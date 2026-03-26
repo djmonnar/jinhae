@@ -327,7 +327,7 @@ const db  = getFirestore(app);
 
 // ── 설정 ──
 const ADMIN_PASSWORD = '1234';   // ← 비밀번호 여기서 변경!
-const ELECTION_DATE  = new Date('2026-06-03');
+const ELECTION_DATE = new Date('2026-06-03T00:00:00+09:00');
 
 const TYPE_CONFIG = {
   street:  { cls:'badge-street',  icon:'📢', label:'거리유세'  },
