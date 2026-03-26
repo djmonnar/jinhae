@@ -8,8 +8,8 @@
     <!-- 오픈그래프 (일반 URL 복사/붙여넣기 시 보여질 썸네일) -->
     <meta property="og:title" content="국민의힘 박동철, 진해의 내일을 바꿉니다">
     <meta property="og:description" content="기획은 치밀하게, 진해는 따뜻하게! 검증된 실력, 박동철입니다.">
-    <!-- 변경된 후보님 지시 사진 링크 -->
-    <meta property="og:image" content="https://i.ibb.co/V08GQW2Y/Kakao-Talk-20260326-143950509.jpg">
+    <!-- 정면 프로필 사진 링크 -->
+    <meta property="og:image" content="https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
     <!-- 폰트 및 아이콘 -->
@@ -30,13 +30,11 @@
         .mobile-container { max-width: 480px; margin: 0 auto; background-color: #ffffff; min-height: 100vh; position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow-x: hidden; }
         html { scroll-behavior: smooth; }
 
-        /* 가로 스크롤바 숨기기 */
+        /* 가로 스크롤바 숨기기 및 부드러운 스크롤 (스냅 제거) */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .scroll-snap-x { scroll-snap-type: x mandatory; }
-        .snap-center { scroll-snap-align: center; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 
-        /* 상단 이름 가독성 극대화를 위한 텍스트 섀도우 */
+        /* 텍스트 가독성용 그림자 */
         .text-shadow-strong { text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.9); }
     </style>
 </head>
@@ -50,8 +48,7 @@
             <div class="px-5 flex justify-between items-center w-full">
                 <!-- 국민의힘 배경제거 로고 적용 -->
                 <div class="font-black text-lg tracking-tight flex items-center gap-1.5">
-                    <!-- 로고에도 섀도우를 주어 밝은 배경에서 묻히지 않게 함 -->
-                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-8 w-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-8 w-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-all" id="nav-logo-img">
                     <span id="nav-name" class="text-white text-shadow-strong transition-colors duration-300">박동철</span>
                 </div>
                 <a href="#contact" id="nav-btn" class="text-xs font-bold px-4 py-2 rounded-full transition-colors bg-party-red text-white shadow-[0_4px_6px_rgba(0,0,0,0.5)]">
@@ -60,28 +57,25 @@
             </div>
         </nav>
 
-        <!-- 1. 히어로 섹션 (오른쪽 정렬 레이아웃 적용) -->
+        <!-- 1. 히어로 섹션 (정면 사진 + 안정적인 중앙 하단 정렬) -->
         <header class="relative bg-gray-900 overflow-hidden flex flex-col justify-end min-h-[85vh]">
             
-            <!-- 사진을 왼쪽 상단 기준으로 정렬 (bg-left-top) 하여 후보님 모습 보존 -->
-            <div class="absolute inset-0 bg-cover bg-left-top" style="background-image: url('https://i.ibb.co/V08GQW2Y/Kakao-Talk-20260326-143950509.jpg');"></div>
+            <!-- 사진을 중앙 상단 기준으로 정렬하여 얼굴 확보 -->
+            <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg');"></div>
             
-            <!-- 1) 네비게이션바 글씨(흰색)를 위한 상단 다크 그라데이션 -->
-            <div class="absolute top-0 w-full h-32 bg-gradient-to-b from-gray-900/90 to-transparent"></div>
-            <!-- 2) 텍스트를 위한 우측 다크 그라데이션 (오른쪽이 어둡게) -->
-            <div class="absolute right-0 top-0 w-[85%] h-full bg-gradient-to-l from-gray-900/90 via-gray-900/40 to-transparent"></div>
-            <!-- 3) 하단 자연스러운 연결을 위한 하단 다크 그라데이션 -->
-            <div class="absolute bottom-0 w-full h-[50vh] bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent"></div>
+            <!-- 그라데이션 레이어: 상단은 네비게이션바, 하단은 텍스트를 위해 어둡게 -->
+            <div class="absolute top-0 w-full h-24 bg-gradient-to-b from-gray-900/80 to-transparent"></div>
+            <div class="absolute bottom-0 w-full h-[55vh] bg-gradient-to-t from-gray-900 via-gray-900/90 to-transparent"></div>
             
-            <!-- 텍스트 영역 (flex-col, items-end, text-right로 우측 정렬) -->
-            <div class="relative z-20 px-6 pb-12 w-full pt-[45vh] flex flex-col items-end text-right">
-                <!-- 메인 배지 (선거명 수정 완료) -->
+            <!-- 텍스트 영역 (중앙 정렬, 얼굴을 가리지 않도록 하단으로 배치) -->
+            <div class="relative z-20 px-6 pb-14 w-full pt-[45vh] flex flex-col items-center text-center">
+                <!-- 메인 배지 -->
                 <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-4 shadow-lg tracking-wider">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-4 w-auto brightness-0 invert">
                     제9회 전국동시지방선거
                 </div>
                 
-                <h1 class="text-4xl leading-[1.2] font-black text-white mb-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+                <h1 class="text-[2.3rem] leading-[1.2] font-black text-white mb-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
                     진심이 전해 <span class="text-yellow-400">진해,</span><br/>
                     내 삶이 든든해 <span class="text-yellow-400">진해!</span>
                 </h1>
@@ -89,19 +83,19 @@
                     기획은 치밀하게, 진해는 따뜻하게.<br/>말이 아닌 결과로 증명해 온 진짜 일꾼입니다.
                 </p>
                 
-                <div class="flex flex-wrap justify-end gap-2">
-                    <span class="bg-gray-900/70 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full border border-gray-600 font-semibold shadow-sm">기획행정위 부위원장</span>
-                    <span class="bg-gray-900/70 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full border border-gray-600 font-semibold shadow-sm">동아대 공학박사과정 수료</span>
+                <div class="flex flex-wrap justify-center gap-2">
+                    <span class="bg-gray-900/60 backdrop-blur-sm text-white text-[11px] px-3 py-1.5 rounded-full border border-gray-500 font-semibold">기획행정위 부위원장</span>
+                    <span class="bg-gray-900/60 backdrop-blur-sm text-white text-[11px] px-3 py-1.5 rounded-full border border-gray-500 font-semibold">동아대 공학박사과정 수료</span>
                 </div>
             </div>
 
-            <!-- 스크롤 유도 아이콘 (가운데 정렬 유지) -->
+            <!-- 스크롤 유도 아이콘 -->
             <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
                 <i data-lucide="chevron-down" class="text-white w-6 h-6 opacity-70 drop-shadow-md"></i>
             </div>
         </header>
 
-        <!-- 2. 후보자 인사말 (상세) -->
+        <!-- 2. 후보자 인사말 -->
         <section class="py-14 px-6 bg-white relative z-30 -mt-2 rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.1)]">
             <h2 class="text-2xl font-black text-gray-900 mb-6 border-l-4 border-party-red pl-3 leading-snug">
                 사랑하고 존경하는<br/>진해 구민 여러분!
@@ -117,7 +111,7 @@
                 </div>
                 <p>
                     지난 의정활동 동안 폭우 현장을 가장 먼저 치우고, 진해신항 개발에 따른 지역 주민의 권리를 강력히 대변해왔습니다. 
-                    <b>초선의 패기로 시작했던 굵직한 현안들, 이제 집권 여당 국민의힘의 든든한 지원과 재선의 노련한 추진력으로 속 시원하게 마무리 짓겠습니다.</b>
+                    <b>초선의 패기로 시작했던 굵직한 현안들, 이제 국민의힘의 든든한 지원과 재선의 노련한 추진력으로 속 시원하게 마무리 짓겠습니다.</b>
                 </p>
                 <p class="font-black text-gray-900 text-lg pt-2 text-center">
                     "진해를 진해답게, 구민의 삶을 더 든든하게!"<br/>
@@ -134,85 +128,128 @@
             </div>
         </section>
 
-        <!-- 3. 상세 의정 성과 (가로 스와이프 갤러리) -->
+        <!-- ★ 3. 보수의 자존심 프레임 (국민의힘 대형 로고 및 성과) ★ -->
+        <section class="py-16 px-6 bg-party-red text-white relative overflow-hidden">
+            <!-- 배경에 아주 큰 국민의힘 로고 워터마크 -->
+            <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" class="absolute -right-10 top-10 w-80 h-auto opacity-10 grayscale transform rotate-[-10deg]" alt="워터마크" />
+            
+            <div class="relative z-10">
+                <div class="text-center mb-8">
+                    <!-- 흰색으로 변환된 대형 국민의힘 로고 -->
+                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-16 w-auto mx-auto mb-5 brightness-0 invert drop-shadow-md">
+                    <h2 class="text-[1.6rem] font-black leading-tight mb-3">
+                        보수의 자존심, 국민의힘의 힘!<br/>
+                        <span class="text-yellow-300">진해 예산, 확실히 끌어옵니다</span>
+                    </h2>
+                    <p class="text-red-100 text-sm font-medium">탄탄한 네트워크와 기획력을 모두 갖춘 도의원</p>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- 당 성과 1 -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-lg">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i data-lucide="zap" class="w-5 h-5 text-yellow-300 fill-current"></i>
+                            <h3 class="font-black text-lg text-yellow-300">국민의힘 경남도당 부위원장</h3>
+                        </div>
+                        <p class="text-sm text-white leading-relaxed font-medium">
+                            도당과 중앙당을 잇는 탄탄한 국민의힘 네트워크를 바탕으로 진해신항, 거점 교육 인프라 등 대규모 국책 및 도비 사업 예산을 최우선으로 확보할 수 있는 강력한 정치력을 보유하고 있습니다.
+                        </p>
+                    </div>
+
+                    <!-- 당 성과 2 -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-lg">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i data-lucide="landmark" class="w-5 h-5 text-yellow-300 fill-current"></i>
+                            <h3 class="font-black text-lg text-yellow-300">경남도의회 기획행정위 부위원장</h3>
+                        </div>
+                        <p class="text-sm text-white leading-relaxed font-medium">
+                            경상남도 전체의 살림(예산)과 기획을 주무르는 핵심 요직입니다. 검증된 도정 설계 능력을 바탕으로 진해 구민에게 실질적 이익이 돌아오는 상생형 발전 방안을 주도합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 상세 의정 성과 (가로 스크롤 감도 완화: 스냅 제거) -->
         <section class="py-14 bg-gray-900 text-white overflow-hidden relative">
             <div class="px-6 mb-6 flex justify-between items-end">
                 <div>
                     <h2 class="text-2xl font-black mb-2">박동철이 뛰니까,<br/><span class="text-yellow-400">진해가 확 달라집니다</span></h2>
                     <p class="text-gray-400 text-sm">추상적인 약속이 아닌, 구체적인 결과로 증명했습니다.</p>
                 </div>
-                <div class="flex items-center text-[10px] font-bold text-gray-400 bg-gray-800 px-2 py-1 rounded-full animate-pulse">
-                    옆으로 넘기세요 <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
+                <!-- 부드러운 스크롤 안내 -->
+                <div class="flex items-center text-[10px] font-bold text-gray-400 bg-gray-800 px-2 py-1 rounded-full animate-pulse shrink-0">
+                    옆으로 밀기 <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
                 </div>
             </div>
 
             <!-- 가로 스크롤 컨테이너 -->
-            <div class="flex gap-4 overflow-x-auto scroll-snap-x hide-scrollbar px-6 pb-8 pt-2">
+            <div class="flex gap-4 overflow-x-auto hide-scrollbar px-6 pb-8 pt-2">
                 
                 <!-- 성과 1: 신항만 -->
-                <div class="snap-center shrink-0 w-[85%] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
+                <div class="shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
                     <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-bl-xl rounded-tr-2xl">지역 권리 수호</div>
                     <div class="bg-blue-50 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-blue-600">
                         <i data-lucide="anchor" class="w-6 h-6"></i>
                     </div>
                     <h3 class="font-black text-xl mb-3 leading-tight">진해신항 개발,<br/>어민 생존권이 먼저입니다</h3>
                     <p class="text-sm text-gray-600 leading-relaxed mb-4">
-                        "어업인 생존권 보장과 환경오염 대책 없는 개발은 절대 안 됩니다." 박동철은 도정질문을 통해 원인자 부담 원칙에 입각한 <b>'지역자원시설세(컨테이너세)' 도입</b>을 강력히 제안했습니다. 단순한 개발을 넘어, 진해 구민에게 실질적인 이익이 돌아오는 상생형 항만 개발을 주도하고 있습니다.
+                        "어업인 생존권 보장과 환경오염 대책 없는 개발은 절대 안 됩니다." 박동철은 도정질문을 통해 원인자 부담 원칙에 입각한 <b>'지역자원시설세(컨테이너세)' 도입</b>을 강력히 제안했습니다. 
                     </p>
                     <div class="text-xs font-bold text-blue-600 bg-blue-50 inline-block px-2 py-1 rounded">#해양수산부_진해이전_촉구</div>
                 </div>
 
                 <!-- 성과 2: 재난 현장 -->
-                <div class="snap-center shrink-0 w-[85%] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
+                <div class="shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
                     <div class="absolute top-0 right-0 bg-party-red text-white text-xs font-bold px-3 py-1.5 rounded-bl-xl rounded-tr-2xl">현장 중심 소통</div>
                     <div class="bg-red-50 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-party-red">
                         <i data-lucide="cloud-rain" class="w-6 h-6"></i>
                     </div>
                     <h3 class="font-black text-xl mb-3 leading-tight">최대 563mm 폭우,<br/>양복 벗고 가장 먼저 현장으로</h3>
                     <p class="text-sm text-gray-600 leading-relaxed mb-4">
-                        2024년 9월, 기록적인 폭우로 진해루와 속천항 일대가 쑥대밭이 되었을 때. 박동철은 지시만 내리지 않았습니다. 장화를 신고 현장으로 달려가 통장협의회 및 주민들과 함께 토사와 해양 쓰레기를 직접 치웠습니다. <b>재난의 최전선에서 도민의 아픔을 가장 먼저 살피는 듬직한 방파제</b>가 되겠습니다.
+                        2024년 9월 기록적인 폭우 때, 박동철은 지시만 내리지 않았습니다. 장화를 신고 현장으로 달려가 통장협의회 및 주민들과 함께 토사와 해양 쓰레기를 직접 치웠습니다. 
                     </p>
                     <div class="text-xs font-bold text-party-red bg-red-50 inline-block px-2 py-1 rounded">#행동하는_양심 #빠른_피해복구</div>
                 </div>
 
                 <!-- 성과 3: 의정대상 -->
-                <div class="snap-center shrink-0 w-[85%] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
+                <div class="shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
                     <div class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-3 py-1.5 rounded-bl-xl rounded-tr-2xl">입법 성과 1위</div>
                     <div class="bg-yellow-50 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-yellow-600">
                         <i data-lucide="medal" class="w-6 h-6"></i>
                     </div>
                     <h3 class="font-black text-xl mb-3 leading-tight">전국 최초 조례 발의,<br/>2025 지방의정대상 '최우수상'</h3>
                     <p class="text-sm text-gray-600 leading-relaxed mb-4">
-                        도민의 삶을 바꾸는 것은 결국 '정교한 입법'입니다. 박동철은 학령인구 감소라는 위기를 기회로 바꾸기 위해 <b>전국 최초로 '미래형 교육시설 조성 조례안'을 발의</b>했습니다. 빈 교실을 지역 주민의 복합 문화 공간으로 탈바꿈시키는 혁신적인 교육 인프라 구축 공로를 전국적으로 인정받았습니다.
+                        도민의 삶을 바꾸는 정교한 입법 능력! 박동철은 <b>전국 최초로 '미래형 교육시설 조성 조례안'을 발의</b>하여 혁신적인 교육 인프라 구축 공로를 전국적으로 인정받았습니다.
                     </p>
                     <div class="text-xs font-bold text-yellow-600 bg-yellow-50 inline-block px-2 py-1 rounded">#교육혁신 #검증된_기획력</div>
                 </div>
 
                 <!-- 성과 4: 사회 공헌 -->
-                <div class="snap-center shrink-0 w-[85%] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
+                <div class="shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
                     <div class="absolute top-0 right-0 bg-green-600 text-white text-xs font-bold px-3 py-1.5 rounded-bl-xl rounded-tr-2xl">따뜻한 연대</div>
                     <div class="bg-green-50 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-green-600">
                         <i data-lucide="heart-handshake" class="w-6 h-6"></i>
                     </div>
                     <h3 class="font-black text-xl mb-3 leading-tight">자립준비청년을 위한<br/>1천만 원 쾌척과 헌신</h3>
                     <p class="text-sm text-gray-600 leading-relaxed mb-4">
-                        정치의 손길이 미처 닿지 못하는 사각지대까지 보듬어야 합니다. 국제라이온스협회 355-C지구를 통해 초록우산 어린이재단에 홀로서기를 준비하는 청년들을 위한 <b>후원금 1천만 원을 개인적으로 쾌척</b>했습니다. 지역 사회의 어른으로서, 청년들의 든든한 버팀목이자 이웃이 되겠습니다.
+                        정치의 손길이 미처 닿지 못하는 사각지대. 국제라이온스협회를 통해 홀로서기를 준비하는 청년들을 위한 <b>후원금 1천만 원을 개인적으로 쾌척</b>하며 따뜻한 이웃이 되었습니다.
                     </p>
                     <div class="text-xs font-bold text-green-600 bg-green-50 inline-block px-2 py-1 rounded">#노블레스_오블리주 #따뜻한_진해</div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. 3대 핵심 공약 (상세) -->
+        <!-- 5. 3대 핵심 공약 -->
         <section class="py-14 px-6 bg-blue-50">
             <div class="text-center mb-10">
                 <h2 class="text-2xl font-black text-blue-900 mb-2">진해의 내일을 바꿀 3대 약속</h2>
                 <div class="w-12 h-1 bg-blue-600 mx-auto mb-4"></div>
-                <p class="text-sm text-gray-600">박동철의 기획력으로 진해의 스케일을 키우겠습니다.</p>
+                <!-- 텍스트 수정 -->
+                <p class="text-sm text-gray-600">국민의힘과 박동철의 기획력으로 진해의 스케일을 키우겠습니다.</p>
             </div>
 
             <div class="space-y-5">
-                <!-- 공약 1 -->
                 <div class="bg-white p-6 rounded-2xl shadow-md border border-blue-100">
                     <div class="flex items-center gap-3 text-blue-800 font-black text-lg mb-4 border-b border-blue-50 pb-3">
                         <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow">1</span> 
@@ -220,21 +257,16 @@
                     </div>
                     <ul class="space-y-3 text-gray-700 text-[14.5px] leading-relaxed font-medium">
                         <li class="flex items-start gap-2">
-                            <i data-lucide="check" class="w-5 h-5 text-party-red shrink-0"></i>
-                            <span><b>진해신항 및 경제자유구역 연계:</b> 양질의 청년 일자리 대거 창출 및 지역 인재 우선 채용 추진</span>
+                            <i data-lucide="check" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                            <span><b>진해신항 연계 일자리:</b> 양질의 청년 일자리 창출 및 지역 인재 채용</span>
                         </li>
                         <li class="flex items-start gap-2">
-                            <i data-lucide="check" class="w-5 h-5 text-party-red shrink-0"></i>
-                            <span><b>해양 중심지 도약:</b> 해양수산부 산하 주요 공공기관 진해 이전 강력 추진</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <i data-lucide="check" class="w-5 h-5 text-party-red shrink-0"></i>
-                            <span><b>속천항 해양관광 벨트화:</b> 만성적인 주차난 해결 및 수변 공원 전면 리모델링</span>
+                            <i data-lucide="check" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                            <span><b>속천항 해양관광 벨트화:</b> 만성적인 주차난 해결 및 수변 공원 리모델링</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- 공약 2 -->
                 <div class="bg-white p-6 rounded-2xl shadow-md border border-blue-100">
                     <div class="flex items-center gap-3 text-blue-800 font-black text-lg mb-4 border-b border-blue-50 pb-3">
                         <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow">2</span> 
@@ -242,21 +274,16 @@
                     </div>
                     <ul class="space-y-3 text-gray-700 text-[14.5px] leading-relaxed font-medium">
                         <li class="flex items-start gap-2">
-                            <i data-lucide="check" class="w-5 h-5 text-party-red shrink-0"></i>
-                            <span><b>동부권 교육 격차 해소:</b> 진해 동부권 내 중·고등학교 신설 및 스마트 교육 인프라 확충</span>
+                            <i data-lucide="check" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                            <span><b>교육 인프라 확충:</b> 진해 동부권 중·고등학교 신설 및 스마트 교육 환경 조성</span>
                         </li>
                         <li class="flex items-start gap-2">
-                            <i data-lucide="check" class="w-5 h-5 text-party-red shrink-0"></i>
-                            <span><b>도시 재생 및 정주 여건:</b> 구도심 노후 주거지 전면 정비 및 이순신 승전지 순례길 명소화</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <i data-lucide="check" class="w-5 h-5 text-party-red shrink-0"></i>
-                            <span><b>도심 속 힐링 공간:</b> 근린공원 및 체육시설 최신화로 구민 삶의 질 향상</span>
+                            <i data-lucide="check" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                            <span><b>정주 여건 개선:</b> 이순신 승전지 순례길 명소화 및 근린 체육시설 최신화</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- 공약 3 -->
                 <div class="bg-white p-6 rounded-2xl shadow-md border border-blue-100">
                     <div class="flex items-center gap-3 text-blue-800 font-black text-lg mb-4 border-b border-blue-50 pb-3">
                         <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm shadow">3</span> 
@@ -264,148 +291,78 @@
                     </div>
                     <ul class="space-y-3 text-gray-700 text-[14.5px] leading-relaxed font-medium">
                         <li class="flex items-start gap-2">
-                            <i data-lucide="check" class="w-5 h-5 text-party-red shrink-0"></i>
-                            <span><b>어르신 예우 강화:</b> 실효성 있는 맞춤형 어르신 일자리 확대 및 스마트 경로당 구축</span>
+                            <i data-lucide="check" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                            <span><b>어르신 예우 강화:</b> 실효성 있는 어르신 일자리 확대 및 스마트 경로당 구축</span>
                         </li>
                         <li class="flex items-start gap-2">
-                            <i data-lucide="check" class="w-5 h-5 text-party-red shrink-0"></i>
-                            <span><b>청년 및 취약계층 지원:</b> 자립준비청년, 1인 가구를 위한 생활 안정 지원 조례 강화</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <i data-lucide="check" class="w-5 h-5 text-party-red shrink-0"></i>
-                            <span><b>골목 경제 살리기:</b> 소상공인 특례 보증 대출 확대 및 상권 활성화 맞춤 컨설팅 지원</span>
+                            <i data-lucide="check" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                            <span><b>골목 경제 살리기:</b> 소상공인 특례 보증 대출 확대 및 맞춤형 컨설팅 지원</span>
                         </li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- 5. 상세 약력 (프로필) -->
-        <section class="py-14 px-6 bg-gray-50 border-t border-gray-200">
-            <div class="text-center mb-10">
-                <h2 class="text-2xl font-black text-gray-900 mb-2">걸어온 길, 증명된 실력</h2>
-                <div class="w-10 h-1 bg-party-red mx-auto"></div>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 relative overflow-hidden">
-                <i data-lucide="award" class="absolute -right-4 -bottom-4 w-32 h-32 text-gray-50 opacity-50"></i>
-                
-                <h3 class="text-lg font-bold text-party-red mb-4 flex items-center gap-2">
-                    <i data-lucide="graduation-cap" class="w-5 h-5"></i> 학력 및 의정
-                </h3>
-                <ul class="space-y-3 mb-8 text-[14.5px] text-gray-700 font-medium">
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 mt-0.5 shrink-0"></i>
-                        <span>동아대학교 대학원 에너지·자원공학 박사과정 수료</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 mt-0.5 shrink-0"></i>
-                        <span>창원 중앙고등학교 졸업</span>
-                    </li>
-                    <li class="flex items-start gap-2 bg-red-50 p-2 rounded-lg border border-red-100">
-                        <i data-lucide="star" class="w-4 h-4 text-party-red mt-0.5 shrink-0 fill-current"></i>
-                        <span class="font-bold text-party-red">(현) 제12대 경상남도의회 의원 (기획행정위 부위원장)</span>
-                    </li>
-                    <li class="flex items-start gap-2 bg-red-50 p-2 rounded-lg border border-red-100 mt-1">
-                        <i data-lucide="star" class="w-4 h-4 text-party-red mt-0.5 shrink-0 fill-current"></i>
-                        <span class="font-bold text-party-red">(현) 국민의힘 경남도당 부위원장</span>
-                    </li>
-                </ul>
-
-                <h3 class="text-lg font-bold text-party-red mb-4 flex items-center gap-2">
-                    <i data-lucide="users" class="w-5 h-5"></i> 지역 사회 활동
-                </h3>
-                <ul class="space-y-3 text-[14px] text-gray-700">
-                    <li class="flex items-start gap-2">
-                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
-                        <span>(현) 진해 문화원 이사 & (사)이충무공선양군항제위원회 회원</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
-                        <span>(현) 창원중앙고등학교 제12대 총동문회 회장</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
-                        <span>(현) 창원시 축구협회 부회장</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
-                        <span>(현) 국제라이온스협회 355-C지구 공적 심사위원</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
-                        <span>(현) 한국외식업중앙회 진해구지부 운영위원</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
-                        <span>(현) 한국법무보호복지공단 법무보호위원</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- 6. 배너 섹션 -->
-        <section class="py-16 bg-party-red text-white text-center px-6 relative overflow-hidden">
-            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, #fff 10%, transparent 20%); background-size: 20px 20px;"></div>
-            
+        <!-- 6. 배너 섹션 (텍스트 수정) -->
+        <section class="py-16 bg-gray-900 text-white text-center px-6 relative overflow-hidden">
             <div class="relative z-10">
-                <h2 class="text-3xl font-black leading-snug mb-3">
-                    진해 발전,<br/>지금이 확실히 밀어줄<br/><span class="text-yellow-300 text-4xl">'철'</span>입니다!
+                <h2 class="text-3xl font-black leading-snug mb-4">
+                    진해 발전,<br/>지금이 확실히 밀어줄<br/><span class="text-party-red text-4xl">'철'</span>입니다!
                 </h2>
-                <p class="text-red-100 font-bold text-sm mb-8">여당의 힘! 검증된 기획력! 따뜻한 진해통!</p>
                 
-                <div class="inline-flex items-center gap-2 bg-white text-party-red text-2xl font-black px-10 py-4 rounded-full shadow-[0_10px_25px_rgba(0,0,0,0.3)]">
-                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 w-auto">
+                <p class="text-red-100 font-bold text-sm mb-6">보수의 자존심! 검증된 기획력! 따뜻한 진해통!</p>
+                
+                <div class="inline-flex items-center gap-2 bg-party-red text-white text-2xl font-black px-10 py-4 rounded-full shadow-[0_10px_25px_rgba(230,30,43,0.4)]">
+                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 w-auto brightness-0 invert">
                     기호 O번 박동철
                 </div>
             </div>
         </section>
 
         <!-- 7. 연락처 및 Footer -->
-        <section id="contact" class="pt-12 pb-10 px-6 bg-gray-900 text-white">
+        <section id="contact" class="pt-12 pb-10 px-6 bg-white text-gray-900 border-t border-gray-200">
             <div class="mb-8">
                 <h2 class="text-xl font-bold mb-2">도민 여러분의 목소리를 듣습니다</h2>
-                <p class="text-gray-400 text-sm">작은 의견도 귀담아듣고 정책으로 만들겠습니다.</p>
+                <p class="text-gray-500 text-sm">작은 의견도 귀담아듣고 정책으로 만들겠습니다.</p>
             </div>
 
             <div class="space-y-3 mb-10">
-                <a href="tel:055-211-7321" class="flex items-center bg-gray-800 p-5 rounded-xl border border-gray-700 active:bg-gray-700 transition shadow-lg">
-                    <div class="bg-gray-700 p-3 rounded-full mr-4">
-                        <i data-lucide="phone" class="w-5 h-5 text-green-400"></i>
+                <a href="tel:055-211-7321" class="flex items-center bg-gray-50 p-5 rounded-xl border border-gray-200 active:bg-gray-100 transition shadow-sm">
+                    <div class="bg-white shadow p-3 rounded-full mr-4">
+                        <i data-lucide="phone" class="w-5 h-5 text-green-600"></i>
                     </div>
                     <div>
-                        <div class="text-xs text-gray-400 mb-1">선거사무소 직통전화</div>
-                        <div class="font-black text-xl tracking-wide">055-211-7321</div>
+                        <div class="text-xs text-gray-500 mb-1">선거사무소 직통전화</div>
+                        <div class="font-black text-xl tracking-wide text-gray-900">055-211-7321</div>
                     </div>
                 </a>
-                <a href="mailto:cleanerlab@naver.com" class="flex items-center bg-gray-800 p-5 rounded-xl border border-gray-700 active:bg-gray-700 transition shadow-lg">
-                    <div class="bg-gray-700 p-3 rounded-full mr-4">
-                        <i data-lucide="mail" class="w-5 h-5 text-blue-400"></i>
+                <a href="mailto:cleanerlab@naver.com" class="flex items-center bg-gray-50 p-5 rounded-xl border border-gray-200 active:bg-gray-100 transition shadow-sm">
+                    <div class="bg-white shadow p-3 rounded-full mr-4">
+                        <i data-lucide="mail" class="w-5 h-5 text-blue-600"></i>
                     </div>
                     <div>
-                        <div class="text-xs text-gray-400 mb-1">이메일 (정책 제안 등)</div>
-                        <div class="font-bold text-[15px] tracking-wide text-gray-200">cleanerlab@naver.com</div>
+                        <div class="text-xs text-gray-500 mb-1">이메일 (정책 제안 등)</div>
+                        <div class="font-bold text-[15px] tracking-wide text-gray-900">cleanerlab@naver.com</div>
                     </div>
                 </a>
             </div>
 
             <!-- ★ 카카오톡 공유 버튼 ★ -->
-            <button onclick="shareKakao()" class="bg-[#FAE100] text-black text-lg font-black py-4 px-6 rounded-xl w-full flex justify-center items-center shadow-xl mb-10 transition transform active:scale-95">
+            <button onclick="shareKakao()" class="bg-[#FAE100] text-black text-lg font-black py-4 px-6 rounded-xl w-full flex justify-center items-center shadow-md mb-10 transition transform active:scale-95">
                 <svg viewBox="0 0 24 24" class="w-6 h-6 mr-2" fill="currentColor">
                     <path d="M12 3c-5.523 0-10 3.582-10 8 0 2.85 1.83 5.352 4.606 6.815l-1.15 4.298c-.11.41.345.742.71.554l4.982-3.328c.28.02.564.03.852.03 5.523 0 10-3.582 10-8s-4.477-8-10-8z"/>
                 </svg>
                 지인들에게 카카오톡 공유하기
             </button>
 
-            <!-- 푸터 (공식 선거명 수정 완료) -->
-            <div class="text-center border-t border-gray-800 pt-8">
-                <div class="flex justify-center items-center mb-3 opacity-60 gap-1.5">
-                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-5 w-auto grayscale">
-                    <span class="text-sm font-bold tracking-widest text-gray-400">국민의힘</span>
+            <!-- 푸터 -->
+            <div class="text-center border-t border-gray-200 pt-8">
+                <div class="flex justify-center items-center mb-3 gap-1.5">
+                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-5 w-auto">
+                    <span class="text-sm font-black tracking-widest text-party-red">국민의힘</span>
                 </div>
-                <!-- 선거명 완벽 수정 -->
-                <p class="text-xs font-medium text-gray-400 mb-1.5">제9회 전국동시지방선거 경상남도의회의원선거 창원시 제14선거구</p>
-                <p class="text-[11px] text-gray-600">본 페이지는 박동철 후보 선거사무소에서 제작하였습니다.</p>
+                <p class="text-xs font-bold text-gray-500 mb-1.5">제9회 전국동시지방선거 경상남도의회의원선거 창원시 제14선거구</p>
+                <p class="text-[11px] text-gray-400">본 페이지는 박동철 후보 선거사무소에서 제작하였습니다.</p>
             </div>
         </section>
 
@@ -416,24 +373,32 @@
         // 1. 아이콘 렌더링
         lucide.createIcons();
 
-        // 2. 스크롤 네비게이션 효과 (글씨 가독성 관련 로직 보강)
+        // 2. 스크롤 네비게이션 효과 (이름 색상 붉은색 -> 검은색(진회색) 변경 완벽 적용)
         const navbar = document.getElementById('navbar');
         const navName = document.getElementById('nav-name');
         const navBtn = document.getElementById('nav-btn');
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                // 스크롤 시 (배경 흰색, 글자 빨간색, 그림자 제거)
+                // 스크롤 내렸을 때: 배경 흰색
                 navbar.classList.add('bg-white', 'shadow-md');
+                
+                // 이름: 그림자 제거하고 묵직한 검은색(text-gray-900)으로 설정 (붉은색 혐오 정서 반영)
                 navName.classList.remove('text-white', 'text-shadow-strong');
-                navName.classList.add('text-party-red');
+                navName.classList.add('text-gray-900');
+                
+                // 버튼: 배경 흰색, 글씨 빨간색, 테두리 빨간색
                 navBtn.classList.remove('bg-party-red', 'text-white', 'shadow-[0_4px_6px_rgba(0,0,0,0.5)]');
                 navBtn.classList.add('bg-white', 'text-party-red', 'border', 'border-party-red');
             } else {
-                // 최상단 (배경 투명, 글자 흰색, 강한 텍스트 그림자 유지)
+                // 최상단일 때: 배경 투명
                 navbar.classList.remove('bg-white', 'shadow-md');
+                
+                // 이름: 다시 흰색 + 그림자
                 navName.classList.add('text-white', 'text-shadow-strong');
-                navName.classList.remove('text-party-red');
+                navName.classList.remove('text-gray-900');
+                
+                // 버튼: 배경 빨간색
                 navBtn.classList.add('bg-party-red', 'text-white', 'shadow-[0_4px_6px_rgba(0,0,0,0.5)]');
                 navBtn.classList.remove('bg-white', 'text-party-red', 'border', 'border-party-red');
             }
@@ -463,7 +428,7 @@
                 content: {
                     title: '기호 O번 박동철 | 제9회 전국동시지방선거 경상남도의원 후보',
                     description: '기획은 치밀하게, 진해는 따뜻하게! 진해의 심장, 확실한 일꾼 박동철입니다.',
-                    imageUrl: 'https://i.ibb.co/V08GQW2Y/Kakao-Talk-20260326-143950509.jpg', // 변경된 사진 적용
+                    imageUrl: 'https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg', // 정면 사진
                     link: {
                         mobileWebUrl: campaignUrl,
                         webUrl: campaignUrl,
