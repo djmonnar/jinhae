@@ -39,33 +39,33 @@
     <!-- 메인 컨테이너 -->
     <div class="mobile-container pb-20">
         
-        <!-- 네비게이션 바 (사진 배경이 흰색이므로 글자를 기본 검은색으로 고정) -->
+        <!-- 네비게이션 바 (사진 배경이 흰색이므로 상단 그림자를 완전히 없애고 글자를 선명한 검은색으로 고정) -->
         <nav id="navbar" class="fixed top-0 w-full max-w-[480px] z-50 transition-all duration-300 py-3">
             <div class="px-5 flex justify-between items-center w-full">
                 <!-- 국민의힘 로고 적용 -->
                 <div class="font-black text-lg tracking-tight flex items-center gap-1.5">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-8 w-auto">
-                    <span id="nav-name" class="text-gray-900 transition-colors duration-300">박동철</span>
+                    <span id="nav-name" class="text-gray-900 font-extrabold tracking-wide transition-colors duration-300">박동철</span>
                 </div>
-                <a href="#contact" id="nav-btn" class="text-xs font-bold px-4 py-2 rounded-full transition-colors bg-party-red text-white shadow-md">
+                <a href="#contact" id="nav-btn" class="text-xs font-bold px-4 py-2 rounded-full transition-colors bg-party-red text-white shadow-md border border-transparent">
                     선거사무소
                 </a>
             </div>
         </nav>
 
-        <!-- 1. 히어로 섹션 (★ 영역 완벽 분리형 레이아웃 ★) -->
-        <header class="relative w-full flex flex-col bg-gray-900 min-h-screen pt-12">
+        <!-- 1. 히어로 섹션 (★ 정장 어깨선까지 보이도록 레이아웃 완벽 최적화 ★) -->
+        <header class="relative w-full flex flex-col bg-gray-900 min-h-screen pt-14">
             
-            <!-- 상단 50% 영역: 오직 사진만 들어감 (얼굴 100% 보장) -->
-            <div class="relative w-full h-[50vh] bg-white shrink-0">
-                <!-- 배경 이미지 세팅 (위쪽 정렬) -->
+            <!-- 상단 60% 영역: 사진이 넉넉하게 들어가 어깨선과 넥타이가 보입니다. -->
+            <div class="relative w-full h-[60vh] shrink-0 bg-white">
                 <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg');"></div>
-                <!-- 하단 텍스트 영역으로 부드럽게 넘어가기 위한 그라데이션 -->
-                <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-gray-900 to-transparent"></div>
+                
+                <!-- 하단 텍스트 영역과 자연스럽게 섞이도록, 목이 아닌 가슴팍(밑에서 40%)부터 부드러운 그라데이션 적용 -->
+                <div class="absolute bottom-0 left-0 w-full h-[40%] bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent"></div>
             </div>
             
-            <!-- 하단 영역: 오직 텍스트만 들어감 (사진과 겹치지 않음) -->
-            <div class="relative w-full bg-gray-900 px-5 pb-16 pt-2 text-center flex-1 flex flex-col items-center justify-start z-10 -mt-2">
+            <!-- 하단 텍스트 영역: 어두운 배경에서 글씨가 선명하게 보입니다. -->
+            <div class="relative w-full bg-gray-900 px-5 pb-16 pt-2 text-center flex-1 flex flex-col items-center justify-start z-10 -mt-1">
                 
                 <!-- 메인 배지 -->
                 <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-4 shadow-lg tracking-wider">
@@ -73,7 +73,7 @@
                     제9회 전국동시지방선거
                 </div>
                 
-                <h1 class="text-[2.2rem] leading-[1.25] font-black text-white mb-4">
+                <h1 class="text-[2.2rem] leading-[1.25] font-black text-white mb-4 drop-shadow-md">
                     진심이 전해 <span class="text-yellow-400">진해,</span><br/>
                     내 삶이 든든해 <span class="text-yellow-400">진해!</span>
                 </h1>
@@ -88,7 +88,7 @@
                 
                 <!-- 스크롤 유도 아이콘 -->
                 <div class="mt-8 animate-bounce">
-                    <i data-lucide="chevron-down" class="text-gray-400 w-6 h-6 mx-auto"></i>
+                    <i data-lucide="chevron-down" class="text-gray-500 w-6 h-6 mx-auto"></i>
                 </div>
             </div>
         </header>
@@ -232,7 +232,7 @@
             <div class="text-center mb-10">
                 <h2 class="text-2xl font-black text-blue-900 mb-2">진해의 내일을 바꿀 3대 약속</h2>
                 <div class="w-12 h-1 bg-blue-600 mx-auto mb-4"></div>
-                <p class="text-sm text-gray-600">국민의힘과 박동철의 기획력으로 진해의 스케일을 키우겠습니다.</p>
+                <p class="text-sm text-gray-600">국민의힘과 박동철의 기획력으로 진해의 스케일을 키겠습니다.</p>
             </div>
 
             <div class="space-y-5">
@@ -359,16 +359,21 @@
         // 1. 아이콘 렌더링
         lucide.createIcons();
 
-        // 2. 스크롤 네비게이션 효과 (이름 색상은 항시 검은색 유지, 배경만 흰색 반투명 유리창 효과)
+        // 2. 스크롤 네비게이션 효과 (글자는 늘 검은색 유지, 배경만 스크롤 시 흰색 유리창 효과)
         const navbar = document.getElementById('navbar');
+        const navBtn = document.getElementById('nav-btn');
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                // 스크롤 내렸을 때: 세련된 반투명 유리창 효과
-                navbar.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-md');
+                // 스크롤 내렸을 때: 세련된 반투명 유리창 효과 & 버튼 색상 반전
+                navbar.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-md');
+                navBtn.classList.remove('bg-party-red', 'text-white', 'shadow-md', 'border-transparent');
+                navBtn.classList.add('bg-white', 'text-party-red', 'border-party-red');
             } else {
-                // 최상단일 때: 투명
-                navbar.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-md');
+                // 최상단일 때: 투명 & 원래 버튼 색상
+                navbar.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-md');
+                navBtn.classList.add('bg-party-red', 'text-white', 'shadow-md', 'border-transparent');
+                navBtn.classList.remove('bg-white', 'text-party-red', 'border-party-red');
             }
         });
 
@@ -379,7 +384,7 @@
         // 카카오 디벨로퍼스에서 복사한 'JavaScript 키'를 아래에 입력해주세요!
         const kakaoJSKey = '1aa968a094a900e05010d7b54c35e006'; // <-- 예시: 'a1b2c3d4e5f6g7h8i9j0...'
         
-        if(!Kakao.isInitialized() && kakaoJSKey !== 'YOUR_KAKAO_JAVASCRIPT_KEY') {
+        if(!Kakao.isInitialized() && kakaoJSKey !== '1aa968a094a900e05010d7b54c35e006') {
             Kakao.init(kakaoJSKey); 
         }
 
