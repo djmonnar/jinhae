@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>박동철 유세 일정 | 제9회 전국동시지방선거</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+  integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
+  crossorigin="anonymous"></script>
+<style>
+  :root {
+    --red: #C8102E; --red-dark: #9b0c22;
+    --navy: #1a2540; --gold: #c9a84c;
+    --bg: #f2f2f0; --white: #fff;
+    --muted: #999; --border: #e8e8e8;
+    --green: #1a7a4a; --green-bg: #e8f5ee;
+    --orange: #d4620a; --orange-bg: #fef0e6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--navy); min-height: 100vh; padding-bottom: 120px; }
+
+  header { background: var(--navy); color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.25); }
+  .gold-bar { height: 4px; background: linear-gradient(90deg, var(--gold), #f0d080, var(--gold)); }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; }
+  .header-info .title { font-size: 15px; font-weight: 700; }
+  .header-info .sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+  .header-right { display: flex; align-items: center; gap: 8px; }
+  .header-badge { background: var(--red); font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 700; }
+  .btn-admin-toggle { background: rgba(255,255,255,0.12); border: none; color: white; font-family: inherit; font-size: 12px; padding: 6px 12px; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+  .btn-admin-toggle:hover { background: rgba(255,255,255,0.2); }
+  .btn-admin-toggle.active { background: var(--gold); color: var(--navy); font-weight: 700; }
+
+  .hero { background: var(--red); color: white; padding: 24px 16px 30px; position: relative; overflow: hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(135deg,transparent,transparent 30px,rgba(255,255,255,0.03) 30px,rgba(255,255,255,0.03) 31px); }
+  .hero-label { font-size: 11px; letter-spacing: 3px; opacity: 0.7; margin-bottom: 8px; }
+  .hero-title { font-family: 'Noto Serif KR', serif; font-size: 24px; font-weight: 900; line-height: 1.4; margin-bottom: 6px; }
+  .hero-title span { background: rgba(255,255,255,0.15); padding: 0 6px; border-radius: 4px; }
+  .hero-sub { font-size: 13px; opacity: 0.7; font-weight: 300; }
+  .hero-dday { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); text-align: center; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 16px; }
+  .dday-label { font-size: 10px; opacity: 0.7; letter-spacing: 2px; margin-bottom: 3px; }
+  .dday-num { font-family: 'Noto Serif KR', serif; font-size: 30px; font-weight: 900; color: #f0c040; line-height: 1; }
+  .dday-unit { font-size: 11px; opacity: 0.6; margin-top: 2px; }
+
+  /* 로딩 */
+  #loading-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 16px; }
+  .spinner { width: 36px; height: 36px; border: 3px solid #eee; border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #loading-screen p { font-size: 14px; color: var(--muted); }
+
+  /* 관리자 패널 */
+  #admin-panel { display: none; background: #fffbf0; border-bottom: 2px solid var(--gold); padding: 14px 16px; }
+  #admin-panel.visible { display: block; }
+  .admin-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+  .admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-add-day { display: flex; align-items: center; gap: 6px; background: var(--navy); color: white; border: none; font-family: inherit; font-size: 13px; font-weight: 700; padding: 9px 14px; border-radius: 10px; cursor: pointer; }
+  .btn-add-event-top { display: flex; align-items: center; gap: 6px; background: var(--red); color: white; border: none; font-family: inherit; font-size: 13px; font-weight: 700; padding: 9px 14px; border-radius: 10px; cursor: pointer; }
+  .admin-hint { margin-top: 10px; font-size: 12px; color: var(--muted); }
+
+  /* 탭 */
+  .date-tabs-wrap { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 53px; z-index: 99; }
+  .date-tabs { display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 12px; }
+  .date-tabs::-webkit-scrollbar { display: none; }
+  .date-tab { flex-shrink: 0; padding: 12px 16px 10px; cursor: pointer; text-align: center; border-bottom: 3px solid transparent; transition: all 0.2s; position: relative; }
+  .date-tab .tab-day { font-size: 10px; color: var(--muted); letter-spacing: 1px; margin-bottom: 3px; }
+  .date-tab .tab-date { font-size: 20px; font-weight: 700; color: #bbb; line-height: 1; }
+  .date-tab .tab-count { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .date-tab.active { border-bottom-color: var(--red); }
+  .date-tab.active .tab-day { color: var(--red); }
+  .date-tab.active .tab-date { color: var(--navy); }
+  .date-tab.active .tab-count { color: var(--red); }
+  .tab-del-btn { position: absolute; top: 4px; right: 4px; background: #ff4444; color: white; border: none; border-radius: 50%; width: 16px; height: 16px; font-size: 9px; cursor: pointer; display: none; align-items: center; justify-content: center; }
+  .admin-mode .tab-del-btn { display: flex; }
+
+  .content { max-width: 680px; margin: 0 auto; padding: 20px 14px; }
+  .day-section { display: none; }
+  .day-section.active { display: block; }
+  .day-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .date-big { font-family: 'Noto Serif KR', serif; font-size: 40px; font-weight: 900; color: var(--red); line-height: 1; }
+  .date-info .month { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+  .date-info .weekday { font-size: 15px; font-weight: 700; }
+  .ev-count-badge { margin-left: auto; background: var(--navy); color: white; font-size: 12px; padding: 4px 12px; border-radius: 20px; }
+
+  .add-event-inline { display: none; align-items: center; gap: 8px; background: var(--green-bg); border: 2px dashed var(--green); border-radius: 12px; padding: 13px 18px; cursor: pointer; color: var(--green); font-size: 14px; font-weight: 700; margin-bottom: 16px; width: 100%; font-family: inherit; transition: all 0.2s; }
+  .add-event-inline:hover { background: #d0f0e0; }
+  .admin-mode .add-event-inline { display: flex; }
+
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before { content:''; position:absolute; left:8px; top:8px; bottom:8px; width:2px; background: linear-gradient(to bottom, var(--red), rgba(200,16,46,0.1)); }
+  .event-item { position: relative; margin-bottom: 14px; animation: fadeUp 0.35s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+  .timeline-dot { position:absolute; left:-21px; top:18px; width:12px; height:12px; border-radius:50%; background:var(--red); border:3px solid var(--bg); box-shadow:0 0 0 2px var(--red); }
+  .event-card { background: var(--white); border-radius: 14px; padding: 16px 16px 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid var(--border); position: relative; transition: box-shadow 0.2s, transform 0.2s; }
+  .event-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-1px); }
+  .event-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .event-time { font-size: 14px; font-weight: 700; color: var(--red); }
+  .event-type-badge { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:700; padding:3px 9px; border-radius:20px; }
+  .badge-street{background:#fff3cd;color:#856404} .badge-market{background:#d1ecf1;color:#0c5460}
+  .badge-meeting{background:#d4edda;color:#155724} .badge-door{background:#f8d7da;color:#721c24}
+  .badge-event{background:#e2d9f3;color:#4a235a} .badge-welfare{background:#fce8d8;color:#8b4513}
+  .event-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+  .event-location { display:flex; align-items:flex-start; gap:6px; margin-bottom:12px; }
+  .event-location .pin { font-size:13px; flex-shrink:0; margin-top:2px; }
+  .event-location .addr { font-size:13px; color:#666; line-height:1.5; }
+  .event-actions { display:flex; gap:7px; flex-wrap:wrap; }
+  .btn-map { display:inline-flex; align-items:center; gap:5px; background:#fde300; color:#3a1d1d; font-size:12px; font-weight:700; padding:7px 12px; border-radius:8px; text-decoration:none; border:none; cursor:pointer; font-family:inherit; }
+  .btn-share-item { display:inline-flex; align-items:center; gap:5px; background:var(--navy); color:white; font-size:12px; font-weight:700; padding:7px 12px; border-radius:8px; border:none; cursor:pointer; font-family:inherit; }
+  .admin-card-btns { display:none; position:absolute; top:10px; right:10px; gap:6px; }
+  .admin-mode .admin-card-btns { display:flex; }
+  .btn-edit-card { background:var(--orange-bg); color:var(--orange); border:none; font-family:inherit; font-size:11px; font-weight:700; padding:5px 10px; border-radius:6px; cursor:pointer; }
+  .btn-del-card { background:#fde8e8; color:#c00; border:none; font-family:inherit; font-size:11px; font-weight:700; padding:5px 10px; border-radius:6px; cursor:pointer; }
+
+  /* 모달 */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1000; align-items:center; justify-content:center; padding:16px; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:white; border-radius:20px; width:100%; max-width:480px; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation:modalIn 0.25s ease; }
+  @keyframes modalIn { from{opacity:0;transform:scale(0.95) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+  .modal-header { display:flex; align-items:center; justify-content:space-between; padding:20px 20px 0; margin-bottom:16px; }
+  .modal-title { font-size:17px; font-weight:700; }
+  .modal-close { background:none; border:none; font-size:22px; cursor:pointer; color:#999; }
+  .modal-body { padding:0 20px 20px; }
+  .field { margin-bottom:16px; }
+  .field label { display:block; font-size:12px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+  .field label .req { color:var(--red); }
+  .field input, .field select {
+    width:100%; padding:11px 14px; border:1.5px solid #e0e0e0; border-radius:10px;
+    font-family:'Noto Sans KR',sans-serif; font-size:14px; color:var(--navy); background:#fafafa;
+  }
+  .field input:focus, .field select:focus { outline:none; border-color:var(--red); background:white; }
+  .field select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+  .field-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .field-hint { font-size:11px; color:var(--muted); margin-top:4px; }
+  .modal-footer { display:flex; gap:10px; padding-top:8px; }
+  .btn-save { flex:1; background:var(--red); color:white; border:none; font-family:inherit; font-size:15px; font-weight:700; padding:14px; border-radius:12px; cursor:pointer; }
+  .btn-save:disabled { opacity:0.5; cursor:not-allowed; }
+  .btn-cancel { background:#f0f0f0; color:#666; border:none; font-family:inherit; font-size:15px; font-weight:700; padding:14px 20px; border-radius:12px; cursor:pointer; }
+
+  /* 비밀번호 모달 */
+  #modal-pw .modal-body { text-align:center; padding:16px 24px 24px; }
+  .pw-icon { font-size:40px; margin-bottom:12px; }
+  .pw-desc { font-size:14px; color:var(--muted); margin-bottom:16px; line-height:1.6; }
+  #pw-input { width:100%; padding:13px; border:2px solid #e0e0e0; border-radius:12px; font-size:20px; text-align:center; letter-spacing:4px; font-family:inherit; outline:none; }
+  #pw-input:focus { border-color:var(--red); }
+  .pw-error { color:var(--red); font-size:13px; margin-top:8px; display:none; }
+
+  .float-share { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:200; }
+  .float-kakao { display:inline-flex; align-items:center; gap:8px; background:#fde300; color:#3a1d1d; font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:700; padding:13px 22px; border-radius:40px; border:none; cursor:pointer; box-shadow:0 4px 20px rgba(0,0,0,0.2); white-space:nowrap; }
+
+  .notice { background:#fff8e1; border-left:3px solid var(--gold); border-radius:0 10px 10px 0; padding:12px 16px; font-size:13px; color:#665500; margin-bottom:18px; line-height:1.6; }
+  .empty { text-align:center; padding:50px 20px; color:var(--muted); }
+  .empty .emoji { font-size:36px; margin-bottom:10px; }
+  footer { text-align:center; padding:28px 20px 16px; font-size:12px; color:var(--muted); line-height:1.8; }
+
+  .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:var(--navy); color:white; font-size:13px; font-weight:500; padding:10px 20px; border-radius:20px; z-index:9999; opacity:0; transition:opacity 0.3s; pointer-events:none; white-space:nowrap; }
+  .toast.show { opacity:1; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="gold-bar"></div>
+  <div class="header-inner">
+    <div class="header-info">
+      <div class="title">🇰🇷 박동철 유세 일정</div>
+      <div class="sub">제9회 전국동시지방선거 · 경남도의원</div>
+    </div>
+    <div class="header-right">
+      <div class="header-badge">기호 O번</div>
+      <button class="btn-admin-toggle" id="admin-toggle-btn" onclick="toggleAdminMode()">⚙️ 관리</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-label">CAMPAIGN SCHEDULE</div>
+  <div class="hero-title">진해 <span>구석구석</span>,<br>직접 찾아갑니다</div>
+  <div class="hero-sub">일정 확인 후 현장에서 만나요!</div>
+  <div class="hero-dday">
+    <div class="dday-label">D-DAY</div>
+    <div class="dday-num" id="dday-num">69</div>
+    <div class="dday-unit">일 남음</div>
+  </div>
+</div>
+
+<div id="admin-panel">
+  <div class="admin-title">🛠️ 관리자 모드 — 일정 편집 중</div>
+  <div class="admin-actions">
+    <button class="btn-add-day" onclick="openAddDayModal()">📅 날짜 추가</button>
+    <button class="btn-add-event-top" onclick="openAddEventModal(activeIdx)">➕ 현재 날짜에 일정 추가</button>
+  </div>
+  <div class="admin-hint">💡 카드의 ✏️수정 / 🗑️삭제 버튼으로 편집하세요 · 탭의 ✕로 날짜 삭제</div>
+</div>
+
+<div class="date-tabs-wrap">
+  <div class="date-tabs" id="date-tabs"></div>
+</div>
+
+<div class="content">
+  <div class="notice">📌 일정은 현장 상황에 따라 변경될 수 있습니다. 문의: <strong>055-211-7321</strong></div>
+  <div id="loading-screen">
+    <div class="spinner"></div>
+    <p>일정을 불러오는 중...</p>
+  </div>
+  <div id="schedule-container" style="display:none"></div>
+</div>
+
+<div class="float-share">
+  <button class="float-kakao" onclick="shareKakao()">💬 카카오톡으로 일정 공유하기</button>
+</div>
+
+<footer>국민의힘 제9회 전국동시지방선거<br>경남도의회의원 창원시 제14선거구 <strong>박동철</strong><br>선거사무소 055-211-7321</footer>
+
+<!-- 비밀번호 모달 -->
+<div class="modal-overlay" id="modal-pw">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">관리자 로그인</div>
+      <button class="modal-close" onclick="closeModal('modal-pw')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="pw-icon">🔐</div>
+      <div class="pw-desc">관리자만 일정을 편집할 수 있습니다.</div>
+      <input type="password" id="pw-input" placeholder="비밀번호" maxlength="20"
+        onkeydown="if(event.key==='Enter') checkPw()"/>
+      <div class="pw-error" id="pw-error">❌ 비밀번호가 틀렸습니다</div>
+      <div style="margin-top:16px">
+        <button class="btn-save" onclick="checkPw()">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 날짜 추가 모달 -->
+<div class="modal-overlay" id="modal-day">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📅 유세 날짜 추가</div>
+      <button class="modal-close" onclick="closeModal('modal-day')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>날짜 <span class="req">*</span></label>
+        <input type="date" id="new-date"/>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal('modal-day')">취소</button>
+        <button class="btn-save" id="btn-save-day" onclick="addDay()">날짜 추가</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 일정 추가/수정 모달 -->
+<div class="modal-overlay" id="modal-event">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-event-title">➕ 일정 추가</div>
+      <button class="modal-close" onclick="closeModal('modal-event')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field-row">
+        <div class="field">
+          <label>시간 <span class="req">*</span></label>
+          <input type="time" id="ev-time"/>
+        </div>
+        <div class="field">
+          <label>유세 유형 <span class="req">*</span></label>
+          <select id="ev-type">
+            <option value="street">📢 거리유세</option>
+            <option value="market">🛒 시장방문</option>
+            <option value="meeting">🤝 주민간담회</option>
+            <option value="door">🚪 방문유세</option>
+            <option value="event">🎉 행사참석</option>
+            <option value="welfare">💛 복지방문</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>일정 제목 <span class="req">*</span></label>
+        <input type="text" id="ev-title" placeholder="예: 진해중앙시장 방문 및 상인 소통"/>
+      </div>
+      <div class="field">
+        <label>장소명 <span class="req">*</span></label>
+        <input type="text" id="ev-place" placeholder="예: 진해중앙시장"/>
+      </div>
+      <div class="field">
+        <label>주소</label>
+        <input type="text" id="ev-address" placeholder="예: 경남 창원시 진해구 중앙동"/>
+      </div>
+      <div class="field">
+        <label>카카오맵 검색어 <span class="req">*</span></label>
+        <input type="text" id="ev-mapquery" placeholder="예: 진해중앙시장"/>
+        <div class="field-hint">카카오맵에서 검색될 키워드를 입력하세요</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal('modal-event')">취소</button>
+        <button class="btn-save" id="btn-save-event" onclick="saveEvent()">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════
+     Firebase + 앱 로직
+════════════════════════════════════════ -->
+<script type="module">
+import { initializeApp }          from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { getFirestore, collection, doc,
+         getDocs, addDoc, setDoc,
+         updateDoc, deleteDoc,
+         query, orderBy, onSnapshot }
+  from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+// ── Firebase 초기화 ──
+const firebaseConfig = {
+  apiKey:            "AIzaSyAeHS1qb4SzJTZWnwd8s_V8K3MuKPBCx5Y",
+  authDomain:        "vote-94dda.firebaseapp.com",
+  projectId:         "vote-94dda",
+  storageBucket:     "vote-94dda.firebasestorage.app",
+  messagingSenderId: "548877092595",
+  appId:             "1:548877092595:web:7d6381ceb779b7b319d986"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// ── 설정 ──
+const ADMIN_PASSWORD = '1234';   // ← 비밀번호 여기서 변경!
+const ELECTION_DATE  = new Date('2026-06-03');
+
+const TYPE_CONFIG = {
+  street:  { cls:'badge-street',  icon:'📢', label:'거리유세'  },
+  market:  { cls:'badge-market',  icon:'🛒', label:'시장방문'  },
+  meeting: { cls:'badge-meeting', icon:'🤝', label:'주민간담회'},
+  door:    { cls:'badge-door',    icon:'🚪', label:'방문유세'  },
+  event:   { cls:'badge-event',   icon:'🎉', label:'행사참석'  },
+  welfare: { cls:'badge-welfare', icon:'💛', label:'복지방문'  },
+};
+const WEEKDAYS = ['일','월','화','수','목','금','토'];
+
+// ── 상태 ──
+let schedule  = [];   // [{ id, date, day, events:[{id,...}] }]
+let isAdmin   = false;
+window.activeIdx = 0;
+
+// ── D-Day ──
+function calcDday() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff  = Math.ceil((ELECTION_DATE - today) / 86400000);
+  document.getElementById('dday-num').textContent =
+    diff > 0 ? diff : diff === 0 ? '오늘!' : '종료';
+}
+calcDday();
+
+// ── Firestore 실시간 구독 ──
+// days 컬렉션 → 각 문서가 날짜 하나 (date, day, events[])
+const daysRef = collection(db, 'schedule_days');
+const q       = query(daysRef, orderBy('date'));
+
+onSnapshot(q, (snapshot) => {
+  schedule = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+  document.getElementById('loading-screen').style.display  = 'none';
+  document.getElementById('schedule-container').style.display = 'block';
+  render();
+}, (err) => {
+  console.error(err);
+  document.getElementById('loading-screen').innerHTML =
+    `<p style="color:red">⚠️ 데이터 로드 실패: ${err.message}<br>Firestore 보안 규칙을 확인해주세요</p>`;
+});
+
+// ── 렌더링 ──
+function render() {
+  const tabsEl = document.getElementById('date-tabs');
+  const contEl = document.getElementById('schedule-container');
+  tabsEl.innerHTML = '';
+  contEl.innerHTML = '';
+
+  if (schedule.length === 0) {
+    contEl.innerHTML = `<div class="empty"><div class="emoji">📭</div><p>등록된 일정이 없습니다.<br>관리자 모드에서 날짜를 추가해주세요.</p></div>`;
+    return;
+  }
+  if (window.activeIdx >= schedule.length) window.activeIdx = schedule.length - 1;
+
+  schedule.forEach((dayData, idx) => {
+    const d   = new Date(dayData.date + 'T00:00:00');
+    const mon = d.getMonth() + 1;
+    const day = d.getDate();
+    const wk  = WEEKDAYS[d.getDay()];
+
+    // 탭
+    const tab = document.createElement('div');
+    tab.className = 'date-tab' + (idx === window.activeIdx ? ' active' : '');
+    tab.dataset.idx = idx;
+    tab.innerHTML = `
+      <div class="tab-day">${mon}월 · ${wk}</div>
+      <div class="tab-date">${day}</div>
+      <div class="tab-count">${(dayData.events||[]).length}개</div>
+      <button class="tab-del-btn" title="날짜 삭제">✕</button>
+    `;
+    tab.querySelector('.tab-del-btn').addEventListener('click', e => {
+      e.stopPropagation(); deleteDay(dayData.id, dayData.date);
+    });
+    tab.addEventListener('click', e => {
+      if (e.target.classList.contains('tab-del-btn')) return;
+      switchDay(idx);
+    });
+    tabsEl.appendChild(tab);
+
+    // 섹션
+    const sec = document.createElement('div');
+    sec.className = 'day-section' + (idx === window.activeIdx ? ' active' : '');
+    sec.dataset.idx = idx;
+    const evHtml = (dayData.events||[]).length === 0
+      ? `<div class="empty"><div class="emoji">📋</div><p>일정이 없습니다.</p></div>`
+      : `<div class="timeline">${(dayData.events||[]).map(ev => renderCard(ev, dayData.id)).join('')}</div>`;
+
+    sec.innerHTML = `
+      <div class="day-header">
+        <div class="date-big">${day}</div>
+        <div class="date-info">
+          <div class="month">${mon}월</div>
+          <div class="weekday">${wk}요일</div>
+        </div>
+        <div class="ev-count-badge">${(dayData.events||[]).length}개 일정</div>
+      </div>
+      <button class="add-event-inline" data-dayid="${dayData.id}">＋ 이 날짜에 일정 추가하기</button>
+      ${evHtml}
+    `;
+    sec.querySelector('.add-event-inline').addEventListener('click', () => {
+      openAddEventModal(idx);
+    });
+    contEl.appendChild(sec);
+  });
+
+  document.body.classList.toggle('admin-mode', isAdmin);
+}
+
+function renderCard(ev, dayDocId) {
+  const cfg = TYPE_CONFIG[ev.type] || TYPE_CONFIG.street;
+  const mapUrl = `https://map.kakao.com/link/search/${encodeURIComponent(ev.mapQuery||ev.place)}`;
+  return `
+    <div class="event-item">
+      <div class="timeline-dot"></div>
+      <div class="event-card">
+        <div class="admin-card-btns">
+          <button class="btn-edit-card" data-dayid="${dayDocId}" data-evid="${ev.id}">✏️ 수정</button>
+          <button class="btn-del-card"  data-dayid="${dayDocId}" data-evid="${ev.id}">🗑️ 삭제</button>
+        </div>
+        <div class="event-top">
+          <div class="event-time">${ev.time}</div>
+          <div class="event-type-badge ${cfg.cls}">${cfg.icon} ${cfg.label}</div>
+        </div>
+        <div class="event-title">${ev.title}</div>
+        <div class="event-location">
+          <span class="pin">📍</span>
+          <div class="addr"><strong>${ev.place}</strong><br>${ev.address||''}</div>
+        </div>
+        <div class="event-actions">
+          <a class="btn-map" href="${mapUrl}" target="_blank">🗺️ 카카오맵 길찾기</a>
+          <button class="btn-share-item" data-time="${ev.time}" data-place="${ev.place}" data-title="${ev.title}">💬 공유</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// 이벤트 위임 (동적 버튼)
+document.getElementById('schedule-container').addEventListener('click', e => {
+  const editBtn  = e.target.closest('.btn-edit-card');
+  const delBtn   = e.target.closest('.btn-del-card');
+  const shareBtn = e.target.closest('.btn-share-item');
+  if (editBtn)  openEditEventModal(editBtn.dataset.dayid, editBtn.dataset.evid);
+  if (delBtn)   deleteEvent(delBtn.dataset.dayid, delBtn.dataset.evid);
+  if (shareBtn) shareThis(shareBtn.dataset.time, shareBtn.dataset.place, shareBtn.dataset.title);
+});
+
+// ── 탭 전환 ──
+window.switchDay = function(idx) {
+  window.activeIdx = idx;
+  document.querySelectorAll('.date-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.day-section').forEach(s => s.classList.remove('active'));
+  const tab = document.querySelector(`.date-tab[data-idx="${idx}"]`);
+  const sec = document.querySelector(`.day-section[data-idx="${idx}"]`);
+  if (tab) { tab.classList.add('active'); tab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }
+  if (sec) sec.classList.add('active');
+  window.scrollTo({top:150,behavior:'smooth'});
+};
+
+// ── 관리자 모드 ──
+window.toggleAdminMode = function() {
+  if (isAdmin) {
+    isAdmin = false;
+    document.getElementById('admin-panel').classList.remove('visible');
+    document.getElementById('admin-toggle-btn').classList.remove('active');
+    document.getElementById('admin-toggle-btn').textContent = '⚙️ 관리';
+    document.body.classList.remove('admin-mode');
+    showToast('관리자 모드 종료');
+  } else {
+    openModal('modal-pw');
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-error').style.display = 'none';
+    setTimeout(() => document.getElementById('pw-input').focus(), 300);
+  }
+};
+
+window.checkPw = function() {
+  if (document.getElementById('pw-input').value === ADMIN_PASSWORD) {
+    closeModal('modal-pw');
+    isAdmin = true;
+    document.getElementById('admin-panel').classList.add('visible');
+    document.getElementById('admin-toggle-btn').classList.add('active');
+    document.getElementById('admin-toggle-btn').textContent = '🔓 관리 중';
+    document.body.classList.add('admin-mode');
+    showToast('관리자 모드 시작!');
+  } else {
+    document.getElementById('pw-error').style.display = 'block';
+    document.getElementById('pw-input').select();
+  }
+};
+
+// ── 날짜 추가 ──
+window.openAddDayModal = function() {
+  document.getElementById('new-date').value = '';
+  openModal('modal-day');
+};
+
+window.addDay = async function() {
+  const dateVal = document.getElementById('new-date').value;
+  if (!dateVal) { alert('날짜를 선택해주세요'); return; }
+  if (schedule.find(d => d.date === dateVal)) { alert('이미 등록된 날짜입니다'); return; }
+  const d  = new Date(dateVal + 'T00:00:00');
+  const wk = WEEKDAYS[d.getDay()];
+  const btn = document.getElementById('btn-save-day');
+  btn.disabled = true; btn.textContent = '저장 중...';
+  try {
+    await addDoc(daysRef, { date: dateVal, day: wk, events: [] });
+    closeModal('modal-day');
+    showToast('날짜 추가 완료!');
+  } catch(e) {
+    alert('저장 실패: ' + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = '날짜 추가';
+  }
+};
+
+// ── 날짜 삭제 ──
+async function deleteDay(docId, dateStr) {
+  if (!confirm(`${dateStr} 날짜와 모든 일정을 삭제할까요?`)) return;
+  try {
+    await deleteDoc(doc(db, 'schedule_days', docId));
+    showToast('날짜 삭제 완료');
+  } catch(e) { alert('삭제 실패: ' + e.message); }
+}
+
+// ── 일정 추가/수정 ──
+let editState = null; // { mode:'add'|'edit', dayDocId, evId? }
+
+window.openAddEventModal = function(idx) {
+  if (idx === undefined) idx = window.activeIdx;
+  if (!schedule[idx]) return;
+  editState = { mode:'add', dayDocId: schedule[idx].id };
+  document.getElementById('modal-event-title').textContent = '➕ 일정 추가';
+  document.getElementById('btn-save-event').textContent = '추가';
+  clearForm();
+  openModal('modal-event');
+};
+
+function openEditEventModal(dayDocId, evId) {
+  const dayData = schedule.find(d => d.id === dayDocId);
+  const ev = (dayData?.events||[]).find(e => e.id === evId);
+  if (!ev) return;
+  editState = { mode:'edit', dayDocId, evId };
+  document.getElementById('modal-event-title').textContent = '✏️ 일정 수정';
+  document.getElementById('btn-save-event').textContent = '저장';
+  document.getElementById('ev-time').value     = ev.time;
+  document.getElementById('ev-type').value     = ev.type;
+  document.getElementById('ev-title').value    = ev.title;
+  document.getElementById('ev-place').value    = ev.place;
+  document.getElementById('ev-address').value  = ev.address||'';
+  document.getElementById('ev-mapquery').value = ev.mapQuery||'';
+  openModal('modal-event');
+}
+
+function clearForm() {
+  ['ev-time','ev-title','ev-place','ev-address','ev-mapquery'].forEach(id =>
+    document.getElementById(id).value = '');
+  document.getElementById('ev-type').value = 'street';
+}
+
+window.saveEvent = async function() {
+  const time     = document.getElementById('ev-time').value;
+  const type     = document.getElementById('ev-type').value;
+  const title    = document.getElementById('ev-title').value.trim();
+  const place    = document.getElementById('ev-place').value.trim();
+  const address  = document.getElementById('ev-address').value.trim();
+  const mapQuery = document.getElementById('ev-mapquery').value.trim();
+  if (!time||!title||!place||!mapQuery) { alert('시간, 제목, 장소명, 카카오맵 검색어는 필수입니다'); return; }
+
+  const btn = document.getElementById('btn-save-event');
+  btn.disabled = true; btn.textContent = '저장 중...';
+
+  try {
+    const dayData = schedule.find(d => d.id === editState.dayDocId);
+    let events = [...(dayData?.events||[])];
+
+    if (editState.mode === 'add') {
+      events.push({ id: uid(), time, type, title, place, address, mapQuery });
+    } else {
+      const idx = events.findIndex(e => e.id === editState.evId);
+      if (idx > -1) events[idx] = { ...events[idx], time, type, title, place, address, mapQuery };
+    }
+    // 시간순 정렬
+    events.sort((a,b) => a.time.localeCompare(b.time));
+
+    await updateDoc(doc(db, 'schedule_days', editState.dayDocId), { events });
+    closeModal('modal-event');
+    showToast(editState.mode === 'add' ? '일정 추가 완료!' : '일정 수정 완료!');
+  } catch(e) {
+    alert('저장 실패: ' + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = '저장';
+  }
+};
+
+// ── 일정 삭제 ──
+async function deleteEvent(dayDocId, evId) {
+  if (!confirm('이 일정을 삭제할까요?')) return;
+  const dayData = schedule.find(d => d.id === dayDocId);
+  const events  = (dayData?.events||[]).filter(e => e.id !== evId);
+  try {
+    await updateDoc(doc(db, 'schedule_days', dayDocId), { events });
+    showToast('일정 삭제 완료');
+  } catch(e) { alert('삭제 실패: ' + e.message); }
+}
+
+// ── 카카오 SDK 초기화 ──
+Kakao.init('1aa968a094a900e05010d7b54c35e006');
+
+// ── 공유 (전체 일정) ──
+window.shareKakao = function() {
+  Kakao.Share.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: '박동철 유세 일정',
+      description: '진해 구석구석 직접 찾아갑니다! 일정을 확인하고 현장에서 만나요 🇰🇷',
+      imageUrl: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
+      link: {
+        mobileWebUrl: location.href,
+        webUrl:       location.href,
+      },
+    },
+    buttons: [{
+      title: '📅 전체 일정 보기',
+      link: { mobileWebUrl: location.href, webUrl: location.href },
+    }],
+  });
+};
+
+// ── 공유 (개별 일정) ──
+function shareThis(time, place, title) {
+  Kakao.Share.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: `⏰ ${time}  📍 ${place}`,
+      description: `${title}\n\n국민의힘 박동철 후보가 찾아갑니다!`,
+      imageUrl: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
+      link: {
+        mobileWebUrl: location.href,
+        webUrl:       location.href,
+      },
+    },
+    buttons: [{
+      title: '📅 전체 일정 보기',
+      link: { mobileWebUrl: location.href, webUrl: location.href },
+    }],
+  });
+}
+
+function fallbackCopy(url) {
+  navigator.clipboard.writeText(url).then(
+    () => showToast('링크 복사! 카카오톡에 붙여넣기 해주세요'),
+    () => prompt('링크를 복사해서 공유해주세요:', url)
+  );
+}
+
+// ── 유틸 ──
+function uid() { return Math.random().toString(36).slice(2,9); }
+window.openModal  = id => document.getElementById(id).classList.add('open');
+window.closeModal = id => document.getElementById(id).classList.remove('open');
+document.querySelectorAll('.modal-overlay').forEach(el =>
+  el.addEventListener('click', e => { if(e.target===el) closeModal(el.id); })
+);
+
+let toastTimer;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+</script>
+</body>
+</html>
