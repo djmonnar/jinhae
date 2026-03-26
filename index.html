@@ -8,7 +8,6 @@
     <!-- 오픈그래프 (일반 URL 복사/붙여넣기 시 보여질 썸네일) -->
     <meta property="og:title" content="국민의힘 박동철, 진해의 내일을 바꿉니다">
     <meta property="og:description" content="기획은 치밀하게, 진해는 따뜻하게! 검증된 실력, 박동철입니다.">
-    <!-- 정면 프로필 사진 링크 -->
     <meta property="og:image" content="https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
@@ -30,12 +29,9 @@
         .mobile-container { max-width: 480px; margin: 0 auto; background-color: #ffffff; min-height: 100vh; position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow-x: hidden; }
         html { scroll-behavior: smooth; }
 
-        /* 가로 스크롤바 숨기기 및 부드러운 스크롤 (스냅 제거) */
+        /* 가로 스크롤바 숨기기 및 부드러운 스크롤 */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-
-        /* 텍스트 가독성용 그림자 */
-        .text-shadow-strong { text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.9); }
     </style>
 </head>
 <body class="antialiased text-gray-800">
@@ -43,60 +39,62 @@
     <!-- 메인 컨테이너 -->
     <div class="mobile-container pb-20">
         
-        <!-- 네비게이션 바 -->
+        <!-- 네비게이션 바 (사진 배경이 흰색이므로 글자를 기본 검은색으로 고정) -->
         <nav id="navbar" class="fixed top-0 w-full max-w-[480px] z-50 transition-all duration-300 py-3">
             <div class="px-5 flex justify-between items-center w-full">
-                <!-- 국민의힘 배경제거 로고 적용 -->
+                <!-- 국민의힘 로고 적용 -->
                 <div class="font-black text-lg tracking-tight flex items-center gap-1.5">
-                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-8 w-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-all" id="nav-logo-img">
-                    <span id="nav-name" class="text-white text-shadow-strong transition-colors duration-300">박동철</span>
+                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-8 w-auto">
+                    <span id="nav-name" class="text-gray-900 transition-colors duration-300">박동철</span>
                 </div>
-                <a href="#contact" id="nav-btn" class="text-xs font-bold px-4 py-2 rounded-full transition-colors bg-party-red text-white shadow-[0_4px_6px_rgba(0,0,0,0.5)]">
+                <a href="#contact" id="nav-btn" class="text-xs font-bold px-4 py-2 rounded-full transition-colors bg-party-red text-white shadow-md">
                     선거사무소
                 </a>
             </div>
         </nav>
 
-        <!-- 1. 히어로 섹션 (정면 사진 + 안정적인 중앙 하단 정렬) -->
-        <header class="relative bg-gray-900 overflow-hidden flex flex-col justify-end min-h-[85vh]">
+        <!-- 1. 히어로 섹션 (★ 영역 완벽 분리형 레이아웃 ★) -->
+        <header class="relative w-full flex flex-col bg-gray-900 min-h-screen pt-12">
             
-            <!-- 사진을 중앙 상단 기준으로 정렬하여 얼굴 확보 -->
-            <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg');"></div>
+            <!-- 상단 50% 영역: 오직 사진만 들어감 (얼굴 100% 보장) -->
+            <div class="relative w-full h-[50vh] bg-white shrink-0">
+                <!-- 배경 이미지 세팅 (위쪽 정렬) -->
+                <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg');"></div>
+                <!-- 하단 텍스트 영역으로 부드럽게 넘어가기 위한 그라데이션 -->
+                <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-gray-900 to-transparent"></div>
+            </div>
             
-            <!-- 그라데이션 레이어: 상단은 네비게이션바, 하단은 텍스트를 위해 어둡게 -->
-            <div class="absolute top-0 w-full h-24 bg-gradient-to-b from-gray-900/80 to-transparent"></div>
-            <div class="absolute bottom-0 w-full h-[55vh] bg-gradient-to-t from-gray-900 via-gray-900/90 to-transparent"></div>
-            
-            <!-- 텍스트 영역 (중앙 정렬, 얼굴을 가리지 않도록 하단으로 배치) -->
-            <div class="relative z-20 px-6 pb-14 w-full pt-[45vh] flex flex-col items-center text-center">
+            <!-- 하단 영역: 오직 텍스트만 들어감 (사진과 겹치지 않음) -->
+            <div class="relative w-full bg-gray-900 px-5 pb-16 pt-2 text-center flex-1 flex flex-col items-center justify-start z-10 -mt-2">
+                
                 <!-- 메인 배지 -->
                 <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-4 shadow-lg tracking-wider">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-4 w-auto brightness-0 invert">
                     제9회 전국동시지방선거
                 </div>
                 
-                <h1 class="text-[2.3rem] leading-[1.2] font-black text-white mb-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+                <h1 class="text-[2.2rem] leading-[1.25] font-black text-white mb-4">
                     진심이 전해 <span class="text-yellow-400">진해,</span><br/>
                     내 삶이 든든해 <span class="text-yellow-400">진해!</span>
                 </h1>
-                <p class="text-gray-200 text-[15px] font-medium leading-relaxed mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                <p class="text-gray-300 text-[14px] font-medium leading-relaxed mb-6">
                     기획은 치밀하게, 진해는 따뜻하게.<br/>말이 아닌 결과로 증명해 온 진짜 일꾼입니다.
                 </p>
                 
                 <div class="flex flex-wrap justify-center gap-2">
-                    <span class="bg-gray-900/60 backdrop-blur-sm text-white text-[11px] px-3 py-1.5 rounded-full border border-gray-500 font-semibold">기획행정위 부위원장</span>
-                    <span class="bg-gray-900/60 backdrop-blur-sm text-white text-[11px] px-3 py-1.5 rounded-full border border-gray-500 font-semibold">동아대 공학박사과정 수료</span>
+                    <span class="bg-gray-800 text-white text-[11px] px-3 py-1.5 rounded-full border border-gray-600 font-semibold shadow-sm">기획행정위 부위원장</span>
+                    <span class="bg-gray-800 text-white text-[11px] px-3 py-1.5 rounded-full border border-gray-600 font-semibold shadow-sm">동아대 공학박사과정 수료</span>
                 </div>
-            </div>
-
-            <!-- 스크롤 유도 아이콘 -->
-            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
-                <i data-lucide="chevron-down" class="text-white w-6 h-6 opacity-70 drop-shadow-md"></i>
+                
+                <!-- 스크롤 유도 아이콘 -->
+                <div class="mt-8 animate-bounce">
+                    <i data-lucide="chevron-down" class="text-gray-400 w-6 h-6 mx-auto"></i>
+                </div>
             </div>
         </header>
 
         <!-- 2. 후보자 인사말 -->
-        <section class="py-14 px-6 bg-white relative z-30 -mt-2 rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.1)]">
+        <section class="py-14 px-6 bg-white relative z-30 -mt-6 rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.2)]">
             <h2 class="text-2xl font-black text-gray-900 mb-6 border-l-4 border-party-red pl-3 leading-snug">
                 사랑하고 존경하는<br/>진해 구민 여러분!
             </h2>
@@ -128,14 +126,12 @@
             </div>
         </section>
 
-        <!-- ★ 3. 보수의 자존심 프레임 (국민의힘 대형 로고 및 성과) ★ -->
+        <!-- 3. 보수의 자존심 프레임 (국민의힘 대형 로고 및 성과) -->
         <section class="py-16 px-6 bg-party-red text-white relative overflow-hidden">
-            <!-- 배경에 아주 큰 국민의힘 로고 워터마크 -->
             <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" class="absolute -right-10 top-10 w-80 h-auto opacity-10 grayscale transform rotate-[-10deg]" alt="워터마크" />
             
             <div class="relative z-10">
                 <div class="text-center mb-8">
-                    <!-- 흰색으로 변환된 대형 국민의힘 로고 -->
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-16 w-auto mx-auto mb-5 brightness-0 invert drop-shadow-md">
                     <h2 class="text-[1.6rem] font-black leading-tight mb-3">
                         보수의 자존심, 국민의힘의 힘!<br/>
@@ -145,7 +141,6 @@
                 </div>
 
                 <div class="space-y-4">
-                    <!-- 당 성과 1 -->
                     <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-lg">
                         <div class="flex items-center gap-2 mb-2">
                             <i data-lucide="zap" class="w-5 h-5 text-yellow-300 fill-current"></i>
@@ -156,7 +151,6 @@
                         </p>
                     </div>
 
-                    <!-- 당 성과 2 -->
                     <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-lg">
                         <div class="flex items-center gap-2 mb-2">
                             <i data-lucide="landmark" class="w-5 h-5 text-yellow-300 fill-current"></i>
@@ -170,23 +164,19 @@
             </div>
         </section>
 
-        <!-- 4. 상세 의정 성과 (가로 스크롤 감도 완화: 스냅 제거) -->
+        <!-- 4. 상세 의정 성과 (부드러운 스크롤) -->
         <section class="py-14 bg-gray-900 text-white overflow-hidden relative">
             <div class="px-6 mb-6 flex justify-between items-end">
                 <div>
                     <h2 class="text-2xl font-black mb-2">박동철이 뛰니까,<br/><span class="text-yellow-400">진해가 확 달라집니다</span></h2>
                     <p class="text-gray-400 text-sm">추상적인 약속이 아닌, 구체적인 결과로 증명했습니다.</p>
                 </div>
-                <!-- 부드러운 스크롤 안내 -->
                 <div class="flex items-center text-[10px] font-bold text-gray-400 bg-gray-800 px-2 py-1 rounded-full animate-pulse shrink-0">
                     옆으로 밀기 <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
                 </div>
             </div>
 
-            <!-- 가로 스크롤 컨테이너 -->
             <div class="flex gap-4 overflow-x-auto hide-scrollbar px-6 pb-8 pt-2">
-                
-                <!-- 성과 1: 신항만 -->
                 <div class="shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
                     <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-bl-xl rounded-tr-2xl">지역 권리 수호</div>
                     <div class="bg-blue-50 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-blue-600">
@@ -199,7 +189,6 @@
                     <div class="text-xs font-bold text-blue-600 bg-blue-50 inline-block px-2 py-1 rounded">#해양수산부_진해이전_촉구</div>
                 </div>
 
-                <!-- 성과 2: 재난 현장 -->
                 <div class="shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
                     <div class="absolute top-0 right-0 bg-party-red text-white text-xs font-bold px-3 py-1.5 rounded-bl-xl rounded-tr-2xl">현장 중심 소통</div>
                     <div class="bg-red-50 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-party-red">
@@ -212,7 +201,6 @@
                     <div class="text-xs font-bold text-party-red bg-red-50 inline-block px-2 py-1 rounded">#행동하는_양심 #빠른_피해복구</div>
                 </div>
 
-                <!-- 성과 3: 의정대상 -->
                 <div class="shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
                     <div class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-3 py-1.5 rounded-bl-xl rounded-tr-2xl">입법 성과 1위</div>
                     <div class="bg-yellow-50 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-yellow-600">
@@ -225,7 +213,6 @@
                     <div class="text-xs font-bold text-yellow-600 bg-yellow-50 inline-block px-2 py-1 rounded">#교육혁신 #검증된_기획력</div>
                 </div>
 
-                <!-- 성과 4: 사회 공헌 -->
                 <div class="shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-2xl p-6 shadow-xl relative">
                     <div class="absolute top-0 right-0 bg-green-600 text-white text-xs font-bold px-3 py-1.5 rounded-bl-xl rounded-tr-2xl">따뜻한 연대</div>
                     <div class="bg-green-50 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-green-600">
@@ -245,7 +232,6 @@
             <div class="text-center mb-10">
                 <h2 class="text-2xl font-black text-blue-900 mb-2">진해의 내일을 바꿀 3대 약속</h2>
                 <div class="w-12 h-1 bg-blue-600 mx-auto mb-4"></div>
-                <!-- 텍스트 수정 -->
                 <p class="text-sm text-gray-600">국민의힘과 박동철의 기획력으로 진해의 스케일을 키우겠습니다.</p>
             </div>
 
@@ -303,7 +289,7 @@
             </div>
         </section>
 
-        <!-- 6. 배너 섹션 (텍스트 수정) -->
+        <!-- 6. 배너 섹션 -->
         <section class="py-16 bg-gray-900 text-white text-center px-6 relative overflow-hidden">
             <div class="relative z-10">
                 <h2 class="text-3xl font-black leading-snug mb-4">
@@ -373,34 +359,16 @@
         // 1. 아이콘 렌더링
         lucide.createIcons();
 
-        // 2. 스크롤 네비게이션 효과 (이름 색상 붉은색 -> 검은색(진회색) 변경 완벽 적용)
+        // 2. 스크롤 네비게이션 효과 (이름 색상은 항시 검은색 유지, 배경만 흰색 반투명 유리창 효과)
         const navbar = document.getElementById('navbar');
-        const navName = document.getElementById('nav-name');
-        const navBtn = document.getElementById('nav-btn');
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                // 스크롤 내렸을 때: 배경 흰색
-                navbar.classList.add('bg-white', 'shadow-md');
-                
-                // 이름: 그림자 제거하고 묵직한 검은색(text-gray-900)으로 설정 (붉은색 혐오 정서 반영)
-                navName.classList.remove('text-white', 'text-shadow-strong');
-                navName.classList.add('text-gray-900');
-                
-                // 버튼: 배경 흰색, 글씨 빨간색, 테두리 빨간색
-                navBtn.classList.remove('bg-party-red', 'text-white', 'shadow-[0_4px_6px_rgba(0,0,0,0.5)]');
-                navBtn.classList.add('bg-white', 'text-party-red', 'border', 'border-party-red');
+                // 스크롤 내렸을 때: 세련된 반투명 유리창 효과
+                navbar.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-md');
             } else {
-                // 최상단일 때: 배경 투명
-                navbar.classList.remove('bg-white', 'shadow-md');
-                
-                // 이름: 다시 흰색 + 그림자
-                navName.classList.add('text-white', 'text-shadow-strong');
-                navName.classList.remove('text-gray-900');
-                
-                // 버튼: 배경 빨간색
-                navBtn.classList.add('bg-party-red', 'text-white', 'shadow-[0_4px_6px_rgba(0,0,0,0.5)]');
-                navBtn.classList.remove('bg-white', 'text-party-red', 'border', 'border-party-red');
+                // 최상단일 때: 투명
+                navbar.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-md');
             }
         });
 
@@ -428,7 +396,7 @@
                 content: {
                     title: '기호 O번 박동철 | 제9회 전국동시지방선거 경상남도의원 후보',
                     description: '기획은 치밀하게, 진해는 따뜻하게! 진해의 심장, 확실한 일꾼 박동철입니다.',
-                    imageUrl: 'https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg', // 정면 사진
+                    imageUrl: 'https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg', 
                     link: {
                         mobileWebUrl: campaignUrl,
                         webUrl: campaignUrl,
