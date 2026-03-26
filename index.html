@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>기호 O번 박동철 | 국민의힘 경상남도의원 후보</title>
+    <title>기호 O번 박동철 | 제9회 전국동시지방선거 경상남도의원 후보</title>
     
     <!-- 오픈그래프 (일반 URL 복사/붙여넣기 시 보여질 썸네일) -->
     <meta property="og:title" content="국민의힘 박동철, 진해의 내일을 바꿉니다">
     <meta property="og:description" content="기획은 치밀하게, 진해는 따뜻하게! 검증된 실력, 박동철입니다.">
-    <!-- 카톡 공유 시 썸네일 사진 (후보님 프로필 사진 링크) -->
-    <meta property="og:image" content="https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg">
-    <!-- 위원장님이 만드신 실제 깃허브 주소 -->
+    <!-- 변경된 후보님 지시 사진 링크 -->
+    <meta property="og:image" content="https://i.ibb.co/V08GQW2Y/Kakao-Talk-20260326-143950509.jpg">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
     <!-- 폰트 및 아이콘 -->
@@ -29,7 +28,6 @@
         
         /* 모바일 최적화 레이아웃 고정 */
         .mobile-container { max-width: 480px; margin: 0 auto; background-color: #ffffff; min-height: 100vh; position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow-x: hidden; }
-        .gradient-overlay { background: linear-gradient(to top, rgba(17, 24, 39, 1) 0%, rgba(17, 24, 39, 0.8) 40%, rgba(17, 24, 39, 0) 100%); }
         html { scroll-behavior: smooth; }
 
         /* 가로 스크롤바 숨기기 */
@@ -37,6 +35,9 @@
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .scroll-snap-x { scroll-snap-type: x mandatory; }
         .snap-center { scroll-snap-align: center; }
+
+        /* 상단 이름 가독성 극대화를 위한 텍스트 섀도우 */
+        .text-shadow-strong { text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.9); }
     </style>
 </head>
 <body class="antialiased text-gray-800">
@@ -49,43 +50,54 @@
             <div class="px-5 flex justify-between items-center w-full">
                 <!-- 국민의힘 배경제거 로고 적용 -->
                 <div class="font-black text-lg tracking-tight flex items-center gap-1.5">
-                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-8 w-auto drop-shadow-md">
-                    <span id="nav-name" class="text-white drop-shadow-md transition-colors duration-300">박동철</span>
+                    <!-- 로고에도 섀도우를 주어 밝은 배경에서 묻히지 않게 함 -->
+                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-8 w-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                    <span id="nav-name" class="text-white text-shadow-strong transition-colors duration-300">박동철</span>
                 </div>
-                <a href="#contact" id="nav-btn" class="text-xs font-bold px-4 py-2 rounded-full transition-colors bg-party-red text-white shadow-lg">
+                <a href="#contact" id="nav-btn" class="text-xs font-bold px-4 py-2 rounded-full transition-colors bg-party-red text-white shadow-[0_4px_6px_rgba(0,0,0,0.5)]">
                     선거사무소
                 </a>
             </div>
         </nav>
 
-        <!-- 1. 히어로 섹션 -->
-        <header class="relative h-[85vh] flex flex-col justify-end bg-gray-900">
-            <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg');"></div>
-            <div class="absolute inset-0 gradient-overlay"></div>
+        <!-- 1. 히어로 섹션 (오른쪽 정렬 레이아웃 적용) -->
+        <header class="relative bg-gray-900 overflow-hidden flex flex-col justify-end min-h-[85vh]">
             
-            <div class="relative z-20 px-6 pb-12 w-full text-left">
-                <!-- 메인 배지 (투명 로고를 흰색으로 필터링하여 적용) -->
+            <!-- 사진을 왼쪽 상단 기준으로 정렬 (bg-left-top) 하여 후보님 모습 보존 -->
+            <div class="absolute inset-0 bg-cover bg-left-top" style="background-image: url('https://i.ibb.co/V08GQW2Y/Kakao-Talk-20260326-143950509.jpg');"></div>
+            
+            <!-- 1) 네비게이션바 글씨(흰색)를 위한 상단 다크 그라데이션 -->
+            <div class="absolute top-0 w-full h-32 bg-gradient-to-b from-gray-900/90 to-transparent"></div>
+            <!-- 2) 텍스트를 위한 우측 다크 그라데이션 (오른쪽이 어둡게) -->
+            <div class="absolute right-0 top-0 w-[85%] h-full bg-gradient-to-l from-gray-900/90 via-gray-900/40 to-transparent"></div>
+            <!-- 3) 하단 자연스러운 연결을 위한 하단 다크 그라데이션 -->
+            <div class="absolute bottom-0 w-full h-[50vh] bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent"></div>
+            
+            <!-- 텍스트 영역 (flex-col, items-end, text-right로 우측 정렬) -->
+            <div class="relative z-20 px-6 pb-12 w-full pt-[45vh] flex flex-col items-end text-right">
+                <!-- 메인 배지 (선거명 수정 완료) -->
                 <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-4 shadow-lg tracking-wider">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-4 w-auto brightness-0 invert">
-                    제13대 경상남도의회의원선거
+                    제9회 전국동시지방선거
                 </div>
                 
-                <h1 class="text-4xl leading-[1.2] font-black text-white mb-4">
+                <h1 class="text-4xl leading-[1.2] font-black text-white mb-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
                     진심이 전해 <span class="text-yellow-400">진해,</span><br/>
                     내 삶이 든든해 <span class="text-yellow-400">진해!</span>
                 </h1>
-                <p class="text-gray-200 text-[15px] font-medium leading-relaxed mb-6">
+                <p class="text-gray-200 text-[15px] font-medium leading-relaxed mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                     기획은 치밀하게, 진해는 따뜻하게.<br/>말이 아닌 결과로 증명해 온 진짜 일꾼입니다.
                 </p>
                 
-                <div class="flex flex-wrap gap-2">
-                    <span class="bg-white/20 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full border border-white/30 font-semibold shadow-sm">기획행정위 부위원장</span>
-                    <span class="bg-white/20 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full border border-white/30 font-semibold shadow-sm">동아대 공학박사과정 수료</span>
+                <div class="flex flex-wrap justify-end gap-2">
+                    <span class="bg-gray-900/70 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full border border-gray-600 font-semibold shadow-sm">기획행정위 부위원장</span>
+                    <span class="bg-gray-900/70 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full border border-gray-600 font-semibold shadow-sm">동아대 공학박사과정 수료</span>
                 </div>
             </div>
 
+            <!-- 스크롤 유도 아이콘 (가운데 정렬 유지) -->
             <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
-                <i data-lucide="chevron-down" class="text-white w-6 h-6 opacity-70"></i>
+                <i data-lucide="chevron-down" class="text-white w-6 h-6 opacity-70 drop-shadow-md"></i>
             </div>
         </header>
 
@@ -385,13 +397,14 @@
                 지인들에게 카카오톡 공유하기
             </button>
 
-            <!-- 푸터 (공식 투명 로고 흑백 적용) -->
+            <!-- 푸터 (공식 선거명 수정 완료) -->
             <div class="text-center border-t border-gray-800 pt-8">
                 <div class="flex justify-center items-center mb-3 opacity-60 gap-1.5">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-5 w-auto grayscale">
                     <span class="text-sm font-bold tracking-widest text-gray-400">국민의힘</span>
                 </div>
-                <p class="text-xs font-medium text-gray-400 mb-1.5">제13대 경상남도의회의원선거 창원시 제14선거구</p>
+                <!-- 선거명 완벽 수정 -->
+                <p class="text-xs font-medium text-gray-400 mb-1.5">제9회 전국동시지방선거 경상남도의회의원선거 창원시 제14선거구</p>
                 <p class="text-[11px] text-gray-600">본 페이지는 박동철 후보 선거사무소에서 제작하였습니다.</p>
             </div>
         </section>
@@ -403,23 +416,25 @@
         // 1. 아이콘 렌더링
         lucide.createIcons();
 
-        // 2. 스크롤 네비게이션 효과
+        // 2. 스크롤 네비게이션 효과 (글씨 가독성 관련 로직 보강)
         const navbar = document.getElementById('navbar');
         const navName = document.getElementById('nav-name');
         const navBtn = document.getElementById('nav-btn');
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
+                // 스크롤 시 (배경 흰색, 글자 빨간색, 그림자 제거)
                 navbar.classList.add('bg-white', 'shadow-md');
-                navName.classList.remove('text-white', 'drop-shadow-md');
+                navName.classList.remove('text-white', 'text-shadow-strong');
                 navName.classList.add('text-party-red');
-                navBtn.classList.remove('bg-party-red', 'text-white');
+                navBtn.classList.remove('bg-party-red', 'text-white', 'shadow-[0_4px_6px_rgba(0,0,0,0.5)]');
                 navBtn.classList.add('bg-white', 'text-party-red', 'border', 'border-party-red');
             } else {
+                // 최상단 (배경 투명, 글자 흰색, 강한 텍스트 그림자 유지)
                 navbar.classList.remove('bg-white', 'shadow-md');
-                navName.classList.add('text-white', 'drop-shadow-md');
+                navName.classList.add('text-white', 'text-shadow-strong');
                 navName.classList.remove('text-party-red');
-                navBtn.classList.add('bg-party-red', 'text-white');
+                navBtn.classList.add('bg-party-red', 'text-white', 'shadow-[0_4px_6px_rgba(0,0,0,0.5)]');
                 navBtn.classList.remove('bg-white', 'text-party-red', 'border', 'border-party-red');
             }
         });
@@ -428,8 +443,7 @@
         // ★ 3. 카카오톡 공유 기능 설정 부분 ★
         // ==========================================
         
-        // 위원장님! 캡처화면에서 도메인 설정 하신 후, 
-        // 카카오 디벨로퍼스 왼쪽 메뉴 [앱 키] 에서 'JavaScript 키'를 복사해서 아래 따옴표 안에 넣어주세요!
+        // 카카오 디벨로퍼스에서 복사한 'JavaScript 키'를 아래에 입력해주세요!
         const kakaoJSKey = '1aa968a094a900e05010d7b54c35e006'; // <-- 예시: 'a1b2c3d4e5f6g7h8i9j0...'
         
         if(!Kakao.isInitialized() && kakaoJSKey !== 'YOUR_KAKAO_JAVASCRIPT_KEY') {
@@ -442,16 +456,14 @@
                 return;
             }
 
-            // 위원장님이 만드신 실제 깃허브 주소가 세팅되어 있습니다.
             const campaignUrl = 'https://djmonnar.github.io/jinhae/'; 
 
             Kakao.Share.sendDefault({
                 objectType: 'feed',
                 content: {
-                    title: '기호 O번 박동철 | 경상남도의원 후보',
+                    title: '기호 O번 박동철 | 제9회 전국동시지방선거 경상남도의원 후보',
                     description: '기획은 치밀하게, 진해는 따뜻하게! 진해의 심장, 확실한 일꾼 박동철입니다.',
-                    // 카카오톡 공유 시 뜰 사진 (후보님 프로필 사진)
-                    imageUrl: 'https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg', 
+                    imageUrl: 'https://i.ibb.co/V08GQW2Y/Kakao-Talk-20260326-143950509.jpg', // 변경된 사진 적용
                     link: {
                         mobileWebUrl: campaignUrl,
                         webUrl: campaignUrl,
