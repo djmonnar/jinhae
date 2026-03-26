@@ -8,6 +8,7 @@
     <!-- 오픈그래프 (일반 URL 복사/붙여넣기 시 보여질 썸네일) -->
     <meta property="og:title" content="국민의힘 박동철, 진해의 내일을 바꿉니다">
     <meta property="og:description" content="기획은 치밀하게, 진해는 따뜻하게! 검증된 실력, 박동철입니다.">
+    <!-- 정면 프로필 사진 링크 -->
     <meta property="og:image" content="https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
@@ -39,33 +40,33 @@
     <!-- 메인 컨테이너 -->
     <div class="mobile-container pb-20">
         
-        <!-- 네비게이션 바 (사진 배경이 흰색이므로 상단 그림자를 완전히 없애고 글자를 선명한 검은색으로 고정) -->
-        <nav id="navbar" class="fixed top-0 w-full max-w-[480px] z-50 transition-all duration-300 py-3">
+        <!-- 네비게이션 바 (★가독성 100% 보장을 위해 처음부터 반투명 흰색 배경 깔기★) -->
+        <nav id="navbar" class="fixed top-0 w-full max-w-[480px] z-50 transition-all duration-300 py-3 bg-white/80 backdrop-blur-md border-b border-gray-100">
             <div class="px-5 flex justify-between items-center w-full">
-                <!-- 국민의힘 로고 적용 -->
+                <!-- 국민의힘 로고 및 이름 -->
                 <div class="font-black text-lg tracking-tight flex items-center gap-1.5">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-8 w-auto">
-                    <span id="nav-name" class="text-gray-900 font-extrabold tracking-wide transition-colors duration-300">박동철</span>
+                    <span class="text-gray-900 font-extrabold tracking-wide">박동철</span>
                 </div>
-                <a href="#contact" id="nav-btn" class="text-xs font-bold px-4 py-2 rounded-full transition-colors bg-party-red text-white shadow-md border border-transparent">
+                <a href="#contact" class="text-xs font-bold px-4 py-2 rounded-full transition-colors bg-party-red text-white shadow-sm border border-transparent">
                     선거사무소
                 </a>
             </div>
         </nav>
 
-        <!-- 1. 히어로 섹션 (★ 정장 어깨선까지 보이도록 레이아웃 완벽 최적화 ★) -->
-        <header class="relative w-full flex flex-col bg-gray-900 min-h-screen pt-14">
+        <!-- 1. 히어로 섹션 (★ 얼굴 100% 보장 레이아웃 ★) -->
+        <header class="relative w-full flex flex-col bg-gray-900 min-h-[90vh] pt-[60px]">
             
-            <!-- 상단 60% 영역: 사진이 넉넉하게 들어가 어깨선과 넥타이가 보입니다. -->
-            <div class="relative w-full h-[60vh] shrink-0 bg-white">
-                <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg');"></div>
+            <!-- 상단 사진 영역: 얼굴이 시원하게 다 나오도록 높이 55vh 할당 -->
+            <div class="relative w-full h-[55vh] shrink-0 bg-white">
+                <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg'); background-position: center top;"></div>
                 
-                <!-- 하단 텍스트 영역과 자연스럽게 섞이도록, 목이 아닌 가슴팍(밑에서 40%)부터 부드러운 그라데이션 적용 -->
-                <div class="absolute bottom-0 left-0 w-full h-[40%] bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent"></div>
+                <!-- ★ 수정완료: 어두운 그라데이션을 넥타이 매듭 부근(맨 아래 h-16, 약 64px)에만 살짝 깔아서 코 주변 침범 절대 불가 ★ -->
+                <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-900 to-transparent"></div>
             </div>
             
-            <!-- 하단 텍스트 영역: 어두운 배경에서 글씨가 선명하게 보입니다. -->
-            <div class="relative w-full bg-gray-900 px-5 pb-16 pt-2 text-center flex-1 flex flex-col items-center justify-start z-10 -mt-1">
+            <!-- 하단 텍스트 영역: 어두운 배경에서 글씨가 선명하게 보임 -->
+            <div class="relative w-full bg-gray-900 px-5 pb-16 pt-3 text-center flex-1 flex flex-col items-center justify-start z-10 -mt-1 border-t-0">
                 
                 <!-- 메인 배지 -->
                 <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-4 shadow-lg tracking-wider">
@@ -232,7 +233,7 @@
             <div class="text-center mb-10">
                 <h2 class="text-2xl font-black text-blue-900 mb-2">진해의 내일을 바꿀 3대 약속</h2>
                 <div class="w-12 h-1 bg-blue-600 mx-auto mb-4"></div>
-                <p class="text-sm text-gray-600">국민의힘과 박동철의 기획력으로 진해의 스케일을 키겠습니다.</p>
+                <p class="text-sm text-gray-600">국민의힘과 박동철의 기획력으로 진해의 스케일을 키우겠습니다.</p>
             </div>
 
             <div class="space-y-5">
@@ -289,7 +290,71 @@
             </div>
         </section>
 
-        <!-- 6. 배너 섹션 -->
+        <!-- 6. 상세 약력 (프로필) -->
+        <section class="py-14 px-6 bg-gray-50 border-t border-gray-200">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-black text-gray-900 mb-2">걸어온 길, 증명된 실력</h2>
+                <div class="w-10 h-1 bg-party-red mx-auto"></div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 relative overflow-hidden">
+                <i data-lucide="award" class="absolute -right-4 -bottom-4 w-32 h-32 text-gray-50 opacity-50"></i>
+                
+                <h3 class="text-lg font-bold text-party-red mb-4 flex items-center gap-2">
+                    <i data-lucide="graduation-cap" class="w-5 h-5"></i> 학력 및 의정
+                </h3>
+                <ul class="space-y-3 mb-8 text-[14.5px] text-gray-700 font-medium">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 mt-0.5 shrink-0"></i>
+                        <span>동아대학교 대학원 에너지·자원공학 박사과정 수료</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 mt-0.5 shrink-0"></i>
+                        <span>창원 중앙고등학교 졸업</span>
+                    </li>
+                    <li class="flex items-start gap-2 bg-red-50 p-2 rounded-lg border border-red-100">
+                        <i data-lucide="star" class="w-4 h-4 text-party-red mt-0.5 shrink-0 fill-current"></i>
+                        <span class="font-bold text-party-red">(현) 제12대 경상남도의회 의원 (기획행정위 부위원장)</span>
+                    </li>
+                    <li class="flex items-start gap-2 bg-red-50 p-2 rounded-lg border border-red-100 mt-1">
+                        <i data-lucide="star" class="w-4 h-4 text-party-red mt-0.5 shrink-0 fill-current"></i>
+                        <span class="font-bold text-party-red">(현) 국민의힘 경남도당 부위원장</span>
+                    </li>
+                </ul>
+
+                <h3 class="text-lg font-bold text-party-red mb-4 flex items-center gap-2">
+                    <i data-lucide="users" class="w-5 h-5"></i> 지역 사회 활동
+                </h3>
+                <ul class="space-y-3 text-[14px] text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
+                        <span>(현) 진해 문화원 이사 & (사)이충무공선양군항제위원회 회원</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
+                        <span>(현) 창원중앙고등학교 제12대 총동문회 회장</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
+                        <span>(현) 창원시 축구협회 부회장</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
+                        <span>(현) 국제라이온스협회 355-C지구 공적 심사위원</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
+                        <span>(현) 한국외식업중앙회 진해구지부 운영위원</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
+                        <span>(현) 한국법무보호복지공단 법무보호위원</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 7. 배너 섹션 -->
         <section class="py-16 bg-gray-900 text-white text-center px-6 relative overflow-hidden">
             <div class="relative z-10">
                 <h2 class="text-3xl font-black leading-snug mb-4">
@@ -305,7 +370,7 @@
             </div>
         </section>
 
-        <!-- 7. 연락처 및 Footer -->
+        <!-- 8. 연락처 및 Footer -->
         <section id="contact" class="pt-12 pb-10 px-6 bg-white text-gray-900 border-t border-gray-200">
             <div class="mb-8">
                 <h2 class="text-xl font-bold mb-2">도민 여러분의 목소리를 듣습니다</h2>
@@ -359,38 +424,35 @@
         // 1. 아이콘 렌더링
         lucide.createIcons();
 
-        // 2. 스크롤 네비게이션 효과 (글자는 늘 검은색 유지, 배경만 스크롤 시 흰색 유리창 효과)
+        // 2. 스크롤 네비게이션 효과
         const navbar = document.getElementById('navbar');
-        const navBtn = document.getElementById('nav-btn');
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                // 스크롤 내렸을 때: 세련된 반투명 유리창 효과 & 버튼 색상 반전
-                navbar.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-md');
-                navBtn.classList.remove('bg-party-red', 'text-white', 'shadow-md', 'border-transparent');
-                navBtn.classList.add('bg-white', 'text-party-red', 'border-party-red');
+                // 스크롤 내렸을 때: 그림자 생김
+                navbar.classList.add('shadow-md');
+                navbar.classList.remove('border-b', 'border-gray-100');
             } else {
-                // 최상단일 때: 투명 & 원래 버튼 색상
-                navbar.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-md');
-                navBtn.classList.add('bg-party-red', 'text-white', 'shadow-md', 'border-transparent');
-                navBtn.classList.remove('bg-white', 'text-party-red', 'border-party-red');
+                // 최상단일 때: 그림자 제거, 하단 미세한 테두리
+                navbar.classList.remove('shadow-md');
+                navbar.classList.add('border-b', 'border-gray-100');
             }
         });
 
         // ==========================================
-        // ★ 3. 카카오톡 공유 기능 설정 부분 ★
+        // ★ 3. 카카오톡 공유 기능 완벽 탑재 ★
         // ==========================================
         
-        // 카카오 디벨로퍼스에서 복사한 'JavaScript 키'를 아래에 입력해주세요!
-        const kakaoJSKey = '1aa968a094a900e05010d7b54c35e006'; // <-- 예시: 'a1b2c3d4e5f6g7h8i9j0...'
+        // 위원장님이 주신 API 키 적용 완료
+        const kakaoJSKey = '1aa968a094a900e05010d7b54c35e006'; 
         
-        if(!Kakao.isInitialized() && kakaoJSKey !== '1aa968a094a900e05010d7b54c35e006') {
+        if(!Kakao.isInitialized()) {
             Kakao.init(kakaoJSKey); 
         }
 
         function shareKakao() {
             if(!Kakao.isInitialized()) {
-                alert('카카오 JavaScript 키가 입력되지 않았습니다. 코드를 확인해주세요.');
+                alert('카카오 API 설정에 문제가 있습니다. 관리자에게 문의해주세요.');
                 return;
             }
 
