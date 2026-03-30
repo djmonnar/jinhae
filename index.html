@@ -5,18 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>기호 2번 박동철 | 제9회 전국동시지방선거 경상남도의원 후보</title>
     
-    <!-- 오픈그래프 (일반 URL 복사/붙여넣기 시 보여질 썸네일) -->
+    <!-- 오픈그래프 -->
     <meta property="og:title" content="기호 2번 박동철, 진해의 내일을 바꿉니다">
     <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다!">
     <meta property="og:image" content="https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
+
+    <!-- ★ 메인 프로필 사진 우선 로딩 (로딩 속도 최적화 - 가장 먼저 화면에 띄움) ★ -->
+    <link rel="preload" as="image" href="https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg" fetchpriority="high">
 
     <!-- 폰트 및 아이콘 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- 카카오톡 SDK 라이브러리 -->
+    <!-- 카카오톡 SDK -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js" xintegrity="sha384-kDljxUXHaJ9xAb2a8C4//nc0uQhH65tM8K//iA1QO0rZ0y1Lw6y1bU3kL6RzSsh" crossorigin="anonymous"></script>
     
     <style>
@@ -39,7 +42,6 @@
         <!-- 네비게이션 바 -->
         <nav id="navbar" class="fixed top-0 w-full max-w-[480px] z-50 transition-all duration-300 py-3 bg-white/85 backdrop-blur-md border-b border-gray-100 shadow-sm">
             <div class="px-5 flex justify-between items-center w-full">
-                <!-- 국민의힘 로고 및 이름 -->
                 <div class="font-black text-lg tracking-tight flex items-center gap-1.5">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-8 w-auto">
                     <span class="text-gray-900 font-extrabold tracking-wide">박동철</span>
@@ -52,14 +54,12 @@
 
         <!-- 1. 히어로 섹션 -->
         <header class="relative w-full flex flex-col bg-gray-900 min-h-[90vh] pt-[60px]">
-            
             <div class="relative w-full h-[55vh] shrink-0 bg-white">
                 <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg'); background-position: center top;"></div>
                 <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-900 to-transparent"></div>
             </div>
             
             <div class="relative w-full bg-gray-900 px-5 pb-16 pt-3 text-center flex-1 flex flex-col items-center justify-start z-10 -mt-1 border-t-0">
-                
                 <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-4 shadow-lg tracking-wider">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-4 w-auto brightness-0 invert">
                     제9회 전국동시지방선거
@@ -84,7 +84,7 @@
             </div>
         </header>
 
-        <!-- 2. 후보자 인사말 (출마선언문 완벽 요약 적용) -->
+        <!-- 2. 후보자 인사말 (출마선언문 요약) -->
         <section class="py-14 px-6 bg-white relative z-30 -mt-6 rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.2)]">
             <div class="inline-block bg-party-red text-white px-2 py-1 text-[10px] font-bold rounded mb-3">출마 선언문</div>
             <h2 class="text-2xl font-black text-gray-900 mb-6 border-l-4 border-party-red pl-3 leading-snug">
@@ -95,7 +95,6 @@
                     존경하는 진해(충무·여좌·태백·경화·병암·석동) 주민 여러분! 여러분이 보내주신 굳건한 믿음은 지난 4년 저를 치열한 현장으로 이끌었고, 진해의 기분 좋은 변화로 이어졌습니다.
                 </p>
                 
-                <!-- 의정 성과 하이라이트 박스 -->
                 <div class="bg-gray-50 p-5 rounded-xl border border-gray-200 shadow-inner">
                     <p class="text-[15px] font-black text-gray-900 mb-3 text-center text-party-red">"의정활동은 말이 아닌 결과로 증명해야 합니다"</p>
                     <ul class="text-[13px] text-gray-700 space-y-3">
@@ -132,56 +131,79 @@
             </div>
         </section>
 
-        <!-- 3. 박동철이 걸어온 길 (성과 갤러리 2개로 압축) -->
+        <!-- ★ 3. 진해와 소통하는 박동철의 진심 (소통 갤러리) ★ -->
         <section class="py-14 bg-gray-900 text-white overflow-hidden relative">
             <div class="px-6 mb-6 flex justify-between items-end">
                 <div>
-                    <!-- 제목 수정 완료 -->
-                    <h2 class="text-2xl font-black mb-2"><span class="text-yellow-400">박동철이</span><br/>걸어온 길</h2>
-                    <p class="text-gray-400 text-[13px]">사진을 터치하시면 보도기사로 직접 연결됩니다.</p>
+                    <!-- 위원장님 지시대로 섹션 제목 변경 -->
+                    <h2 class="text-2xl font-black mb-2"><span class="text-yellow-400">진해와 소통하는</span><br/>박동철의 진심</h2>
+                    <p class="text-gray-400 text-[13px]">사진을 터치하시면 원본 이미지 및 기사로 연결됩니다.</p>
                 </div>
                 <div class="flex items-center text-[10px] font-bold text-gray-400 bg-gray-800 px-2 py-1 rounded-full animate-pulse shrink-0">
                     옆으로 밀기 <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
                 </div>
             </div>
 
-            <!-- 스크롤 컨테이너 (기사 2개만 남김) -->
             <div class="flex gap-4 overflow-x-auto hide-scrollbar px-6 pb-8 pt-2">
                 
-                <!-- 기사 1: 신항만 -->
-                <a href="https://www.newsfreezone.co.kr/news/articleView.html?idxno=614396" target="_blank" class="block shrink-0 w-[80%] sm:w-[300px] bg-white text-gray-900 rounded-2xl shadow-lg border border-gray-700 relative overflow-hidden group transition-transform active:scale-95">
-                    <div class="w-full h-40 bg-gray-200 relative overflow-hidden">
-                        <img src="https://i.ibb.co/cS890NTF/Kakao-Talk-20260327-103441014.jpg" alt="진해신항 상생형개발 촉구" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-[10px] font-black px-2 py-1 rounded shadow-md">지역 권리 수호</div>
-                        <div class="absolute inset-0 bg-black/30 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <!-- 카드 1: 군항제 벚꽃 인사 (새로 업로드하신 이미지) -->
+                <!-- [주의] href와 img src에 2379.png의 IMGBB 링크를 넣어주세요 -->
+                <a href="여기에_2379.png_IMGBB링크_입력" target="_blank" class="block shrink-0 w-[80%] sm:w-[300px] bg-white text-gray-900 rounded-2xl shadow-lg border border-gray-700 relative overflow-hidden group transition-transform active:scale-95">
+                    <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
+                        <img src="여기에_2379.png_IMGBB링크_입력" alt="군항제 벚꽃 인사" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute top-3 right-3 bg-pink-500 text-white text-[10px] font-black px-2 py-1 rounded shadow-md">진해의 봄</div>
+                        <div class="absolute inset-0 bg-black/20 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <div class="bg-white text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
-                                <i data-lucide="external-link" class="w-3 h-3"></i> 관련 뉴스 확인하기
+                                <i data-lucide="search" class="w-3 h-3"></i> 원본 포스터 보기
                             </div>
                         </div>
                     </div>
                     <div class="p-5">
-                        <h3 class="font-black text-lg mb-3 leading-snug group-hover:text-blue-600 transition-colors">"어민 생존권이 먼저" 진해신항 상생형 개발 촉구</h3>
+                        <h3 class="font-black text-lg mb-2 leading-snug group-hover:text-pink-500 transition-colors">진해의 봄이 내게 전해지네! 제64회 군항제</h3>
+                        <p class="text-[12px] text-gray-500 mb-3 line-clamp-2">따뜻하고 감성적인 군항제 되시길 바랍니다. 벚꽃 가득한 진해로 여러분을 초대합니다!</p>
                         <div class="flex items-center gap-1.5 text-[11px] font-bold text-gray-500 bg-gray-50 p-2 rounded-lg">
-                            <i data-lucide="mouse-pointer-click" class="w-3 h-3 text-party-red"></i> 터치하여 관련 언론 보도 확인
+                            <i data-lucide="image" class="w-3 h-3 text-pink-500"></i> 터치하여 원본 이미지 확인
                         </div>
                     </div>
                 </a>
 
-                <!-- 기사 2: 의정대상 -->
-                <a href="https://search.naver.com/search.naver?query=도의원+박동철+지방의정대상" target="_blank" class="block shrink-0 w-[80%] sm:w-[300px] bg-white text-gray-900 rounded-2xl shadow-lg border border-gray-700 relative overflow-hidden group transition-transform active:scale-95">
-                    <div class="w-full h-40 bg-gray-200 relative overflow-hidden">
-                        <img src="https://i.ibb.co/xS3PSz29/Kakao-Talk-20260327-151656724.jpg" alt="지방의정대상 최우수상" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute top-3 right-3 bg-yellow-500 text-white text-[10px] font-black px-2 py-1 rounded shadow-md">입법 성과 1위</div>
-                        <div class="absolute inset-0 bg-black/30 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <!-- 카드 2: 공식 웹 포스터 (새로 업로드하신 이미지) -->
+                <!-- [주의] href와 img src에 2380.jpg의 IMGBB 링크를 넣어주세요 -->
+                <a href="여기에_2380.jpg_IMGBB링크_입력" target="_blank" class="block shrink-0 w-[80%] sm:w-[300px] bg-white text-gray-900 rounded-2xl shadow-lg border border-gray-700 relative overflow-hidden group transition-transform active:scale-95">
+                    <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
+                        <img src="여기에_2380.jpg_IMGBB링크_입력" alt="공식 포스터" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute top-3 right-3 bg-party-red text-white text-[10px] font-black px-2 py-1 rounded shadow-md">진해의 선택</div>
+                        <div class="absolute inset-0 bg-black/20 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <div class="bg-white text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
-                                <i data-lucide="external-link" class="w-3 h-3"></i> 관련 뉴스 확인하기
+                                <i data-lucide="search" class="w-3 h-3"></i> 원본 포스터 보기
                             </div>
                         </div>
                     </div>
                     <div class="p-5">
-                        <h3 class="font-black text-lg mb-3 leading-snug group-hover:text-yellow-600 transition-colors">전국 최초 조례 발의! 2025 지방의정대상 '최우수상' 수상</h3>
+                        <h3 class="font-black text-lg mb-2 leading-snug group-hover:text-party-red transition-colors">진해의 선택! 기호 2번 박동철 공식 웹 포스터</h3>
+                        <p class="text-[12px] text-gray-500 mb-3 line-clamp-2">박동철 후보의 세부 학력과 약력이 담긴 공식 온라인 홍보 포스터입니다.</p>
                         <div class="flex items-center gap-1.5 text-[11px] font-bold text-gray-500 bg-gray-50 p-2 rounded-lg">
-                            <i data-lucide="mouse-pointer-click" class="w-3 h-3 text-party-red"></i> 터치하여 관련 언론 보도 확인
+                            <i data-lucide="image" class="w-3 h-3 text-party-red"></i> 터치하여 원본 이미지 확인
+                        </div>
+                    </div>
+                </a>
+
+                <!-- ★ 카드 3: 새 카드뉴스 이미지 1 (글씨 없이 사진만 꽉 채움) ★ -->
+                <a href="https://i.ibb.co/N2zBBgjK/Kakao-Talk-20260330-120127383.jpg" target="_blank" class="block shrink-0 w-[80%] sm:w-[300px] bg-white rounded-2xl shadow-lg border border-gray-700 relative overflow-hidden group transition-transform active:scale-95">
+                    <img src="https://i.ibb.co/N2zBBgjK/Kakao-Talk-20260330-120127383.jpg" alt="박동철 의원 활동" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/20 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="bg-white text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
+                            <i data-lucide="search" class="w-3 h-3"></i> 이미지 크게 보기
+                        </div>
+                    </div>
+                </a>
+
+                <!-- ★ 카드 4: 새 카드뉴스 이미지 2 (글씨 없이 사진만 꽉 채움) ★ -->
+                <a href="https://i.ibb.co/xt5ZMtTD/Kakao-Talk-20260330-121216575.png" target="_blank" class="block shrink-0 w-[80%] sm:w-[300px] bg-white rounded-2xl shadow-lg border border-gray-700 relative overflow-hidden group transition-transform active:scale-95">
+                    <img src="https://i.ibb.co/xt5ZMtTD/Kakao-Talk-20260330-121216575.png" alt="박동철 의원 성과" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/20 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="bg-white text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
+                            <i data-lucide="search" class="w-3 h-3"></i> 이미지 크게 보기
                         </div>
                     </div>
                 </a>
@@ -296,18 +318,17 @@
             </div>
         </section>
 
-        <!-- 정책(공약) 섹션 삭제됨. 추후 정리 후 삽입 -->
-
-        <!-- 6. 배너 섹션 -->
+        <!-- ★ 6. 배너 섹션 (따옴표 띄어쓰기 완벽 교정) ★ -->
         <section class="py-16 bg-gray-900 text-white text-center px-6 relative overflow-hidden">
             <div class="relative z-10">
                 <h2 class="text-3xl font-black leading-snug mb-5">
-                    <span class="text-party-red drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">'박동'</span>하는 진해,<br/>
+                    <!-- '박동' 뒤에 &nbsp; 공백 추가하여 띄어쓰기 완벽 반영 -->
+                    <span class="text-party-red drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">'박동'</span>&nbsp;하는 진해,<br/>
                     지금이 확실히 밀어줄<br/>
                     <span class="text-party-red text-4xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">'철'</span>입니다!
                 </h2>
                 
-                <div class="inline-flex items-center gap-2 bg-party-red text-white text-2xl font-black px-10 py-4 rounded-full shadow-[0_10px_25px_rgba(230,30,43,0.4)]">
+                <div class="inline-flex items-center gap-2 bg-party-red text-white text-2xl font-black px-10 py-4 rounded-full shadow-[0_10px_25px_rgba(230,30,43,0.4)] mt-4">
                     <span class="text-yellow-300">기호 2번</span> 박동철
                 </div>
             </div>
@@ -316,7 +337,6 @@
         <!-- 7. 연락처 및 Footer -->
         <section id="contact" class="pt-12 pb-10 px-6 bg-white text-gray-900 border-t border-gray-200">
             <div class="mb-8">
-                <!-- 도민 -> 진해 로 수정 -->
                 <h2 class="text-xl font-bold mb-2">진해 여러분의 목소리를 듣습니다</h2>
                 <p class="text-gray-500 text-sm">작은 의견도 귀담아듣고 정책으로 만들겠습니다.</p>
             </div>
