@@ -8,11 +8,10 @@
     <!-- 오픈그래프 -->
     <meta property="og:title" content="진해의 도약!! 진해의 선택!! 박동철 도의원">
     <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다!">
-    <!-- 메인 포스터 썸네일 이미지 교체 완료 -->
     <meta property="og:image" content="https://i.ibb.co/VPgSMK4/951bcbbc-b2f2-4388-869b-3c737a4d589c.png">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
-    <!-- ★ 메인 포스터 우선 로딩 교체 완료 ★ -->
+    <!-- 메인 포스터 우선 로딩 -->
     <link rel="preload" as="image" href="https://i.ibb.co/VPgSMK4/951bcbbc-b2f2-4388-869b-3c737a4d589c.png" fetchpriority="high">
 
     <!-- 폰트 및 아이콘 -->
@@ -82,7 +81,7 @@
              ========================================== -->
         <div id="tab-home" class="tab-content active">
             
-            <!-- 1. 히어로 섹션 (신규 포스터 적용 완료) -->
+            <!-- 1. 히어로 섹션 -->
             <section class="relative w-full pt-[60px] bg-gray-900">
                 <img src="https://i.ibb.co/VPgSMK4/951bcbbc-b2f2-4388-869b-3c737a4d589c.png" alt="박동철 공식 포스터" class="w-full h-auto block" />
             </section>
@@ -392,23 +391,26 @@
         </div>
 
         <!-- ==========================================
-             ★ 탭 4: [공약/정책] 화면 (유일하게 준비중이 표시되는 곳)
+             ★ 탭 4: [공약/정책] 화면 (버그 완전 해결 구역)
              ========================================== -->
-        <div id="tab-policy" class="tab-content pt-[60px] bg-gray-50 min-h-screen flex flex-col items-center justify-center px-6">
-            <div class="bg-white w-full py-16 px-6 rounded-3xl shadow-lg border border-gray-100 text-center">
-                <div class="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i data-lucide="cog" class="w-12 h-12 text-party-red animate-spin-slow" style="animation-duration: 3s;"></i>
-                </div>
-                <h2 class="text-2xl font-black text-gray-900 mb-4">정책 및 공약 준비 중</h2>
-                <div class="w-12 h-1 bg-party-red mx-auto mb-6"></div>
-                <p class="text-[15px] text-gray-600 leading-relaxed font-medium break-keep">
-                    진해의 미래를 바꿀 완벽한 마스터플랜을 다듬고 있습니다.<br/><br/>
-                    구민 여러분의 소중한 의견을 바탕으로,<br/>실현 가능한 최고의 정책으로 곧 찾아뵙겠습니다!
-                </p>
-                <div class="mt-8">
-                    <button onclick="switchTab('home')" class="bg-gray-900 text-white text-sm font-bold px-6 py-3 rounded-full hover:bg-party-red transition">
-                        홈으로 돌아가기
-                    </button>
+        <!-- flex 클래스를 부모 탭에서 제거하고, 자식 요소에 부여하여 버그를 완벽하게 잡았습니다! -->
+        <div id="tab-policy" class="tab-content pt-[60px] bg-gray-50 min-h-screen">
+            <div class="flex flex-col items-center justify-center min-h-[80vh] px-6">
+                <div class="bg-white w-full py-16 px-6 rounded-3xl shadow-lg border border-gray-100 text-center">
+                    <div class="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="cog" class="w-12 h-12 text-party-red animate-spin-slow" style="animation-duration: 3s;"></i>
+                    </div>
+                    <h2 class="text-2xl font-black text-gray-900 mb-4">정책 및 공약 준비 중</h2>
+                    <div class="w-12 h-1 bg-party-red mx-auto mb-6"></div>
+                    <p class="text-[15px] text-gray-600 leading-relaxed font-medium break-keep">
+                        진해의 미래를 바꿀 완벽한 마스터플랜을 다듬고 있습니다.<br/><br/>
+                        구민 여러분의 소중한 의견을 바탕으로,<br/>실현 가능한 최고의 정책으로 곧 찾아뵙겠습니다!
+                    </p>
+                    <div class="mt-8">
+                        <button onclick="switchTab('home')" class="bg-gray-900 text-white text-sm font-bold px-6 py-3 rounded-full hover:bg-party-red transition">
+                            홈으로 돌아가기
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -458,7 +460,7 @@
         </div>
 
         <!-- ==========================================
-             ★ 탭 6: [의정활동] 화면
+             ★ 탭 6: [의정활동] 화면 
              ========================================== -->
         <div id="tab-activity" class="tab-content pt-[60px] bg-gray-900 min-h-screen">
             <section class="py-12 text-white overflow-hidden relative">
@@ -552,7 +554,7 @@
         </div>
 
         <!-- ==========================================
-             ★ 탭 7: [갤러리] 화면
+             ★ 탭 7: [갤러리] 화면 
              ========================================== -->
         <div id="tab-gallery" class="tab-content pt-[60px] bg-gray-100 min-h-screen">
             <section class="py-12 text-gray-900 overflow-hidden relative">
@@ -588,7 +590,7 @@
         </div>
 
         <!-- ==========================================
-             ★ 글로벌 섹션: 푸터 
+             ★ 글로벌 섹션: 항상 모든 탭 하단에 표시되는 푸터 
              ========================================== -->
         <div id="global-footer">
             <section class="pt-10 px-6 bg-white text-gray-900 border-t border-gray-200">
@@ -714,6 +716,7 @@
 
     </div>
 
+    <!-- 앱 구동 자바스크립트 -->
     <script>
         lucide.createIcons();
 
