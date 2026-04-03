@@ -8,11 +8,12 @@
     <!-- 오픈그래프 -->
     <meta property="og:title" content="진해의 도약!! 진해의 선택!! 박동철 도의원">
     <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다!">
-    <meta property="og:image" content="https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg">
+    <!-- 메인 포스터로 썸네일 이미지 교체 -->
+    <meta property="og:image" content="https://i.ibb.co/hTWbJpk/583b1bb8-4529-4d2e-8b61-f35d824aa03b.png">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
-    <!-- 메인 프로필 사진 우선 로딩 -->
-    <link rel="preload" as="image" href="https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg" fetchpriority="high">
+    <!-- ★ 메인 포스터 우선 로딩 (가장 먼저 화면에 띄움) ★ -->
+    <link rel="preload" as="image" href="https://i.ibb.co/hTWbJpk/583b1bb8-4529-4d2e-8b61-f35d824aa03b.png" fetchpriority="high">
 
     <!-- 폰트 및 아이콘 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
@@ -63,50 +64,28 @@
     <div class="mobile-app-container pb-nav relative">
         
         <!-- 상단 고정 헤더 -->
-        <nav id="top-header" class="fixed top-0 w-full max-w-[480px] z-40 transition-all duration-300 py-3 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+        <nav id="top-header" class="fixed top-0 w-full max-w-[480px] z-40 transition-all duration-300 py-3 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
             <div class="px-5 flex justify-between items-center w-full">
                 <div class="font-black text-lg tracking-tight flex items-center gap-1.5">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-7 w-auto">
                     <span class="text-gray-900 font-extrabold tracking-wide">기호 2번 박동철</span>
                 </div>
+                <!-- ★ 우측 상단 햄버거 버튼 ★ -->
+                <button onclick="toggleMenu()" class="p-1.5 rounded-md text-gray-900 hover:bg-gray-100 transition">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
             </div>
         </nav>
 
         <!-- ==========================================
-             ★ 탭 1: [홈] 화면 (대시보드화 완료)
+             ★ 탭 1: [홈] 화면 (대시보드화 + 포스터 풀 노출)
              ========================================== -->
         <div id="tab-home" class="tab-content active">
             
-            <!-- 1. 히어로 섹션 -->
-            <section class="relative w-full flex flex-col bg-gray-900 h-[100dvh] pt-[60px]">
-                <div class="relative w-full h-[60%] shrink-0 bg-white">
-                    <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg'); background-position: center top;"></div>
-                    <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-gray-900 to-transparent"></div>
-                </div>
-                
-                <div class="relative w-full bg-gray-900 px-5 flex-1 flex flex-col items-center justify-center z-10 -mt-2">
-                    <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded-full mb-3 shadow-lg tracking-wider">
-                        제9회 전국동시지방선거
-                    </div>
-                    
-                    <h1 class="text-[2.2rem] leading-[1.25] font-black text-white mb-3 drop-shadow-md text-center">
-                        진심이 전해 <span class="text-yellow-400">진해,</span><br/>
-                        내 삶이 든든해 <span class="text-yellow-400">진해!</span>
-                    </h1>
-                    
-                    <p class="text-gray-300 text-[14px] font-medium leading-relaxed mb-5 text-center">
-                        기획은 치밀하게, 진해는 따뜻하게.<br/>말이 아닌 결과로 증명해 온 진짜 일꾼입니다.
-                    </p>
-                    
-                    <div class="flex flex-wrap justify-center gap-2 mb-6">
-                        <span class="bg-party-red/90 text-white text-[11px] px-3 py-1.5 rounded-full border border-red-500 font-bold shadow-sm">국민의힘 원내부대표</span>
-                        <span class="bg-gray-800 text-white text-[11px] px-3 py-1.5 rounded-full border border-gray-600 font-semibold shadow-sm">기획행정위 부위원장</span>
-                    </div>
-                    
-                    <div class="animate-bounce mt-auto pb-8">
-                        <i data-lucide="chevrons-down" class="text-gray-500 w-6 h-6 mx-auto"></i>
-                    </div>
-                </div>
+            <!-- 1. 히어로 섹션 (포스터 100% 전체 노출) -->
+            <section class="relative w-full pt-[60px] bg-gray-900">
+                <!-- 크롭되지 않고 가로 비율에 맞춰 전체가 보이도록 h-auto 적용 -->
+                <img src="https://i.ibb.co/hTWbJpk/583b1bb8-4529-4d2e-8b61-f35d824aa03b.png" alt="박동철 공식 포스터" class="w-full h-auto block" />
             </section>
 
             <!-- 2. 대시보드: 출마선언문 요약 -->
@@ -254,10 +233,9 @@
         </div>
 
         <!-- ==========================================
-             ★ 탭 2: [후보소개] 화면 (약력 위주로 재편)
+             ★ 탭 2: [후보소개] 화면 (약력 중심)
              ========================================== -->
         <div id="tab-profile" class="tab-content pt-[60px] bg-gray-50 min-h-screen">
-            
             <section class="py-12 px-6 bg-gray-50">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl font-black text-gray-900 mb-2">진해를 가장 잘 아는 일꾼</h2>
@@ -325,10 +303,8 @@
                 </div>
             </section>
 
-            <!-- 진해가 키운 아들 (국민의힘 프리미엄) -->
             <section class="py-16 px-6 bg-party-red text-white relative overflow-hidden">
                 <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" class="absolute -right-10 top-10 w-80 h-auto opacity-10 grayscale transform rotate-[-10deg]" alt="워터마크" />
-                
                 <div class="relative z-10">
                     <div class="text-center mb-10">
                         <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-16 w-auto mx-auto mb-5 brightness-0 invert drop-shadow-md">
@@ -631,7 +607,7 @@
         </div>
 
         <!-- ==========================================
-             ★ 글로벌 섹션: 푸터 
+             ★ 글로벌 섹션: 항상 모든 탭 하단에 표시되는 푸터 
              ========================================== -->
         <div id="global-footer">
             <section class="pt-10 px-6 bg-white text-gray-900 border-t border-gray-200">
@@ -714,6 +690,49 @@
             </div>
         </div>
 
+        <!-- ==========================================
+             ★ 우측 상단 햄버거 메뉴 (사이드바 오버레이) ★ 
+             ========================================== -->
+        <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
+            <!-- 반투명 검은색 배경 -->
+            <div class="absolute inset-0 bg-black/50 transition-opacity opacity-0" id="mobile-menu-backdrop" onclick="toggleMenu()"></div>
+            <!-- 우측에서 튀어나오는 하얀색 메뉴 패널 -->
+            <div class="absolute right-0 top-0 bottom-0 w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col" id="mobile-menu-panel">
+                <div class="p-5 flex justify-end border-b border-gray-100">
+                    <button onclick="toggleMenu()" class="p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition">
+                        <i data-lucide="x" class="w-5 h-5 text-gray-900"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col py-2 overflow-y-auto">
+                    <a href="javascript:void(0)" onclick="switchTab('home'); toggleMenu();" class="px-6 py-4 border-b border-gray-50 flex items-center gap-3 hover:bg-red-50 transition">
+                        <i data-lucide="home" class="w-5 h-5 text-party-red"></i><span class="font-bold text-gray-800">홈 (대시보드)</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="switchTab('profile'); toggleMenu();" class="px-6 py-4 border-b border-gray-50 flex items-center gap-3 hover:bg-red-50 transition">
+                        <i data-lucide="user" class="w-5 h-5 text-gray-400"></i><span class="font-bold text-gray-800">후보 소개</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="switchTab('declaration'); toggleMenu();" class="px-6 py-4 border-b border-gray-50 flex items-center gap-3 hover:bg-red-50 transition">
+                        <i data-lucide="mic" class="w-5 h-5 text-gray-400"></i><span class="font-bold text-gray-800">출마 선언문</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="switchTab('policy'); toggleMenu();" class="px-6 py-4 border-b border-gray-50 flex items-center gap-3 hover:bg-red-50 transition">
+                        <i data-lucide="check-square" class="w-5 h-5 text-gray-400"></i><span class="font-bold text-gray-800">정책 및 공약</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="switchTab('schedule'); toggleMenu();" class="px-6 py-4 border-b border-gray-50 flex items-center gap-3 hover:bg-red-50 transition">
+                        <i data-lucide="calendar" class="w-5 h-5 text-gray-400"></i><span class="font-bold text-gray-800">선거 일정</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="switchTab('activity'); toggleMenu();" class="px-6 py-4 border-b border-gray-50 flex items-center gap-3 hover:bg-red-50 transition">
+                        <i data-lucide="file-text" class="w-5 h-5 text-gray-400"></i><span class="font-bold text-gray-800">언론 보도</span>
+                    </a>
+                    <a href="javascript:void(0)" onclick="switchTab('gallery'); toggleMenu();" class="px-6 py-4 border-b border-gray-50 flex items-center gap-3 hover:bg-red-50 transition">
+                        <i data-lucide="image" class="w-5 h-5 text-gray-400"></i><span class="font-bold text-gray-800">현장 갤러리</span>
+                    </a>
+                </div>
+                <div class="mt-auto p-6 bg-gray-50">
+                    <p class="text-xs text-gray-500 font-bold mb-2">문의 전화</p>
+                    <p class="text-lg font-black text-party-red">055-546-4312</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- 앱 구동 자바스크립트 -->
@@ -723,26 +742,61 @@
 
         // 2. 탭 전환 로직
         function switchTab(tabId) {
+            // 모든 탭 숨기기
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
+            // 하단 메뉴 색상 초기화
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('text-party-red');
                 item.classList.add('text-gray-400');
             });
             
+            // 타겟 탭 보여주기
             document.getElementById('tab-' + tabId).classList.add('active');
             
+            // 하단 메뉴 활성화 색상 변경
             const activeNav = document.getElementById('nav-' + tabId);
-            activeNav.classList.add('text-party-red');
-            activeNav.classList.remove('text-gray-400');
+            if(activeNav) {
+                activeNav.classList.add('text-party-red');
+                activeNav.classList.remove('text-gray-400');
+                // 클릭된 탭이 중앙에 오도록 스크롤 이동
+                activeNav.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
             
-            activeNav.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            
+            // 화면 상단으로 즉시 이동
             window.scrollTo({ top: 0, behavior: 'instant' });
         }
 
-        // 3. 스크롤 애니메이션 (홈 탭 등에서 뷰포트 노출 시 효과)
+        // 3. 우측 상단 햄버거 메뉴(사이드바) 토글 로직
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('mobile-menu-backdrop');
+            const panel = document.getElementById('mobile-menu-panel');
+            
+            if (menu.classList.contains('hidden')) {
+                // 열기
+                menu.classList.remove('hidden');
+                // 약간의 지연 후 애니메이션 클래스 적용 (DOM 리플로우 강제)
+                void menu.offsetWidth;
+                backdrop.classList.remove('opacity-0');
+                backdrop.classList.add('opacity-100');
+                panel.classList.remove('translate-x-full');
+                panel.classList.add('translate-x-0');
+            } else {
+                // 닫기
+                backdrop.classList.remove('opacity-100');
+                backdrop.classList.add('opacity-0');
+                panel.classList.remove('translate-x-0');
+                panel.classList.add('translate-x-full');
+                // 애니메이션 끝난 후 display:none 적용
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // 4. 스크롤 애니메이션 (요소가 화면에 나타날 때 효과)
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -755,10 +809,9 @@
             }
         }
         window.addEventListener("scroll", reveal);
-        // DOM 로드 시 1회 실행
         setTimeout(reveal, 100);
 
-        // 4. 카카오톡 API
+        // 5. 카카오톡 API
         const kakaoJSKey = '1aa968a094a900e05010d7b54c35e006'; 
         if(!Kakao.isInitialized()) { Kakao.init(kakaoJSKey); }
 
@@ -773,7 +826,7 @@
                 content: {
                     title: '진해의 도약!! 진해의 선택!! 박동철 도의원',
                     description: '박동하는 진해, 지금이 확실히 밀어줄 철입니다!',
-                    imageUrl: 'https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg', 
+                    imageUrl: 'https://i.ibb.co/hTWbJpk/583b1bb8-4529-4d2e-8b61-f35d824aa03b.png', 
                     link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl },
                 },
                 buttons: [{ title: '후보자 프로필 보기', link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl } }],
