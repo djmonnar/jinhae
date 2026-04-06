@@ -8,11 +8,12 @@
     <!-- 오픈그래프 -->
     <meta property="og:title" content="진해의 도약!! 진해의 선택!! 박동철 도의원">
     <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다!">
-    <meta property="og:image" content="https://i.ibb.co/VPgSMK4/951bcbbc-b2f2-4388-869b-3c737a4d589c.png">
+    <!-- 카카오톡 공유 썸네일 최적화(WebP) -->
+    <meta property="og:image" content="https://i.ibb.co/B53HdQ16/951bcbbc-b2f2-4388-869b-3c737a4d589c.webp">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
-    <!-- 메인 포스터 우선 로딩 -->
-    <link rel="preload" as="image" href="https://i.ibb.co/VPgSMK4/951bcbbc-b2f2-4388-869b-3c737a4d589c.png" fetchpriority="high">
+    <!-- ★ 메인 포스터 최우선 로딩 (초고속 WebP 적용) ★ -->
+    <link rel="preload" as="image" href="https://i.ibb.co/B53HdQ16/951bcbbc-b2f2-4388-869b-3c737a4d589c.webp" fetchpriority="high">
 
     <!-- 폰트 및 아이콘 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
@@ -77,13 +78,14 @@
         </nav>
 
         <!-- ==========================================
-             ★ 탭 1: [홈] 화면 (대시보드화 + 신규 포스터)
+             ★ 탭 1: [홈] 화면 (대시보드화 + 신규 포스터 WebP)
              ========================================== -->
         <div id="tab-home" class="tab-content active">
             
             <!-- 1. 히어로 섹션 -->
             <section class="relative w-full pt-[60px] bg-gray-900">
-                <img src="https://i.ibb.co/VPgSMK4/951bcbbc-b2f2-4388-869b-3c737a4d589c.png" alt="박동철 공식 포스터" class="w-full h-auto block" />
+                <!-- 초고속 WebP 이미지 적용 완료 -->
+                <img src="https://i.ibb.co/B53HdQ16/951bcbbc-b2f2-4388-869b-3c737a4d589c.webp" alt="박동철 공식 포스터" class="w-full h-auto block" />
             </section>
 
             <!-- 2. 대시보드: 출마선언문 요약 -->
@@ -179,6 +181,17 @@
                     </div>
 
                     <div class="flex gap-4 overflow-x-auto hide-scrollbar px-6 pb-4 pt-2">
+                        <!-- 생물다양성 보전 조례 발의 기사 요약 -->
+                        <div onclick="switchTab('activity')" class="block shrink-0 w-[200px] bg-white text-gray-900 rounded-2xl shadow-lg relative overflow-hidden cursor-pointer">
+                            <div class="w-full h-32 bg-gray-200 relative overflow-hidden border-b border-gray-100">
+                                <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=600&auto=format&fit=crop" alt="생물다양성 보전 조례" class="w-full h-full object-cover object-center">
+                                <div class="absolute top-2 right-2 bg-green-600 text-white text-[9px] font-black px-2 py-1 rounded shadow-md">소통 입법</div>
+                            </div>
+                            <div class="p-3">
+                                <h3 class="font-black text-[13px] mb-1 leading-snug line-clamp-2">진해 동진여중 학생 제안 '생물다양성 조례' 발의</h3>
+                            </div>
+                        </div>
+
                         <div onclick="switchTab('activity')" class="block shrink-0 w-[200px] bg-white text-gray-900 rounded-2xl shadow-lg relative overflow-hidden cursor-pointer">
                             <div class="w-full h-32 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                                 <img src="https://cdn.koreaeaglenews.com/news/photo/202603/98143_122518_580.jpg" alt="재선 도전" class="w-full h-full object-cover object-top">
@@ -391,9 +404,8 @@
         </div>
 
         <!-- ==========================================
-             ★ 탭 4: [공약/정책] 화면 (버그 완전 해결 구역)
+             ★ 탭 4: [공약/정책] 화면 
              ========================================== -->
-        <!-- flex 클래스를 부모 탭에서 제거하고, 자식 요소에 부여하여 버그를 완벽하게 잡았습니다! -->
         <div id="tab-policy" class="tab-content pt-[60px] bg-gray-50 min-h-screen">
             <div class="flex flex-col items-center justify-center min-h-[80vh] px-6">
                 <div class="bg-white w-full py-16 px-6 rounded-3xl shadow-lg border border-gray-100 text-center">
@@ -416,7 +428,7 @@
         </div>
 
         <!-- ==========================================
-             ★ 탭 5: [일정 안내] 화면 (틀만 유지)
+             ★ 탭 5: [일정 안내] 화면 
              ========================================== -->
         <div id="tab-schedule" class="tab-content pt-[60px] bg-white min-h-screen">
             <section class="py-12 px-6">
@@ -475,7 +487,22 @@
                 </div>
 
                 <div class="flex gap-5 overflow-x-auto hide-scrollbar px-6 pb-8 pt-2">
-                    <!-- 기사 1 -->
+                    <!-- 생물다양성 보전 조례 발의 -->
+                    <a href="https://www.gukjenews.com/news/articleView.html?idxno=3549991" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
+                        <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
+                            <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=600&auto=format&fit=crop" alt="생물다양성 보전 조례" class="w-full h-full object-cover object-center">
+                            <div class="absolute top-3 right-3 bg-green-600 text-white text-[11px] font-black px-2.5 py-1 rounded-md shadow-md">소통 입법</div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-black text-lg mb-2 leading-snug text-green-600">진해 동진여중 학생 제안이 현실로! '생물다양성 보전 조례' 대표 발의</h3>
+                            <p class="text-[13px] text-gray-600 mb-4 line-clamp-2 leading-relaxed">진해 지역 청소년들의 목소리를 경청하여, 경남의 생태 자산을 체계적으로 보전하기 위한 조례안을 전격 발의했습니다.</p>
+                            <div class="flex items-center gap-1.5 text-[12px] font-bold text-gray-500 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+                                <i data-lucide="external-link" class="w-4 h-4 text-party-red"></i> 관련 뉴스 바로가기
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- 재선 도전 공식 선언 -->
                     <a href="http://www.koreaeaglenews.com/news/articleView.html?idxno=98143" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://cdn.koreaeaglenews.com/news/photo/202603/98143_122518_580.jpg" alt="재선 도전 공식 선언" class="w-full h-full object-cover object-top">
@@ -490,7 +517,7 @@
                         </div>
                     </a>
 
-                    <!-- 기사 2 -->
+                    <!-- 진해신항 상생형개발 촉구 -->
                     <a href="https://www.newsfreezone.co.kr/news/articleView.html?idxno=614396" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://i.ibb.co/cS890NTF/Kakao-Talk-20260327-103441014.jpg" alt="진해신항 상생형개발 촉구" class="w-full h-full object-cover object-top">
@@ -505,7 +532,7 @@
                         </div>
                     </a>
 
-                    <!-- 기사 3 -->
+                    <!-- 지방의정대상 최우수상 -->
                     <a href="https://search.naver.com/search.naver?query=도의원+박동철+지방의정대상" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://i.ibb.co/xS3PSz29/Kakao-Talk-20260327-151656724.jpg" alt="지방의정대상 최우수상" class="w-full h-full object-cover object-top">
@@ -520,7 +547,7 @@
                         </div>
                     </a>
 
-                    <!-- 기사 4 -->
+                    <!-- 폭우 피해 복구 -->
                     <a href="https://search.naver.com/search.naver?query=도의원+박동철+폭우+진해" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://i.ibb.co/xSFHGV9R/Kakao-Talk-20260327-103343620.jpg" alt="폭우 피해 복구" class="w-full h-full object-cover">
@@ -535,7 +562,7 @@
                         </div>
                     </a>
 
-                    <!-- 기사 5 -->
+                    <!-- 창원청년비전센터 진해관 개소식 참여 -->
                     <a href="https://www.yna.co.kr/view/AKR20260331172200052?input=1195m" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://i.ibb.co/Y79k3ybM/image.png" alt="창원청년비전센터 진해관 개소식" class="w-full h-full object-cover">
@@ -631,7 +658,7 @@
             </a>
         </div>
 
-        <!-- ★ 하단 고정 네비게이션 탭 ★ -->
+        <!-- ★ 하단 고정 네비게이션 탭 (가로 스크롤 적용) ★ -->
         <div class="fixed bottom-0 w-full max-w-[480px] bg-white border-t border-gray-200 shadow-[0_-5px_20px_rgba(0,0,0,0.05)] z-50 pb-safe">
             <div class="flex items-center h-[70px] overflow-x-auto hide-scrollbar px-1 gap-1 snap-x snap-mandatory">
                 
@@ -792,7 +819,7 @@
                 content: {
                     title: '진해의 도약!! 진해의 선택!! 박동철 도의원',
                     description: '박동하는 진해, 지금이 확실히 밀어줄 철입니다!',
-                    imageUrl: 'https://i.ibb.co/VPgSMK4/951bcbbc-b2f2-4388-869b-3c737a4d589c.png', 
+                    imageUrl: 'https://i.ibb.co/B53HdQ16/951bcbbc-b2f2-4388-869b-3c737a4d589c.webp', 
                     link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl },
                 },
                 buttons: [{ title: '후보자 프로필 보기', link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl } }],
