@@ -8,11 +8,10 @@
     <!-- 오픈그래프 -->
     <meta property="og:title" content="진해의 도약!! 진해의 선택!! 박동철 도의원">
     <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다!">
-    <!-- 카카오톡 공유 썸네일 최적화(WebP) -->
     <meta property="og:image" content="https://i.ibb.co/B53HdQ16/951bcbbc-b2f2-4388-869b-3c737a4d589c.webp">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
-    <!-- ★ 메인 포스터 최우선 로딩 (초고속 WebP 적용) ★ -->
+    <!-- ★ 구버전 프로필 사진 로딩 최적화 유지 (WebP 적용) ★ -->
     <link rel="preload" as="image" href="https://i.ibb.co/B53HdQ16/951bcbbc-b2f2-4388-869b-3c737a4d589c.webp" fetchpriority="high">
 
     <!-- 폰트 및 아이콘 -->
@@ -68,13 +67,41 @@
             </div>
         </nav>
 
-        <!-- 1. 히어로 섹션 (신규 포스터 WebP) -->
-        <header class="relative w-full pt-[60px] bg-gray-900">
-            <img src="https://i.ibb.co/B53HdQ16/951bcbbc-b2f2-4388-869b-3c737a4d589c.webp" alt="박동철 공식 포스터" class="w-full h-auto block" />
+        <!-- ★ 1. 히어로 섹션 (구버전 디자인 복구) ★ -->
+        <header class="relative w-full flex flex-col bg-gray-900 min-h-[90vh] pt-[60px]">
+            <div class="relative w-full h-[55vh] shrink-0 bg-white">
+                <!-- WebP 프로필 이미지 적용 (기존 배경 방식) -->
+                <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/B53HdQ16/951bcbbc-b2f2-4388-869b-3c737a4d589c.webp'); background-position: center top;"></div>
+                <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-900 to-transparent"></div>
+            </div>
+            
+            <div class="relative w-full bg-gray-900 px-5 pb-16 pt-3 text-center flex-1 flex flex-col items-center justify-start z-10 -mt-1 border-t-0">
+                <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-4 shadow-lg tracking-wider">
+                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-4 w-auto brightness-0 invert">
+                    제9회 전국동시지방선거
+                </div>
+                
+                <h1 class="text-[2.2rem] leading-[1.25] font-black text-white mb-4 drop-shadow-md">
+                    진심이 전해 <span class="text-yellow-400">진해,</span><br/>
+                    내 삶이 든든해 <span class="text-yellow-400">진해!</span>
+                </h1>
+                <p class="text-gray-300 text-[14px] font-medium leading-relaxed mb-6">
+                    기획은 치밀하게, 진해는 따뜻하게.<br/>말이 아닌 결과로 증명해 온 진짜 일꾼입니다.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-2">
+                    <span class="bg-party-red/90 text-white text-[11px] px-3 py-1.5 rounded-full border border-red-500 font-bold shadow-sm">국민의힘 원내부대표</span>
+                    <span class="bg-gray-800 text-white text-[11px] px-3 py-1.5 rounded-full border border-gray-600 font-semibold shadow-sm">기획행정위 부위원장</span>
+                </div>
+                
+                <div class="mt-8 animate-bounce">
+                    <i data-lucide="chevron-down" class="text-gray-500 w-6 h-6 mx-auto"></i>
+                </div>
+            </div>
         </header>
 
         <!-- 2. 출마선언문 전문 -->
-        <section class="py-14 px-6 bg-white relative shadow-sm border-b border-gray-100">
+        <section class="py-14 px-6 bg-white relative z-30 -mt-6 rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.2)]">
             <div class="reveal">
                 <div class="inline-block bg-party-red text-white px-2 py-1 text-[10px] font-bold rounded mb-3">출마 선언문</div>
                 <h2 class="text-2xl font-black text-gray-900 mb-8 border-l-4 border-party-red pl-3 leading-snug">
@@ -124,7 +151,7 @@
             </div>
         </section>
 
-        <!-- 3. 상세 약력 (구버전 디자인으로 복구) -->
+        <!-- 3. 상세 약력 (구버전 디자인) -->
         <section class="py-14 px-6 bg-gray-50 border-b border-gray-200">
             <div class="reveal">
                 <div class="text-center mb-10">
