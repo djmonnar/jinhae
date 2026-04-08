@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,7 +14,7 @@
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
             background-color: #f3f4f6;
         }
-        /* 캡처 시 불필요한 UI 숨김용 클래스 */
+        /* 상단 UI 숨김용 */
         .hide-on-capture {
             display: flex;
         }
@@ -26,7 +27,7 @@
         .editable-image .overlay {
             position: absolute;
             inset: 0;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
             color: white;
             display: flex;
             align-items: center;
@@ -63,41 +64,37 @@
         </button>
     </div>
 
-    <!-- 캡처될 메인 영역 (id="capture-area") -->
-    <div id="capture-area" class="bg-white w-full max-w-[1200px] border-[12px] border-[#e60024] p-6 md:p-10 flex flex-col lg:flex-row gap-10 shadow-2xl relative overflow-hidden">
+    <!-- 캡처될 메인 영역 -->
+    <div id="capture-area" class="bg-white w-full max-w-[1200px] border-[12px] border-[#e60024] p-6 md:p-10 flex flex-col lg:flex-row gap-10 shadow-2xl relative overflow-hidden mx-auto transition-all">
         
-        <!-- 왼쪽 영역 (45%): 포스터 이미지 삽입 영역 -->
-        <div class="w-full lg:w-[45%] flex flex-col justify-center items-center z-10 bg-white shadow-sm border border-gray-100 overflow-hidden editable-image rounded-xl" onclick="document.getElementById('upload-poster').click()">
+        <!-- 왼쪽 영역 (포스터) -->
+        <div id="left-area" class="w-full lg:w-[45%] flex flex-col justify-center items-center z-10 bg-white shadow-sm border border-gray-100 overflow-hidden editable-image rounded-xl" onclick="document.getElementById('upload-poster').click()">
             <img id="main-poster-img" src="https://i.ibb.co/N2zBBgjK/Kakao-Talk-20260330-120127383.jpg" alt="후보자 포스터" class="w-full h-auto object-contain min-h-[600px] bg-gray-50">
             <div class="overlay rounded-xl">포스터 사진 변경</div>
             <input type="file" id="upload-poster" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'main-poster-img', 'src')">
         </div>
 
-        <!-- 오른쪽 영역 (55%): 활동 사진 4분할 그리드 -->
-        <div class="w-full lg:w-[55%] grid grid-cols-2 grid-rows-2 gap-4 h-[600px] lg:h-auto min-h-[700px] p-4 bg-gray-50 rounded-2xl border border-gray-200">
+        <!-- 오른쪽 영역 (활동 사진 4분할 그리드) -->
+        <div id="right-area" class="w-full lg:w-[55%] grid grid-cols-2 grid-rows-2 gap-4 h-[600px] lg:h-auto min-h-[700px] p-4 bg-gray-50 rounded-2xl border border-gray-200">
             
-            <!-- 활동 사진 1 -->
             <div class="editable-image rounded-xl shadow-md border-2 border-white w-full h-full" onclick="document.getElementById('upload-act1').click()">
                 <div id="activity-img-1" class="img-placeholder w-full h-full rounded-lg" style="background-image: url('https://i.ibb.co/Zzv9k46M/Kakao-Talk-20260408-105516246.jpg');"></div>
                 <div class="overlay rounded-lg">활동 사진 1 변경</div>
                 <input type="file" id="upload-act1" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'activity-img-1', 'bg')">
             </div>
 
-            <!-- 활동 사진 2 -->
             <div class="editable-image rounded-xl shadow-md border-2 border-white w-full h-full" onclick="document.getElementById('upload-act2').click()">
                 <div id="activity-img-2" class="img-placeholder w-full h-full rounded-lg" style="background-image: url('https://i.ibb.co/xt5ZMtTD/Kakao-Talk-20260330-121216575.png');"></div>
                 <div class="overlay rounded-lg">활동 사진 2 변경</div>
                 <input type="file" id="upload-act2" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'activity-img-2', 'bg')">
             </div>
 
-            <!-- 활동 사진 3 -->
             <div class="editable-image rounded-xl shadow-md border-2 border-white w-full h-full" onclick="document.getElementById('upload-act3').click()">
                 <div id="activity-img-3" class="img-placeholder w-full h-full rounded-lg" style="background-image: url('https://i.ibb.co/xSFHGV9R/Kakao-Talk-20260327-103343620.jpg');"></div>
                 <div class="overlay rounded-lg">활동 사진 3 변경</div>
                 <input type="file" id="upload-act3" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'activity-img-3', 'bg')">
             </div>
 
-            <!-- 활동 사진 4 -->
             <div class="editable-image rounded-xl shadow-md border-2 border-white w-full h-full" onclick="document.getElementById('upload-act4').click()">
                 <div id="activity-img-4" class="img-placeholder w-full h-full rounded-lg" style="background-image: url('https://i.ibb.co/xS3PSz29/Kakao-Talk-20260327-151656724.jpg');"></div>
                 <div class="overlay rounded-lg">활동 사진 4 변경</div>
@@ -120,10 +117,8 @@
                 const targetElement = document.getElementById(targetId);
                 
                 if (type === 'src') {
-                    // 왼쪽 포스터용 (img 태그)
                     targetElement.src = imageUrl;
                 } else if (type === 'bg') {
-                    // 오른쪽 활동 사진용 (background-image)
                     targetElement.style.backgroundImage = `url('${imageUrl}')`;
                 }
             };
@@ -132,7 +127,7 @@
 
         // 초고화질 다운로드 처리 함수
         function downloadHighRes() {
-            // 버튼 상태 변경 (로딩 중)
+            // 버튼 상태 변경
             const btn = document.querySelector('button');
             const originalText = btn.innerHTML;
             btn.innerHTML = '⏳ 이미지 생성 중...';
@@ -140,16 +135,33 @@
             btn.classList.add('opacity-75', 'cursor-not-allowed');
 
             const captureArea = document.getElementById('capture-area');
+            const leftArea = document.getElementById('left-area');
+            const rightArea = document.getElementById('right-area');
+            const overlays = document.querySelectorAll('.overlay');
 
-            // 마우스 hover 효과(overlay)가 캡처되지 않도록 임시로 클래스 제거 조치
-            const editableImages = document.querySelectorAll('.editable-image');
-            editableImages.forEach(el => el.classList.remove('editable-image'));
+            // 1. 오버레이 텍스트 아예 숨기기 (버그 해결)
+            overlays.forEach(el => el.style.display = 'none');
 
-            // html2canvas 옵션: scale을 3으로 설정하여 3배수 초고화질(글자 깨짐 방지)로 렌더링
+            // 2. 모바일 기기에서도 데스크톱용 좌우 레이아웃으로 캡처되도록 강제 설정
+            const originalStyles = {
+                flexDirection: captureArea.style.flexDirection,
+                width: captureArea.style.width,
+                leftWidth: leftArea.style.width,
+                rightWidth: rightArea.style.width
+            };
+            
+            captureArea.style.width = '1200px';
+            captureArea.style.flexDirection = 'row';
+            leftArea.style.width = '45%';
+            rightArea.style.width = '55%';
+
+            // html2canvas 옵션: scale 3으로 설정하여 초고화질 렌더링 (글자 깨짐 방지)
             html2canvas(captureArea, {
                 scale: 3, 
                 useCORS: true, 
-                backgroundColor: '#ffffff'
+                backgroundColor: '#ffffff',
+                width: 1200,
+                windowWidth: 1200 // 반응형 레이아웃 꼬임 방지
             }).then(canvas => {
                 // 다운로드 링크 생성 및 클릭
                 const link = document.createElement('a');
@@ -157,22 +169,30 @@
                 link.href = canvas.toDataURL('image/png');
                 link.click();
 
-                // 원상 복구
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed');
-                editableImages.forEach(el => el.classList.add('editable-image'));
+                // 3. 캡처 완료 후 원래 상태로 복구
+                restoreState();
             }).catch(err => {
                 console.error('캡처 중 오류 발생:', err);
                 alert('이미지 생성 중 오류가 발생했습니다.');
+                restoreState();
+            });
+
+            // 상태 복구 함수
+            function restoreState() {
+                overlays.forEach(el => el.style.display = '');
+                captureArea.style.width = originalStyles.width;
+                captureArea.style.flexDirection = originalStyles.flexDirection;
+                leftArea.style.width = originalStyles.leftWidth;
+                rightArea.style.width = originalStyles.rightWidth;
                 
-                // 원상 복구
                 btn.innerHTML = originalText;
                 btn.disabled = false;
                 btn.classList.remove('opacity-75', 'cursor-not-allowed');
-                editableImages.forEach(el => el.classList.add('editable-image'));
-            });
+            }
         }
     </script>
 </body>
 </html>
+
+
+```
