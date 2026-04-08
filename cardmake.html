@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,49 +13,91 @@
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
             background-color: #f3f4f6;
         }
-        /* 상단 UI 숨김용 */
+        /* 캡처 시 불필요한 UI 숨김용 클래스 */
         .hide-on-capture {
             display: flex;
         }
-        /* 이미지 영역 hover 효과 */
-        .editable-image {
+        /* 편집 가능한 컨테이너 스타일 */
+        .editable-container {
             position: relative;
-            cursor: pointer;
             overflow: hidden;
-        }
-        .editable-image .overlay {
-            position: absolute;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
+            border-radius: 0.5rem;
+            background-color: #e5e7eb;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            font-weight: bold;
+            flex-direction: column;
+        }
+        /* 마우스 드래그를 위한 이미지 레이어 */
+        .img-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: grab;
+            transition: transform 0.1s ease-out;
+        }
+        .img-layer:active {
+            cursor: grabbing;
+        }
+        /* 호버 시 나타나는 도구 모음 */
+        .tools-overlay {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            justify-content: space-between;
             opacity: 0;
             transition: opacity 0.2s ease-in-out;
-            z-index: 50;
+            z-index: 20;
+            pointer-events: none; /* 하위 버튼만 클릭 가능하게 */
         }
-        .editable-image:hover .overlay {
+        .editable-container:hover .tools-overlay {
             opacity: 1;
         }
-        .img-placeholder {
-            background-color: #e5e7eb;
-            background-size: cover;
-            background-position: center;
+        .tools-overlay > * {
+            pointer-events: auto; /* 버튼 활성화 */
+        }
+        /* 캡션 영역 (contenteditable) */
+        .caption-layer {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            color: white;
+            padding: 1.5rem 1rem 0.75rem 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            outline: none;
+            z-index: 10;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            transition: opacity 0.3s;
+        }
+        .caption-layer:empty:not(:focus):before {
+            content: "클릭하여 캡션 입력 (비워두면 숨김)";
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            font-weight: 400;
         }
     </style>
 </head>
 <body class="p-4 md:p-8 flex flex-col justify-center items-center min-h-screen gap-6">
 
-    <!-- 상단 컨트롤 패널 (다운로드 버튼) -->
-    <div class="bg-white p-4 rounded-xl shadow-md flex items-center justify-between w-full max-w-[1200px] hide-on-capture sticky top-4 z-50 border border-gray-200">
+    <!-- 상단 컨트롤 패널 -->
+    <div class="bg-white p-4 rounded-xl shadow-md flex flex-col md:flex-row items-center justify-between w-full max-w-[1200px] hide-on-capture sticky top-4 z-50 border border-gray-200 gap-4">
         <div>
-            <h2 class="text-xl font-bold text-gray-800">📸 홍보물 생성기</h2>
-            <p class="text-sm text-gray-500">이미지 영역을 클릭하여 내 사진으로 변경하세요.</p>
+            <h2 class="text-xl font-bold text-gray-800">📸 홍보물 생성기 <span class="text-sm font-normal text-[#e60024]">v1.1</span></h2>
+            <p class="text-sm text-gray-500">사진 드래그로 초점 이동, 돋보기로 확대/축소, 텍스트 클릭 시 캡션 수정</p>
         </div>
-        <button onclick="downloadHighRes()" class="bg-[#e60024] hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors flex items-center gap-2">
+        
+        <!-- 레이아웃 변경 버튼 그룹 -->
+        <div class="flex bg-gray-100 p-1 rounded-lg">
+            <button onclick="changeLayout('grid4')" id="btn-layout-grid4" class="px-3 py-2 text-sm font-bold rounded-md bg-white shadow-sm text-gray-800 transition-all">4분할 (기본)</button>
+            <button onclick="changeLayout('top2bottom1')" id="btn-layout-top2bottom1" class="px-3 py-2 text-sm font-bold rounded-md text-gray-500 hover:text-gray-800 transition-all">위2/아래1</button>
+            <button onclick="changeLayout('vertical3')" id="btn-layout-vertical3" class="px-3 py-2 text-sm font-bold rounded-md text-gray-500 hover:text-gray-800 transition-all">세로 3분할</button>
+        </div>
+
+        <button onclick="downloadHighRes()" class="bg-[#e60024] hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors flex items-center gap-2 flex-shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
@@ -65,40 +106,75 @@
     </div>
 
     <!-- 캡처될 메인 영역 -->
-    <div id="capture-area" class="bg-white w-full max-w-[1200px] border-[12px] border-[#e60024] p-6 md:p-10 flex flex-col lg:flex-row gap-10 shadow-2xl relative overflow-hidden mx-auto transition-all">
+    <div id="capture-area" class="bg-white w-full max-w-[1200px] border-[12px] border-[#e60024] p-6 md:p-10 flex flex-col lg:flex-row gap-8 shadow-2xl relative overflow-hidden mx-auto">
         
-        <!-- 왼쪽 영역 (포스터) -->
-        <div id="left-area" class="w-full lg:w-[45%] flex flex-col justify-center items-center z-10 bg-white shadow-sm border border-gray-100 overflow-hidden editable-image rounded-xl" onclick="document.getElementById('upload-poster').click()">
-            <img id="main-poster-img" src="https://i.ibb.co/N2zBBgjK/Kakao-Talk-20260330-120127383.jpg" alt="후보자 포스터" class="w-full h-auto object-contain min-h-[600px] bg-gray-50">
-            <div class="overlay rounded-xl">포스터 사진 변경</div>
-            <input type="file" id="upload-poster" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'main-poster-img', 'src')">
+        <!-- 왼쪽 영역 (45%): 포스터 -->
+        <div class="w-full lg:w-[45%] editable-container min-h-[600px] bg-white border border-gray-100 shadow-sm z-10">
+            <div id="poster-img" class="img-layer" style="background-image: url('https://i.ibb.co/N2zBBgjK/Kakao-Talk-20260330-120127383.jpg'); background-size: contain;"></div>
+            
+            <div class="tools-overlay hide-on-capture">
+                <div class="flex items-center gap-2 bg-black/60 rounded-lg px-3 py-1 shadow-md">
+                    <span class="text-white text-xs">🔍</span>
+                    <input type="range" min="0.5" max="3" step="0.1" value="1" oninput="updateScale('poster-img', this.value)" class="w-20 cursor-pointer accent-[#e60024]">
+                </div>
+                <button onclick="document.getElementById('upload-poster').click()" class="bg-[#e60024] text-white text-sm font-bold py-1.5 px-3 rounded-lg shadow-md hover:bg-red-700">포스터 변경</button>
+                <input type="file" id="upload-poster" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'poster-img')">
+            </div>
         </div>
 
-        <!-- 오른쪽 영역 (활동 사진 4분할 그리드) -->
-        <div id="right-area" class="w-full lg:w-[55%] grid grid-cols-2 grid-rows-2 gap-4 h-[600px] lg:h-auto min-h-[700px] p-4 bg-gray-50 rounded-2xl border border-gray-200">
+        <!-- 오른쪽 영역 (55%): 활동 사진 그리드 -->
+        <div id="activity-grid" class="w-full lg:w-[55%] grid grid-cols-2 grid-rows-2 gap-4 h-[600px] lg:h-auto min-h-[700px] p-4 bg-gray-50 rounded-2xl border border-gray-200 transition-all duration-300">
             
-            <div class="editable-image rounded-xl shadow-md border-2 border-white w-full h-full" onclick="document.getElementById('upload-act1').click()">
-                <div id="activity-img-1" class="img-placeholder w-full h-full rounded-lg" style="background-image: url('https://i.ibb.co/Zzv9k46M/Kakao-Talk-20260408-105516246.jpg');"></div>
-                <div class="overlay rounded-lg">활동 사진 1 변경</div>
-                <input type="file" id="upload-act1" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'activity-img-1', 'bg')">
+            <!-- 사진 1 -->
+            <div id="wrapper-act1" class="editable-container w-full h-full shadow-md border-2 border-white group">
+                <div id="act1-img" class="img-layer" style="background-image: url('https://i.ibb.co/Zzv9k46M/Kakao-Talk-20260408-105516246.jpg');"></div>
+                <div class="tools-overlay hide-on-capture">
+                    <div class="flex items-center gap-2 bg-black/60 rounded-lg px-2 py-1">
+                        <input type="range" min="1" max="3" step="0.1" value="1" oninput="updateScale('act1-img', this.value)" class="w-16 accent-[#e60024]">
+                    </div>
+                    <button onclick="document.getElementById('upload-act1').click()" class="bg-gray-800 text-white text-xs font-bold py-1 px-2 rounded hover:bg-black">📷 변경</button>
+                    <input type="file" id="upload-act1" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'act1-img')">
+                </div>
+                <div contenteditable="true" class="caption-layer"></div>
             </div>
 
-            <div class="editable-image rounded-xl shadow-md border-2 border-white w-full h-full" onclick="document.getElementById('upload-act2').click()">
-                <div id="activity-img-2" class="img-placeholder w-full h-full rounded-lg" style="background-image: url('https://i.ibb.co/xt5ZMtTD/Kakao-Talk-20260330-121216575.png');"></div>
-                <div class="overlay rounded-lg">활동 사진 2 변경</div>
-                <input type="file" id="upload-act2" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'activity-img-2', 'bg')">
+            <!-- 사진 2 -->
+            <div id="wrapper-act2" class="editable-container w-full h-full shadow-md border-2 border-white group">
+                <div id="act2-img" class="img-layer" style="background-image: url('https://i.ibb.co/xt5ZMtTD/Kakao-Talk-20260330-121216575.png');"></div>
+                <div class="tools-overlay hide-on-capture">
+                    <div class="flex items-center gap-2 bg-black/60 rounded-lg px-2 py-1">
+                        <input type="range" min="1" max="3" step="0.1" value="1" oninput="updateScale('act2-img', this.value)" class="w-16 accent-[#e60024]">
+                    </div>
+                    <button onclick="document.getElementById('upload-act2').click()" class="bg-gray-800 text-white text-xs font-bold py-1 px-2 rounded hover:bg-black">📷 변경</button>
+                    <input type="file" id="upload-act2" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'act2-img')">
+                </div>
+                <div contenteditable="true" class="caption-layer"></div>
             </div>
 
-            <div class="editable-image rounded-xl shadow-md border-2 border-white w-full h-full" onclick="document.getElementById('upload-act3').click()">
-                <div id="activity-img-3" class="img-placeholder w-full h-full rounded-lg" style="background-image: url('https://i.ibb.co/xSFHGV9R/Kakao-Talk-20260327-103343620.jpg');"></div>
-                <div class="overlay rounded-lg">활동 사진 3 변경</div>
-                <input type="file" id="upload-act3" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'activity-img-3', 'bg')">
+            <!-- 사진 3 -->
+            <div id="wrapper-act3" class="editable-container w-full h-full shadow-md border-2 border-white group transition-all duration-300">
+                <div id="act3-img" class="img-layer" style="background-image: url('https://i.ibb.co/xSFHGV9R/Kakao-Talk-20260327-103343620.jpg');"></div>
+                <div class="tools-overlay hide-on-capture">
+                    <div class="flex items-center gap-2 bg-black/60 rounded-lg px-2 py-1">
+                        <input type="range" min="1" max="3" step="0.1" value="1" oninput="updateScale('act3-img', this.value)" class="w-16 accent-[#e60024]">
+                    </div>
+                    <button onclick="document.getElementById('upload-act3').click()" class="bg-gray-800 text-white text-xs font-bold py-1 px-2 rounded hover:bg-black">📷 변경</button>
+                    <input type="file" id="upload-act3" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'act3-img')">
+                </div>
+                <div contenteditable="true" class="caption-layer"></div>
             </div>
 
-            <div class="editable-image rounded-xl shadow-md border-2 border-white w-full h-full" onclick="document.getElementById('upload-act4').click()">
-                <div id="activity-img-4" class="img-placeholder w-full h-full rounded-lg" style="background-image: url('https://i.ibb.co/xS3PSz29/Kakao-Talk-20260327-151656724.jpg');"></div>
-                <div class="overlay rounded-lg">활동 사진 4 변경</div>
-                <input type="file" id="upload-act4" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'activity-img-4', 'bg')">
+            <!-- 사진 4 -->
+            <div id="wrapper-act4" class="editable-container w-full h-full shadow-md border-2 border-white group">
+                <div id="act4-img" class="img-layer" style="background-image: url('https://i.ibb.co/xS3PSz29/Kakao-Talk-20260327-151656724.jpg');"></div>
+                <div class="tools-overlay hide-on-capture">
+                    <div class="flex items-center gap-2 bg-black/60 rounded-lg px-2 py-1">
+                        <input type="range" min="1" max="3" step="0.1" value="1" oninput="updateScale('act4-img', this.value)" class="w-16 accent-[#e60024]">
+                    </div>
+                    <button onclick="document.getElementById('upload-act4').click()" class="bg-gray-800 text-white text-xs font-bold py-1 px-2 rounded hover:bg-black">📷 변경</button>
+                    <input type="file" id="upload-act4" class="hidden" accept="image/*" onchange="handleImageUpload(event, 'act4-img')">
+                </div>
+                <div contenteditable="true" class="caption-layer"></div>
             </div>
 
         </div>
@@ -106,93 +182,179 @@
     </div>
 
     <script>
-        // 파일 업로드 처리 함수
-        function handleImageUpload(event, targetId, type) {
+        // 1. 파일 업로드 처리
+        function handleImageUpload(event, targetId) {
             const file = event.target.files[0];
             if (!file) return;
 
             const reader = new FileReader();
             reader.onload = function(e) {
-                const imageUrl = e.target.result;
                 const targetElement = document.getElementById(targetId);
+                targetElement.style.backgroundImage = `url('${e.target.result}')`;
+                // 업로드 시 스케일과 위치 초기화
+                targetElement.style.transform = 'scale(1)';
+                targetElement.style.backgroundPosition = 'center';
+                targetElement.dataset.x = 0;
+                targetElement.dataset.y = 0;
                 
-                if (type === 'src') {
-                    targetElement.src = imageUrl;
-                } else if (type === 'bg') {
-                    targetElement.style.backgroundImage = `url('${imageUrl}')`;
-                }
+                // 해당 요소의 범위 슬라이더 초기화
+                const slider = targetElement.nextElementSibling.querySelector('input[type="range"]');
+                if(slider) slider.value = 1;
             };
             reader.readAsDataURL(file);
         }
 
-        // 초고화질 다운로드 처리 함수
+        // 2. 스케일(확대/축소) 처리
+        function updateScale(targetId, value) {
+            const targetElement = document.getElementById(targetId);
+            targetElement.style.transform = `scale(${value})`;
+        }
+
+        // 3. 드래그 앤 드롭 (초점/위치 이동) 처리 로직
+        let isDragging = false;
+        let dragTarget = null;
+        let startX, startY;
+        let currentX = 0, currentY = 0;
+
+        document.querySelectorAll('.img-layer').forEach(layer => {
+            layer.addEventListener('mousedown', startDrag);
+            layer.addEventListener('touchstart', startDrag, {passive: false});
+        });
+
+        function startDrag(e) {
+            if(e.target.closest('.tools-overlay') || e.target.closest('.caption-layer')) return;
+            
+            isDragging = true;
+            dragTarget = this;
+            
+            startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+            
+            // 기존에 이동했던 거리(데이터) 불러오기
+            currentX = parseFloat(dragTarget.dataset.x) || 0;
+            currentY = parseFloat(dragTarget.dataset.y) || 0;
+            
+            if(e.type !== 'touchstart') e.preventDefault();
+        }
+
+        document.addEventListener('mousemove', moveDrag);
+        document.addEventListener('touchmove', moveDrag, {passive: false});
+
+        function moveDrag(e) {
+            if (!isDragging || !dragTarget) return;
+            
+            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+            const dx = clientX - startX;
+            const dy = clientY - startY;
+
+            const newX = currentX + dx;
+            const newY = currentY + dy;
+
+            // calc 함수를 활용해 이미지 중심점(50%)에서 이동 거리만큼 오프셋 적용
+            dragTarget.style.backgroundPosition = `calc(50% + ${newX}px) calc(50% + ${newY}px)`;
+            
+            // 임시 저장
+            dragTarget.dataset.tempX = newX;
+            dragTarget.dataset.tempY = newY;
+        }
+
+        document.addEventListener('mouseup', endDrag);
+        document.addEventListener('touchend', endDrag);
+
+        function endDrag() {
+            if (isDragging && dragTarget) {
+                // 최종 이동 거리 확정
+                dragTarget.dataset.x = dragTarget.dataset.tempX || currentX;
+                dragTarget.dataset.y = dragTarget.dataset.tempY || currentY;
+            }
+            isDragging = false;
+            dragTarget = null;
+        }
+
+        // 4. 레이아웃 변경 함수
+        function changeLayout(type) {
+            const grid = document.getElementById('activity-grid');
+            const wrapper3 = document.getElementById('wrapper-act3');
+            const wrapper4 = document.getElementById('wrapper-act4');
+            
+            const btns = [document.getElementById('btn-layout-grid4'), document.getElementById('btn-layout-top2bottom1'), document.getElementById('btn-layout-vertical3')];
+            btns.forEach(btn => {
+                btn.classList.remove('bg-white', 'shadow-sm', 'text-gray-800');
+                btn.classList.add('text-gray-500');
+            });
+
+            grid.className = 'w-full lg:w-[55%] grid gap-4 h-[600px] lg:h-auto min-h-[700px] p-4 bg-gray-50 rounded-2xl border border-gray-200 transition-all duration-300';
+            wrapper3.className = 'editable-container w-full h-full shadow-md border-2 border-white group transition-all duration-300';
+            wrapper4.style.display = 'flex';
+
+            if (type === 'grid4') {
+                grid.classList.add('grid-cols-2', 'grid-rows-2');
+                document.getElementById('btn-layout-grid4').classList.add('bg-white', 'shadow-sm', 'text-gray-800');
+                document.getElementById('btn-layout-grid4').classList.remove('text-gray-500');
+            } 
+            else if (type === 'top2bottom1') {
+                grid.classList.add('grid-cols-2', 'grid-rows-2');
+                wrapper3.classList.add('col-span-2'); 
+                wrapper4.style.display = 'none';      
+                document.getElementById('btn-layout-top2bottom1').classList.add('bg-white', 'shadow-sm', 'text-gray-800');
+                document.getElementById('btn-layout-top2bottom1').classList.remove('text-gray-500');
+            } 
+            else if (type === 'vertical3') {
+                grid.classList.add('grid-cols-1', 'grid-rows-3');
+                wrapper4.style.display = 'none';      
+                document.getElementById('btn-layout-vertical3').classList.add('bg-white', 'shadow-sm', 'text-gray-800');
+                document.getElementById('btn-layout-vertical3').classList.remove('text-gray-500');
+            }
+        }
+
+        // 5. 초고화질 다운로드
         function downloadHighRes() {
-            // 버튼 상태 변경
-            const btn = document.querySelector('button');
+            const btn = document.querySelector('button[onclick="downloadHighRes()"]');
             const originalText = btn.innerHTML;
             btn.innerHTML = '⏳ 이미지 생성 중...';
             btn.disabled = true;
-            btn.classList.add('opacity-75', 'cursor-not-allowed');
 
             const captureArea = document.getElementById('capture-area');
-            const leftArea = document.getElementById('left-area');
-            const rightArea = document.getElementById('right-area');
-            const overlays = document.querySelectorAll('.overlay');
+            const hideElements = document.querySelectorAll('.hide-on-capture');
+            const captions = document.querySelectorAll('.caption-layer');
 
-            // 1. 오버레이 텍스트 아예 숨기기 (버그 해결)
-            overlays.forEach(el => el.style.display = 'none');
+            // 캡처 전: 컨트롤 패널 숨기기 및 비어있는 캡션 숨기기
+            hideElements.forEach(el => el.style.display = 'none');
+            captions.forEach(cap => {
+                const text = cap.innerText.trim();
+                // 사용자가 아무것도 적지 않았거나 기본 플레이스홀더 상태면 캡션 배경을 숨깁니다.
+                if(!text || text === "클릭하여 캡션 입력 (비워두면 숨김)") {
+                    cap.style.display = 'none';
+                }
+            });
 
-            // 2. 모바일 기기에서도 데스크톱용 좌우 레이아웃으로 캡처되도록 강제 설정
-            const originalStyles = {
-                flexDirection: captureArea.style.flexDirection,
-                width: captureArea.style.width,
-                leftWidth: leftArea.style.width,
-                rightWidth: rightArea.style.width
-            };
-            
-            captureArea.style.width = '1200px';
-            captureArea.style.flexDirection = 'row';
-            leftArea.style.width = '45%';
-            rightArea.style.width = '55%';
-
-            // html2canvas 옵션: scale 3으로 설정하여 초고화질 렌더링 (글자 깨짐 방지)
+            // html2canvas 옵션: scale 3으로 고화질 렌더링
             html2canvas(captureArea, {
                 scale: 3, 
                 useCORS: true, 
-                backgroundColor: '#ffffff',
-                width: 1200,
-                windowWidth: 1200 // 반응형 레이아웃 꼬임 방지
+                backgroundColor: '#ffffff'
             }).then(canvas => {
-                // 다운로드 링크 생성 및 클릭
                 const link = document.createElement('a');
                 link.download = '정치인_홍보물_고화질.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
 
-                // 3. 캡처 완료 후 원래 상태로 복구
-                restoreState();
-            }).catch(err => {
-                console.error('캡처 중 오류 발생:', err);
-                alert('이미지 생성 중 오류가 발생했습니다.');
-                restoreState();
-            });
-
-            // 상태 복구 함수
-            function restoreState() {
-                overlays.forEach(el => el.style.display = '');
-                captureArea.style.width = originalStyles.width;
-                captureArea.style.flexDirection = originalStyles.flexDirection;
-                leftArea.style.width = originalStyles.leftWidth;
-                rightArea.style.width = originalStyles.rightWidth;
-                
+                // 원상 복구
                 btn.innerHTML = originalText;
                 btn.disabled = false;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed');
-            }
+                hideElements.forEach(el => el.style.display = '');
+                captions.forEach(cap => cap.style.display = '');
+            }).catch(err => {
+                console.error('캡처 중 오류:', err);
+                alert('이미지 캡처 중 오류가 발생했습니다.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                hideElements.forEach(el => el.style.display = '');
+                captions.forEach(cap => cap.style.display = '');
+            });
         }
     </script>
 </body>
 </html>
-
-
-```
