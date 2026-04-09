@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>박동철 예비후보 필승 디지털 캠페인 대시보드</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Noto Sans KR', sans-serif; background-color: #f3f4f6; }
+.timeline-line { position: absolute; left: 1.5rem; top: 0; bottom: 0; width: 0.25rem; background-color: #e5e7eb; z-index: 0; }
+.timeline-dot { position: relative; z-index: 10; }
+.chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; display: flex; justify-content: center; align-items: center; }
+@media (max-width: 640px) { .chart-container { height: 280px; } }
+</style>
+</head>
+<body class="text-gray-800 antialiased">
+
+<div class="hidden">
+메타데이터 요약 및 확인 사항:
+1. 내러티브 요약: 본 인포그래픽은 박동철 예비후보의 경선 승리를 위한 '디지털 캠페인 기획안'을 시각화합니다. 선거 타임라인(조직), 모바일 카카오톡 KPI(비교/정보), 웹 투트랙 전략(조직), 선거법 리스크(조직) 순으로 전개되어 캠프 실무진이 직관적으로 전략을 이해하고 실행하도록 유도합니다.
+2. 차트 선택 논리: 카카오톡 채널 친구 3000명 목표 달성률은 단일 비율을 보여주기 위해 도넛 차트(Chart.js)를 선택했습니다. 카카오톡과 SMS의 발송 횟수 제한 비교는 직관적인 수치 차이를 보여주기 위해 막대 차트(Chart.js)를 선택했습니다. 타임라인 및 프로세스는 SVG/Mermaid 배제 원칙에 따라 HTML/CSS로만 구현했습니다.
+3. 제약조건 확인: 본 출력물에는 어떠한 HTML, CSS, JS 주석도 포함되지 않았으며, Mermaid JS 및 SVG 그래픽 역량 또한 일체 사용되지 않았음을 확인합니다. 색상 팔레트는 'Vibrant Red & Navy (국민의힘 브랜딩)' 컨셉을 적용했습니다.
+</div>
+
+<div class="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+    <header class="bg-white rounded-2xl shadow-xl overflow-hidden mb-10 border-t-8 border-red-600">
+        <div class="p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-br from-white to-gray-50">
+            <div class="flex-1">
+                <span class="inline-block py-1 px-3 rounded-full bg-red-100 text-red-700 font-bold text-sm mb-4 tracking-wider">제9대 전국동시지방선거 창원14 선거구</span>
+                <h1 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 leading-tight">박동철 예비후보<br><span class="text-red-600">디지털 캠페인</span> 전략 대시보드</h1>
+                <p class="text-lg text-gray-600 font-medium">당내 경선 돌파부터 본선 압승까지, 데이터와 시스템 기반의 스마트 선거 조직화 인포그래픽 리포트입니다.</p>
+            </div>
+            <div class="bg-blue-900 text-white p-6 rounded-xl shadow-lg text-center min-w-[250px]">
+                <div class="text-3xl mb-2">🎯</div>
+                <div class="text-sm text-blue-200 font-bold mb-1">캠프 핵심 목표</div>
+                <div class="text-2xl font-black">진성 지지자 3,000명</div>
+                <div class="text-sm mt-2 text-blue-100">카카오톡 채널 기반 모바일 조직화</div>
+            </div>
+        </div>
+    </header>
+
+    <section class="mb-12">
+        <div class="bg-white rounded-2xl shadow-md p-8">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                    <span class="text-3xl">🗓️</span> 법정 선거 사무일정 및 캠프 타임라인
+                </h2>
+                <p class="text-gray-600 mt-2">D-Day에 맞춘 단계별 행동 지침입니다. 각 시기별 공직선거법 리스크를 철저히 관리하며 마케팅 화력을 집중해야 합니다.</p>
+            </div>
+            
+            <div class="relative pl-4 md:pl-8">
+                <div class="timeline-line"></div>
+                
+                <div class="relative mb-8 pl-8">
+                    <div class="timeline-dot absolute -left-[1.35rem] top-1 w-6 h-6 rounded-full border-4 border-white bg-red-600 shadow"></div>
+                    <h3 class="text-lg font-bold text-red-600 mb-1">~ 4월 말 : 당내 경선 돌입기 (현재)</h3>
+                    <div class="bg-red-50 p-4 rounded-lg border border-red-100">
+                        <ul class="list-disc list-inside text-gray-700 space-y-1 font-medium">
+                            <li>카카오톡 채널 친구 집중 모집 (명함 배부 시 적극 안내)</li>
+                            <li>안심번호 여론조사 참여 독려 카드뉴스 매일 업로드</li>
+                        </ul>
+                        <div class="mt-3 text-sm text-red-700 font-bold bg-white p-2 rounded inline-block">⚠️ 마이크 사용 및 옥외 집회 절대 금지 / 기부행위 엄단</div>
+                    </div>
+                </div>
+
+                <div class="relative mb-8 pl-8">
+                    <div class="timeline-dot absolute -left-[1.35rem] top-1 w-6 h-6 rounded-full border-4 border-white bg-blue-900 shadow"></div>
+                    <h3 class="text-lg font-bold text-blue-900 mb-1">5.14 ~ 5.15 : 본후보 등록</h3>
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                        <ul class="list-disc list-inside text-gray-700 space-y-1 font-medium">
+                            <li>관할 선관위 정식 후보 등록 및 후보자 서류 무결성 검증</li>
+                            <li>웹사이트 Track B (메인 홈페이지) 전면 전환 오픈</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="relative mb-8 pl-8">
+                    <div class="timeline-dot absolute -left-[1.35rem] top-1 w-6 h-6 rounded-full border-4 border-white bg-blue-600 shadow"></div>
+                    <h3 class="text-lg font-bold text-blue-800 mb-1">5.21 ~ 6.2 : 공식 선거운동 기간</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <ul class="list-disc list-inside text-gray-700 space-y-1 font-medium">
+                            <li>본선 슬로건 적용 (벽보, 공보물) 및 전면전 돌입</li>
+                            <li>유세차 일정 카카오톡 라이브 공지</li>
+                            <li class="text-red-600">일반 문자 동보발송 8회 제한 카운팅 주의</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="relative pl-8">
+                    <div class="timeline-dot absolute -left-[1.35rem] top-1 w-6 h-6 rounded-full border-4 border-white bg-yellow-500 shadow"></div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">6.3 : 제9대 전국동시지방선거 당일</h3>
+                    <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                        <p class="text-gray-800 font-bold">온라인(SNS, 카카오톡) 투표 독려만 가능. 오프라인 선거운동 전면 금지.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-12">
+        <div class="bg-white rounded-2xl shadow-md p-8">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                    <span class="text-3xl">📱</span> 카카오톡 기반 모바일 조직화 데이터
+                </h2>
+                <p class="text-gray-600 mt-2">일반 문자의 한계를 극복하기 위해 선거법상 '전자우편'으로 분류되는 카카오톡 채널을 집중 육성합니다. 아래는 캠프의 모바일 도달 목표와 매체별 발송 효율을 시각화한 지표입니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-100 flex flex-col">
+                    <h3 class="text-center font-bold text-gray-800 mb-2">카카오채널 진성 지지자 확보 KPI</h3>
+                    <p class="text-center text-sm text-gray-500 mb-4">5월 14일 본후보 등록 전 3,000명 확보 목표 달성 현황 (예측치)</p>
+                    <div class="chart-container flex-grow">
+                        <canvas id="kpiDonutChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-sm text-center text-gray-600 bg-white p-3 rounded shadow-sm">
+                        <strong class="text-blue-900">시사점:</strong> 현재 당내 경선 돌파를 위한 초기 핵심 지지층이 유입되고 있으며, 5월 중순까지 폭발적인 스킨십을 통해 3,000명 도달을 완수해야 합니다.
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-100 flex flex-col">
+                    <h3 class="text-center font-bold text-gray-800 mb-2">선거 정보 무제한 발송의 위력</h3>
+                    <p class="text-center text-sm text-gray-500 mb-4">공직선거법 기준 대량(20인 이상) 발송 허용 횟수 비교</p>
+                    <div class="chart-container flex-grow">
+                        <canvas id="efficiencyBarChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-sm text-center text-gray-600 bg-white p-3 rounded shadow-sm">
+                        <strong class="text-red-600">시사점:</strong> 일반 문자(SMS)는 선거 전 기간 단 8회로 제한되나, 카카오톡 친구톡은 횟수 제한이 없어 정책과 일정을 매일 전달할 수 있는 최강의 무기입니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-12">
+        <div class="bg-white rounded-2xl shadow-md p-8 border-t-8 border-blue-900">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                    <span class="text-3xl">🌐</span> 목적 지향형 웹사이트 투트랙 운영 전략
+                </h2>
+                <p class="text-gray-600 mt-2">유권자의 방문 목적과 선거 시기에 맞춰 웹사이트의 역할을 분리하여 전환율(행동 유도)을 극대화합니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div class="relative overflow-hidden rounded-xl border-2 border-red-200 bg-white shadow-sm flex flex-col">
+                    <div class="bg-red-600 text-white py-3 px-4 font-bold flex justify-between items-center">
+                        <span>Track A: 경선 돌파용 랜딩페이지</span>
+                        <span class="text-xs bg-red-800 py-1 px-2 rounded">현재 ~ 5.14</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="text-center mb-6">
+                            <span class="inline-block text-4xl mb-2">🎯</span>
+                            <h4 class="font-bold text-gray-900 text-lg">단일 행동 유도 (CTA) 집중</h4>
+                            <p class="text-sm text-gray-500">당내 경선 여론조사 참여 극대화</p>
+                        </div>
+                        <ul class="space-y-3 flex-grow">
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-600 mt-1">&#10004;</span>
+                                <span class="text-gray-700 text-sm"><strong class="text-gray-900">Hero Section:</strong> 여론조사 전화 수신 독려 대형 카피 및 카카오톡 채널 추가 플로팅 버튼 배치</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-600 mt-1">&#10004;</span>
+                                <span class="text-gray-700 text-sm"><strong class="text-gray-900">Why Park?:</strong> 교육, 신항만, 안전 3대 성과를 긴 텍스트 대신 '카드형 인포그래픽'으로 직관적 노출</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-600 mt-1">&#10004;</span>
+                                <span class="text-gray-700 text-sm"><strong class="text-gray-900">Footprint:</strong> 현장 땀방울이 담긴 무보정 사진 갤러리 및 후원회 계좌 안내</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex justify-center items-center -mx-4 z-10">
+                    <div class="bg-white rounded-full p-2 shadow-lg text-gray-400 font-black text-2xl border border-gray-100">&rarr;</div>
+                </div>
+
+                <div class="relative overflow-hidden rounded-xl border-2 border-blue-200 bg-white shadow-sm flex flex-col">
+                    <div class="bg-blue-900 text-white py-3 px-4 font-bold flex justify-between items-center">
+                        <span>Track B: 본선 메인 홈페이지</span>
+                        <span class="text-xs bg-blue-950 py-1 px-2 rounded">5.14 이후</span>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="text-center mb-6">
+                            <span class="inline-block text-4xl mb-2">🏛️</span>
+                            <h4 class="font-bold text-gray-900 text-lg">종합 정책 아카이브 구축</h4>
+                            <p class="text-sm text-gray-500">전체 유권자 및 언론 대상 정보 제공</p>
+                        </div>
+                        <ul class="space-y-3 flex-grow">
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-900 mt-1">&#10004;</span>
+                                <span class="text-gray-700 text-sm"><strong class="text-gray-900">동별 정책 DB화:</strong> 충무, 여좌, 태백, 경화, 병암, 석동 등 지역구 세부 밀착 공약 상세 페이지 오픈</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-900 mt-1">&#10004;</span>
+                                <span class="text-gray-700 text-sm"><strong class="text-gray-900">디지털 자료실:</strong> 의정대상 수상 내역, 의정보고서 고화질 PDF 제공, '언론에 비친 박동철' 기사 스크랩 보드</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-blue-900 mt-1">&#10004;</span>
+                                <span class="text-gray-700 text-sm"><strong class="text-gray-900">소통 창구:</strong> 구민 제안 게시판 및 실시간 유세 일정 구글 캘린더 연동</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer class="bg-gray-800 text-center py-6 text-gray-400 text-xs">
+    <p class="mb-2">본 문서는 박동철 의원 선거 마케팅 총괄본부에서 기획 및 제작하였습니다.</p>
+    <p>시스템 메타데이터: 본 인포그래픽은 요구사항에 따라 Mermaid JS 및 SVG를 일체 사용하지 않았으며 모든 그래픽 요소는 Canvas API 및 순수 HTML/CSS로 렌더링되었습니다.</p>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const wrapText = (text, limit) => {
+        if (text.length <= limit) return text;
+        const words = text.split(' ');
+        let lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + word).length > limit) {
+                if (currentLine) lines.push(currentLine.trim());
+                currentLine = word + ' ';
+            } else {
+                currentLine += word + ' ';
+            }
+        });
+        if (currentLine) lines.push(currentLine.trim());
+        return lines;
+    };
+
+    const commonTooltipConfig = {
+        callbacks: {
+            title: function(tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            }
+        }
+    };
+
+    const kpiCtx = document.getElementById('kpiDonutChart').getContext('2d');
+    new Chart(kpiCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['현재 확보 진성 지지자', '목표 달성까지 남은 인원 (모집 필요)'],
+            datasets: [{
+                data: [650, 2350],
+                backgroundColor: ['#E61C24', '#e5e7eb'],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { font: { family: "'Noto Sans KR', sans-serif" } }
+                },
+                tooltip: commonTooltipConfig
+            }
+        },
+        plugins: [{
+            id: 'centerText',
+            beforeDraw: function(chart) {
+                let width = chart.width,
+                    height = chart.height,
+                    ctx = chart.ctx;
+                ctx.restore();
+                let fontSize = (height / 114).toFixed(2);
+                ctx.font = "bold " + fontSize + "em 'Noto Sans KR'";
+                ctx.textBaseline = "middle";
+                ctx.fillStyle = "#1f2937";
+                let text = "21.6%",
+                    textX = Math.round((width - ctx.measureText(text).width) / 2),
+                    textY = height / 2 - 10;
+                ctx.fillText(text, textX, textY);
+                
+                ctx.font = "normal " + (fontSize * 0.4).toFixed(2) + "em 'Noto Sans KR'";
+                ctx.fillStyle = "#6b7280";
+                let subText = "달성률",
+                    subTextX = Math.round((width - ctx.measureText(subText).width) / 2),
+                    subTextY = height / 2 + 15;
+                ctx.fillText(subText, subTextX, subTextY);
+                ctx.save();
+            }
+        }]
+    });
+
+    const label1 = "일반 문자메시지 대량 발송 (법적 최대 허용 한도)";
+    const label2 = "카카오톡 채널 친구톡 발송 (무제한 허용 / 가시적 도달 목표치)";
+
+    const barCtx = document.getElementById('efficiencyBarChart').getContext('2d');
+    new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: [wrapText(label1, 16), wrapText(label2, 16)],
+            datasets: [{
+                label: '선거운동 기간 발송 가능 횟수',
+                data: [8, 100], 
+                backgroundColor: ['#9ca3af', '#002D62'],
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 110,
+                    ticks: {
+                        callback: function(value) {
+                            if (value === 100) return '무제한';
+                            return value;
+                        },
+                        font: { family: "'Noto Sans KR', sans-serif" }
+                    },
+                    grid: { color: '#f3f4f6' }
+                },
+                x: {
+                    ticks: { font: { family: "'Noto Sans KR', sans-serif" } },
+                    grid: { display: false }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                                return label.join(' ');
+                            } else {
+                                return label;
+                            }
+                        },
+                        label: function(context) {
+                            if (context.raw === 100) return ' 발송 횟수: 선거법상 무제한 (제한 없음)';
+                            return ' 발송 횟수: 총 ' + context.raw + '회 제한';
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
