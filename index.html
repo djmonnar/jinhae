@@ -9,12 +9,12 @@
     <!-- 오픈그래프 -->
     <meta property="og:title" content="진해의 도약!! 진해의 선택!! 박동철 도의원">
     <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다!">
-    <!-- 카카오톡 공유 썸네일 -->
-    <meta property="og:image" content="https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg">
+    <!-- 카카오톡 공유 썸네일 (신규 포스터) -->
+    <meta property="og:image" content="https://i.ibb.co/1GMR2PbW/1775703200005.png">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
-    <!-- ★ 구버전 프로필 사진 로딩 최적화 유지 ★ -->
-    <link rel="preload" as="image" href="https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg" fetchpriority="high">
+    <!-- ★ 메인 포스터 최우선 로딩 (새 이미지 적용) ★ -->
+    <link rel="preload" as="image" href="https://i.ibb.co/1GMR2PbW/1775703200005.png" fetchpriority="high">
 
     <!-- 폰트 및 아이콘 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
@@ -48,7 +48,7 @@
         <!-- 상단 고정 헤더 -->
         <nav id="navbar" class="fixed top-0 w-full max-w-[480px] z-50 transition-all duration-300 py-3 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
             <div class="px-4 flex justify-between items-center w-full">
-                <!-- ★ 상단 이름 '도의원 예비 후보 박동철'로 변경 완료 ★ -->
+                <!-- 상단 이름 '도의원 예비 후보 박동철' -->
                 <div class="font-black text-[16px] tracking-tight flex items-center gap-1.5">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 w-auto">
                     <span class="text-gray-900 font-extrabold tracking-tight">도의원 예비 후보 박동철</span>
@@ -59,16 +59,23 @@
             </div>
         </nav>
 
-        <!-- 1. 히어로 섹션 -->
-        <header class="relative w-full flex flex-col bg-gray-900 min-h-[90vh] pt-[60px]">
-            <div class="relative w-full h-[55vh] shrink-0 bg-white">
-                <!-- 구버전 프로필 이미지 적용 -->
-                <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg'); background-position: center top;"></div>
-                <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-900 to-transparent"></div>
+        <!-- ★ 1. 히어로 섹션 (신규 포스터 액자형 100% 노출) ★ -->
+        <header class="relative w-full flex flex-col bg-gray-900 pt-[60px]">
+            
+            <!-- 포스터 전체가 보이도록 여백을 준 화사한 배경 영역 -->
+            <div class="w-full flex justify-center items-center bg-gradient-to-b from-gray-100 to-gray-200 py-10 px-5 shrink-0 relative overflow-hidden">
+                <!-- 배경 장식 (선택) -->
+                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                
+                <!-- 이미지가 잘리지 않고 전체 노출되도록 크기 조절 (w-[75%]) -->
+                <img src="https://i.ibb.co/1GMR2PbW/1775703200005.png" 
+                     alt="박동철 도의원 예비후보 공식 포스터" 
+                     class="relative z-10 w-[80%] sm:max-w-[320px] h-auto object-contain shadow-[0_20px_50px_rgba(0,0,0,0.2)] rounded-xl border border-gray-300 transform transition duration-500 hover:scale-105" />
             </div>
             
-            <div class="relative w-full bg-gray-900 px-5 pb-16 pt-3 text-center flex-1 flex flex-col items-center justify-start z-10 -mt-1 border-t-0">
-                <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-4 shadow-lg tracking-wider">
+            <!-- 기존의 다크 테마 텍스트 영역 (이질감 없게 자연스럽게 연결) -->
+            <div class="relative w-full bg-gray-900 px-5 pb-16 pt-8 text-center flex-1 flex flex-col items-center justify-start z-10 border-t-[5px] border-party-red">
+                <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-5 shadow-lg tracking-wider">
                     <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-4 w-auto brightness-0 invert">
                     제9회 전국동시지방선거
                 </div>
@@ -86,7 +93,7 @@
                     <span class="bg-gray-800 text-white text-[11px] px-3 py-1.5 rounded-full border border-gray-600 font-semibold shadow-sm">기획행정위 부위원장</span>
                 </div>
                 
-                <div class="mt-8 animate-bounce">
+                <div class="mt-10 animate-bounce">
                     <i data-lucide="chevron-down" class="text-gray-500 w-6 h-6 mx-auto"></i>
                 </div>
             </div>
@@ -143,7 +150,7 @@
             </div>
         </section>
 
-        <!-- 3. 상세 약력 -->
+        <!-- 3. 상세 약력 (구버전 디자인) -->
         <section class="py-14 px-6 bg-gray-50 border-b border-gray-200">
             <div class="reveal">
                 <div class="text-center mb-10">
@@ -180,6 +187,11 @@
                         <li class="flex items-start gap-2">
                             <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
                             <span>현) 진해혁신포럼 대표</span>
+                        </li>
+                        <!-- ★ 하늘땅 본점 대표 이력 추가 ★ -->
+                        <li class="flex items-start gap-2">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
+                            <span>현) 백년가업 하늘땅 본점 대표</span>
                         </li>
                         <li class="flex items-start gap-2">
                             <div class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0"></div>
@@ -365,8 +377,8 @@
             </div>
         </section>
 
-        <!-- 7. 카드뉴스 및 현장 앨범 (가로 스크롤) -->
-        <section class="py-14 bg-gray-100 text-gray-900 overflow-hidden relative">
+        <!-- 6. 카드뉴스 및 현장 앨범 (가로 스크롤) -->
+        <section class="py-14 bg-gray-100 text-gray-900 overflow-hidden relative border-b border-gray-200">
             <div class="reveal">
                 <div class="px-6 mb-8 flex justify-between items-end">
                     <div>
@@ -399,7 +411,7 @@
             </div>
         </section>
 
-        <!-- 8. 하단 배너 (빈 섹션 제거 후 바로 배너로 이어짐) -->
+        <!-- 7. 하단 배너 -->
         <section class="py-16 bg-party-red text-white text-center px-6 relative overflow-hidden">
             <div class="reveal">
                 <div class="relative z-10">
@@ -415,7 +427,7 @@
             </div>
         </section>
 
-        <!-- 9. 연락처 및 Footer -->
+        <!-- 8. 연락처 및 Footer -->
         <section id="contact" class="pt-10 px-6 bg-white text-gray-900">
             <div class="mb-6 text-center">
                 <h2 class="text-xl font-black mb-2">진해 여러분의 목소리를 듣습니다</h2>
@@ -499,7 +511,7 @@
                 content: {
                     title: '진해의 도약!! 진해의 선택!! 박동철 도의원',
                     description: '박동하는 진해, 지금이 확실히 밀어줄 철입니다!',
-                    imageUrl: 'https://i.ibb.co/6JyFRkTd/Kakao-Talk-20260326-143941240.jpg', 
+                    imageUrl: 'https://i.ibb.co/1GMR2PbW/1775703200005.png', 
                     link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl },
                 },
                 buttons: [{ title: '후보자 프로필 보기', link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl } }],
