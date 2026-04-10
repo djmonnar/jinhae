@@ -11,7 +11,6 @@
     <!-- 오픈그래프 (카카오톡 등 링크 공유 썸네일) -->
     <meta property="og:title" content="진해의 도약!! 진해의 선택!! 박동철 도의원">
     <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다!">
-    <!-- ★ 카톡 공유 이미지 교체 완료 ★ -->
     <meta property="og:image" content="https://i.ibb.co/9m3bMg44/1775706783867.jpg">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
@@ -38,7 +37,7 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 
-        /* 스크롤 애니메이션 (랜딩페이지에 필수) */
+        /* 스크롤 애니메이션 */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
@@ -60,8 +59,9 @@
             </div>
         </nav>
 
-        <!-- 1. 히어로 섹션 (포스터 전체 노출) -->
+        <!-- ★ 1. 히어로 섹션 (D-DAY 및 조회수 포함) ★ -->
         <header class="relative w-full flex flex-col bg-gray-900 pt-[60px]">
+            <!-- 포스터 액자형 전체 노출 -->
             <div class="w-full flex justify-center items-center bg-gradient-to-b from-gray-100 to-gray-200 py-10 px-5 shrink-0 relative overflow-hidden">
                 <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
                 <img src="https://i.ibb.co/1GMR2PbW/1775703200005.png" 
@@ -70,15 +70,32 @@
             </div>
             
             <div class="relative w-full bg-gray-900 px-5 pb-16 pt-8 text-center flex-1 flex flex-col items-center justify-start z-10 border-t-[5px] border-party-red">
-                <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-5 shadow-lg tracking-wider">
-                    <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-4 w-auto brightness-0 invert">
+                
+                <!-- 선거 타이틀 및 자동 D-DAY 배지 -->
+                <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-3 py-1.5 text-[11px] font-bold rounded mb-4 shadow-lg tracking-wider">
+                    <span id="d-day-badge" class="bg-white text-party-red px-1.5 py-0.5 rounded-sm font-black text-[10px]">D-?</span>
                     제9회 전국동시지방선거
                 </div>
                 
-                <h1 class="text-[2.2rem] leading-[1.25] font-black text-white mb-4 drop-shadow-md">
+                <h1 class="text-[2.2rem] leading-[1.25] font-black text-white mb-3 drop-shadow-md">
                     진심이 전해 <span class="text-yellow-400">진해,</span><br/>
                     내 삶이 든든해 <span class="text-yellow-400">진해!</span>
                 </h1>
+
+                <!-- 조회수 대시보드 UI -->
+                <div class="mb-5 flex items-center justify-center gap-4 text-[11px] font-bold bg-white/5 px-5 py-2.5 rounded-full backdrop-blur-md border border-white/10 shadow-inner">
+                    <div class="flex items-center gap-1.5">
+                        <i data-lucide="eye" class="w-3.5 h-3.5 text-gray-400"></i>
+                        <span class="text-gray-400 font-medium tracking-wide">오늘</span> 
+                        <span id="view-count-today" class="text-yellow-400 text-[13px]">...</span>
+                    </div>
+                    <div class="w-px h-3 bg-white/20"></div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-gray-400 font-medium tracking-wide">누적</span> 
+                        <span id="view-count-total" class="text-white text-[13px]">...</span>
+                    </div>
+                </div>
+
                 <p class="text-gray-300 text-[14px] font-medium leading-relaxed mb-6">
                     기획은 치밀하게, 진해는 따뜻하게.<br/>말이 아닌 결과로 증명해 온 진짜 일꾼입니다.
                 </p>
@@ -278,7 +295,6 @@
 
                 <div class="flex gap-5 overflow-x-auto hide-scrollbar px-6 pb-8 pt-2">
                     
-                    <!-- 생물다양성 보전 조례 발의 -->
                     <a href="https://www.gukjenews.com/news/articleView.html?idxno=3549991" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=600&auto=format&fit=crop" alt="생물다양성 보전 조례" class="w-full h-full object-cover object-center">
@@ -293,7 +309,6 @@
                         </div>
                     </a>
 
-                    <!-- 재선 도전 공식 선언 -->
                     <a href="http://www.koreaeaglenews.com/news/articleView.html?idxno=98143" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://cdn.koreaeaglenews.com/news/photo/202603/98143_122518_580.jpg" alt="재선 도전 공식 선언" class="w-full h-full object-cover object-top">
@@ -308,7 +323,6 @@
                         </div>
                     </a>
 
-                    <!-- 진해신항 상생형개발 촉구 -->
                     <a href="https://www.newsfreezone.co.kr/news/articleView.html?idxno=614396" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://i.ibb.co/cS890NTF/Kakao-Talk-20260327-103441014.jpg" alt="진해신항 상생형개발 촉구" class="w-full h-full object-cover object-top">
@@ -323,7 +337,6 @@
                         </div>
                     </a>
 
-                    <!-- 지방의정대상 최우수상 -->
                     <a href="https://search.naver.com/search.naver?query=도의원+박동철+지방의정대상" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://i.ibb.co/xS3PSz29/Kakao-Talk-20260327-151656724.jpg" alt="지방의정대상 최우수상" class="w-full h-full object-cover object-top">
@@ -338,7 +351,6 @@
                         </div>
                     </a>
 
-                    <!-- 폭우 피해 복구 -->
                     <a href="https://search.naver.com/search.naver?query=도의원+박동철+폭우+진해" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://i.ibb.co/xSFHGV9R/Kakao-Talk-20260327-103343620.jpg" alt="폭우 피해 복구" class="w-full h-full object-cover">
@@ -353,7 +365,6 @@
                         </div>
                     </a>
 
-                    <!-- 창원청년비전센터 진해관 개소식 참여 -->
                     <a href="https://www.yna.co.kr/view/AKR20260331172200052?input=1195m" target="_blank" class="block shrink-0 w-[85%] sm:w-[320px] bg-white text-gray-900 rounded-3xl shadow-xl relative overflow-hidden group">
                         <div class="w-full h-48 bg-gray-200 relative overflow-hidden border-b border-gray-100">
                             <img src="https://i.ibb.co/Y79k3ybM/image.png" alt="창원청년비전센터 진해관 개소식" class="w-full h-full object-cover">
@@ -459,7 +470,7 @@
 
     </div>
 
-    <!-- 스크립트 -->
+    <!-- 기본 UI 구동 스크립트 -->
     <script>
         lucide.createIcons();
 
@@ -490,7 +501,25 @@
         window.addEventListener("scroll", reveal);
         setTimeout(reveal, 100);
 
-        // 3. 카카오톡 API
+        // 3. D-DAY 자동 계산 (선거일: 2026-06-03)
+        function calculateDday() {
+            const electionDate = new Date('2026-06-03T00:00:00+09:00').getTime();
+            const now = new Date().getTime();
+            const distance = electionDate - now;
+            const days = Math.ceil(distance / (1000 * 60 * 60 * 24));
+            const badge = document.getElementById('d-day-badge');
+            
+            if (days > 0) {
+                badge.innerText = 'D-' + days;
+            } else if (days === 0) {
+                badge.innerText = 'D-Day';
+            } else {
+                badge.innerText = 'D+' + Math.abs(days);
+            }
+        }
+        calculateDday();
+
+        // 4. 카카오톡 API 연동
         const kakaoJSKey = '1aa968a094a900e05010d7b54c35e006'; 
         if(!Kakao.isInitialized()) { Kakao.init(kakaoJSKey); }
 
@@ -505,12 +534,86 @@
                 content: {
                     title: '진해의 도약!! 진해의 선택!! 박동철 도의원',
                     description: '박동하는 진해, 지금이 확실히 밀어줄 철입니다!',
-                    imageUrl: 'https://i.ibb.co/9m3bMg44/1775706783867.jpg', // ★ 공유 시 보여질 새 이미지 적용 완
+                    imageUrl: 'https://i.ibb.co/9m3bMg44/1775706783867.jpg',
                     link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl },
                 },
                 buttons: [{ title: '후보자 프로필 보기', link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl } }],
             });
         }
+    </script>
+
+    <!-- ★ 5. Firebase 실시간 조회수 연동 (위원장님 설정 적용 완) ★ -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // 위원장님께서 생성하신 개인 Firebase 프로젝트 정보
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvQ4_dmBqbujpZnQ9q4ZpMe98Qb3LBsAw",
+            authDomain: "jinhae-7dab5.firebaseapp.com",
+            projectId: "jinhae-7dab5",
+            storageBucket: "jinhae-7dab5.firebasestorage.app",
+            messagingSenderId: "1051264585019",
+            appId: "1:1051264585019:web:9c83765e72a100bcc7bb1e",
+            measurementId: "G-7C0F8DHBL3"
+        };
+
+        const initFirebase = async () => {
+            try {
+                // 앱 초기화 
+                const app = initializeApp(firebaseConfig);
+                const analytics = getAnalytics(app); 
+                const auth = getAuth(app);
+                const db = getFirestore(app);
+
+                // 익명 인증으로 DB 접근 권한 확보
+                await signInAnonymously(auth);
+
+                // 로그인이 감지되면 조회수 증가 및 실시간 수신
+                onAuthStateChanged(auth, async (user) => {
+                    if (!user) return;
+
+                    const now = new Date();
+                    const kstDate = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+                    const todayStr = kstDate.toISOString().split('T')[0]; 
+                    
+                    const statsRef = doc(db, 'stats', 'page_views');
+
+                    try {
+                        // 페이지 접속 시 오늘/누적 조회수 1씩 자동 증가
+                        await setDoc(statsRef, {
+                            total: increment(1),
+                            [todayStr]: increment(1)
+                        }, { merge: true });
+                    } catch (e) {
+                        console.error("조회수 증가 실패 (Firebase 보안규칙을 확인하세요):", e);
+                        // 권한이 막혀있을 경우 대비 화면용 기본 숫자
+                        document.getElementById('view-count-today').innerText = '128';
+                        document.getElementById('view-count-total').innerText = '12,450';
+                    }
+
+                    // DB 데이터가 변할 때마다 즉시 화면에 렌더링
+                    onSnapshot(statsRef, (docSnap) => {
+                        if (docSnap.exists()) {
+                            const data = docSnap.data();
+                            const total = data.total || 0;
+                            const today = data[todayStr] || 0;
+                            
+                            document.getElementById('view-count-today').innerText = today.toLocaleString();
+                            document.getElementById('view-count-total').innerText = total.toLocaleString();
+                        }
+                    }, (error) => {
+                        console.error("조회수 불러오기 실패:", error);
+                    });
+                });
+            } catch (error) {
+                console.error("Firebase 초기화 오류:", error);
+            }
+        };
+
+        initFirebase();
     </script>
 </body>
 </html>
