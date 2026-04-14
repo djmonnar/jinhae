@@ -6,26 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>진해의 도약!! 진해의 선택!! 박동철 도의원</title>
     
-    <!-- 브라우저 탭 파비콘 -->
     <link rel="icon" href="https://i.ibb.co/9m3bMg44/1775706783867.jpg">
 
-    <!-- 오픈그래프 (공유 시 노출 정보) -->
+    <!-- 오픈그래프 -->
     <meta property="og:title" content="진해의 도약!! 진해의 선택!! 박동철 도의원">
     <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다!">
     <meta property="og:image" content="https://i.ibb.co/9m3bMg44/1775706783867.jpg">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
-    <!-- ★ 초고속 로딩을 위한 메인 사진 Preload ★ -->
+    <!-- 이미지 Preload (로딩 속도 최적화) -->
     <link rel="preload" as="image" href="./1776148156619.webp" fetchpriority="high">
 
-    <!-- 폰트 및 외부 라이브러리 -->
+    <!-- 외부 라이브러리 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js" xintegrity="sha384-kDljxUXHaJ9xAb2a8C4//nc0uQhH65tM8K//iA1QO0rZ0y1Lw6y1bU3kL6RzSsh" crossorigin="anonymous"></script>
     
     <style>
-        /* ★ 로딩 전 하얀 화면 및 텍스트 노출 방지 ★ */
+        /* 로딩 전 텍스트 노출 방지 */
         html, body { background-color: #0f172a; margin: 0; padding: 0; }
         
         /* 로딩 스플래시 화면 */
@@ -43,21 +42,14 @@
         .text-party-red { color: #E61E2B; }
         .border-party-red { border-color: #E61E2B; }
 
-        /* ==============================
-           ★ PC 화면 최적화 (프리미엄 배경)
-           ============================== */
+        /* PC 화면 레이아웃 */
         .pc-wrapper {
             display: flex; justify-content: center; align-items: flex-start;
             min-height: 100vh; width: 100%;
             background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), 
                         url('./1776148156619.webp') no-repeat center center / cover;
         }
-        
-        .pc-side-info {
-            display: none; flex-direction: column; justify-content: center;
-            width: 420px; padding-right: 80px; color: white; height: 100vh; position: sticky; top: 0;
-        }
-        
+        .pc-side-info { display: none; flex-direction: column; justify-content: center; width: 420px; padding-right: 80px; color: white; height: 100vh; position: sticky; top: 0; }
         @media (min-width: 1024px) { .pc-side-info { display: flex; } }
 
         /* 모바일 컨테이너 */
@@ -71,20 +63,23 @@
 
         .fixed-mobile { position: fixed; width: 100%; max-width: 480px; left: 50%; transform: translateX(-50%); }
 
-        /* 디자인 포인트 */
+        /* 디자인 요소 */
         .gradient-text { background: linear-gradient(135deg, #E61E2B 0%, #ff6b6b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .gold-text { background: linear-gradient(135deg, #F59E0B, #FCD34D); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .glass-dark { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
         .glass-light { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
         
+        .reveal { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
         @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.8); opacity: 0; } }
         .pulse-ring::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #E61E2B; animation: pulse-ring 1.8s ease-out infinite; z-index: -1; }
         
-        .reveal { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .card-lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+        .card-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body class="antialiased">
@@ -93,33 +88,24 @@
     <div id="splash-screen">
         <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="loader-logo">
         <div class="text-white font-black text-lg tracking-widest animate-pulse">PARK DONG CHEOL</div>
-        <div class="text-gray-500 text-xs mt-2 italic">진해의 더 큰 도약을 준비합니다...</div>
+        <div class="text-gray-500 text-xs mt-2">진해의 미래를 준비하고 있습니다...</div>
     </div>
 
     <div class="pc-wrapper">
-        <!-- PC용 좌측 정보 섹션 -->
         <div class="pc-side-info">
             <div class="inline-block bg-party-red text-white px-4 py-1.5 rounded-full text-xs font-black mb-6 w-max shadow-lg">제9회 전국동시지방선거</div>
             <h1 class="text-6xl font-black mb-6 leading-tight tracking-tighter text-white">진해의 도약!<br/><span class="text-party-red">박동철</span>입니다.</h1>
             <p class="text-gray-300 text-xl leading-relaxed font-medium mb-10 opacity-80">
                 기획은 치밀하게, 진해는 따뜻하게.<br/>말이 아닌 결과로 증명해 온 진짜 일꾼입니다.
             </p>
-            <div class="flex items-center gap-3">
-                <div class="flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-5 py-3 rounded-2xl">
-                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
-                    <span class="text-sm font-bold text-gray-200">공식 브랜드 페이지 운영 중</span>
-                </div>
-            </div>
         </div>
 
-        <!-- 모바일 컨테이너 (Ver1 단일 페이지) -->
         <div id="main-container" class="mobile-container relative pb-10">
             
-            <!-- 상단 헤더 -->
             <nav id="navbar" class="fixed-mobile top-0 z-50 py-3 glass-light border-b border-gray-100 shadow-sm transition-all duration-300">
                 <div class="px-5 flex justify-between items-center w-full">
                     <div class="font-black text-lg tracking-tight flex items-center gap-1.5 border-l-4 border-party-red pl-2">
-                        <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 w-auto drop-shadow-sm">
+                        <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 w-auto">
                         <span class="text-gray-900 font-extrabold tracking-tight">도의원 예비후보 박동철</span>
                     </div>
                     <a href="#contact" class="text-[11px] font-bold px-3 py-2 rounded-full transition-colors bg-party-red text-white shadow-sm shrink-0">
@@ -128,9 +114,8 @@
                 </div>
             </nav>
 
-            <!-- 1. 히어로 섹션 (사진 꽉 채운 버전) -->
+            <!-- 1. 히어로 섹션 (꽉 찬 사진) -->
             <header class="relative w-full pt-[54px] bg-white overflow-hidden">
-                <!-- 사진을 화면 좌우 꽉 채우도록 설정 -->
                 <img src="./1776148156619.webp" alt="박동철 예비후보" class="w-full h-auto block" />
                 
                 <div class="relative w-full bg-gray-900 px-6 pb-16 pt-10 text-center z-10 border-t-[5px] border-party-red">
@@ -144,7 +129,6 @@
                         내 삶이 든든해 <span class="gold-text">진해!</span>
                     </h1>
 
-                    <!-- 실시간 조회수 섹션 -->
                     <div class="mb-8 flex items-center justify-center gap-5 text-[11px] font-bold bg-white/10 px-6 py-3 rounded-full backdrop-blur-md border border-white/10 shadow-inner w-max mx-auto">
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="eye" class="w-4 h-4 text-gray-400"></i>
@@ -169,47 +153,92 @@
                 </div>
             </header>
 
-            <!-- 2. 출마선언문 섹션 -->
+            <!-- 2. 출마선언문 -->
             <section class="py-16 px-6 bg-white relative z-30 -mt-6 rounded-t-[2.5rem] shadow-[0_-20px_40px_rgba(0,0,0,0.2)]">
                 <div class="reveal">
                     <div class="inline-block bg-party-red text-white px-2.5 py-1 text-[10px] font-bold rounded mb-4 shadow-sm">출마 선언문</div>
                     <h2 class="text-2xl font-black text-gray-900 mb-8 border-l-4 border-party-red pl-3 leading-snug">
                         진해의 중단 없는 발전,<br/><span class="gradient-text">검증된 실천력</span>으로 완성하겠습니다!
                     </h2>
-
                     <div class="text-[15.5px] text-gray-700 leading-[1.8] space-y-6 font-medium break-keep">
-                        <p>
-                            존경하는 진해 주민 여러분! 박동철 의원입니다. 저는 지난 4년의 성과를 디딤돌 삼아 진해의 더 큰 도약과 발전을 완수하기 위해 다시 섰습니다.
-                        </p>
-                        <div class="bg-gray-50 border-l-4 border-party-red p-6 rounded-r-2xl shadow-sm">
-                            <p class="font-black text-gray-900 mb-3 text-lg">의정활동은 말이 아닌 결과로 증명해야 합니다.</p>
-                            <p class="text-[14px] text-gray-600 leading-relaxed">
-                                장기간 표류하며 지역의 해묵은 과제였던 ‘통합진해중학교’ 개교 완수, 「경상남도교육청 학교복합시설 설치 조례」 제정 등 오직 주민만을 바라본 진심이 이뤄낸 결과였습니다.
-                            </p>
-                        </div>
-                        <p>
-                            재선 도의원으로서 제가 갈 길은 명확합니다. 초선의 패기에 실력을 더해, 피부로 느끼는 실질적인 변화를 체감시켜 드리겠습니다. <span class="gradient-text font-bold">결과로 보답하고 행동으로 증명하겠습니다.</span>
-                        </p>
-                    </div>
-
-                    <div class="mt-14 text-right border-t border-gray-100 pt-6">
-                        <p class="text-sm text-gray-500 mb-2">2026년 3월 26일</p>
-                        <p class="text-2xl font-black text-gray-900">도의원 예비후보 박 동 철 <span class="text-sm font-bold text-gray-500 ml-1">올림</span></p>
+                        <p>존경하는 진해 주민 여러분! 박동철입니다. 저는 지난 4년의 성과를 디딤돌 삼아 진해의 더 큰 도약과 발전을 완수하기 위해 다시 섰습니다.</p>
+                        <p class="font-bold text-party-red">"말보다 앞서는 행동으로, 결과로 보답하겠습니다."</p>
                     </div>
                 </div>
             </section>
 
-            <!-- 3. 상세 약력 섹션 -->
-            <section class="py-16 px-6 bg-gray-50 border-b border-gray-100">
+            <!-- ★ 복구된 섹션 1: 언론 보도 (가로 스크롤) ★ -->
+            <section class="py-16 bg-gray-900 text-white overflow-hidden relative">
                 <div class="reveal">
-                    <div class="text-center mb-10">
-                        <h2 class="text-2xl font-black text-gray-900 mb-2">진해를 가장 잘 아는 일꾼</h2>
-                        <div class="w-10 h-1 bg-party-red mx-auto"></div>
+                    <div class="px-6 mb-8 flex justify-between items-end">
+                        <div>
+                            <h2 class="text-2xl font-black mb-2 leading-tight"><span class="text-yellow-400">진해와 소통하는</span><br/>박동철의 진심</h2>
+                            <p class="text-gray-400 text-[13px]">원본 기사로 연결됩니다.</p>
+                        </div>
+                        <div class="flex items-center text-[10px] font-bold text-gray-900 bg-yellow-400 px-3 py-1.5 rounded-full animate-pulse shadow-lg">
+                            밀어서 보기 <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
+                        </div>
                     </div>
 
-                    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 relative overflow-hidden">
+                    <div class="flex gap-5 overflow-x-auto hide-scrollbar px-6 pb-8 pt-2">
+                        <!-- 기사 1 -->
+                        <a href="https://www.gukjenews.com/news/articleView.html?idxno=3549991" target="_blank" class="block shrink-0 w-[80%] bg-white text-gray-900 rounded-3xl shadow-xl overflow-hidden card-lift">
+                            <div class="w-full h-40 bg-gray-200 overflow-hidden relative">
+                                <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=600&auto=format&fit=crop" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-green-600 text-white text-[10px] font-black px-2 py-1 rounded shadow-md">소통 입법</div>
+                            </div>
+                            <div class="p-6"><h3 class="font-black text-lg mb-2 leading-snug text-green-700">학생 제안 '생물다양성 보전 조례' 발의</h3></div>
+                        </a>
+                        <!-- 기사 2 -->
+                        <a href="http://www.koreaeaglenews.com/news/articleView.html?idxno=98143" target="_blank" class="block shrink-0 w-[80%] bg-white text-gray-900 rounded-3xl shadow-xl overflow-hidden card-lift">
+                            <div class="w-full h-40 bg-gray-200 overflow-hidden relative">
+                                <img src="https://cdn.koreaeaglenews.com/news/photo/202603/98143_122518_580.jpg" class="w-full h-full object-cover object-top">
+                                <div class="absolute top-3 right-3 bg-party-red text-white text-[10px] font-black px-2 py-1 rounded shadow-md">출마 선언</div>
+                            </div>
+                            <div class="p-6"><h3 class="font-black text-lg mb-2 leading-snug text-party-red">재선 도전 공식 선언 "진해 발전 완수"</h3></div>
+                        </a>
+                        <!-- 기사 3 -->
+                        <a href="https://www.newsfreezone.co.kr/news/articleView.html?idxno=614396" target="_blank" class="block shrink-0 w-[80%] bg-white text-gray-900 rounded-3xl shadow-xl overflow-hidden card-lift">
+                            <div class="w-full h-40 bg-gray-200 overflow-hidden relative">
+                                <img src="https://i.ibb.co/cS890NTF/Kakao-Talk-20260327-103441014.jpg" class="w-full h-full object-cover object-top">
+                                <div class="absolute top-3 right-3 bg-blue-600 text-white text-[10px] font-black px-2 py-1 rounded shadow-md">지역 수호</div>
+                            </div>
+                            <div class="p-6"><h3 class="font-black text-lg mb-2 leading-snug">진해신항 상생형 개발 강력 촉구</h3></div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ★ 복구된 섹션 2: 카드뉴스 및 현장 앨범 ★ -->
+            <section class="py-16 bg-gray-100 text-gray-900 overflow-hidden relative">
+                <div class="reveal">
+                    <div class="px-6 mb-8 flex justify-between items-end">
+                        <div>
+                            <h2 class="text-2xl font-black mb-2"><span class="text-party-red">카드뉴스</span> 및 현장 앨범</h2>
+                            <p class="text-gray-500 text-[13px]">사진을 터치하시면 크게 보실 수 있습니다.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 overflow-x-auto hide-scrollbar px-6 pb-8 pt-2 items-center">
+                        <a href="https://i.ibb.co/N2zBBgjK/Kakao-Talk-20260330-120127383.jpg" target="_blank" class="block shrink-0 w-[75%] bg-white rounded-3xl shadow-md border border-gray-200 overflow-hidden card-lift">
+                            <img src="https://i.ibb.co/N2zBBgjK/Kakao-Talk-20260330-120127383.jpg" class="w-full aspect-[4/5] object-cover">
+                        </a>
+                        <a href="https://i.ibb.co/xt5ZMtTD/Kakao-Talk-20260330-121216575.png" target="_blank" class="block shrink-0 w-[75%] bg-white rounded-3xl shadow-md border border-gray-200 overflow-hidden card-lift">
+                            <img src="https://i.ibb.co/xt5ZMtTD/Kakao-Talk-20260330-121216575.png" class="w-full aspect-[4/5] object-cover">
+                        </a>
+                        <a href="https://i.ibb.co/cXTx34kq/image.png" target="_blank" class="block shrink-0 w-[75%] bg-white rounded-3xl shadow-md border border-gray-200 overflow-hidden p-2 card-lift">
+                            <img src="https://i.ibb.co/cXTx34kq/image.png" class="w-full aspect-[4/5] object-contain bg-gray-50 rounded-2xl">
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. 상세 약력 -->
+            <section class="py-16 px-6 bg-white border-b border-gray-100">
+                <div class="reveal">
+                    <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 relative overflow-hidden">
                         <i data-lucide="award" class="absolute -right-6 -bottom-6 w-40 h-40 text-gray-50 opacity-60"></i>
-                        <h3 class="text-lg font-black text-gray-900 mb-6 flex items-center gap-2 border-b-2 border-gray-100 pb-3">
+                        <h3 class="text-xl font-black text-gray-900 mb-6 flex items-center gap-2 border-b-2 border-gray-100 pb-3">
                             <i data-lucide="landmark" class="w-6 h-6 text-party-red"></i> 주요 경력
                         </h3>
                         <ul class="space-y-4 mb-8 text-[14.5px] text-gray-800 font-medium">
@@ -221,28 +250,18 @@
                                 <i data-lucide="bar-chart-3" class="w-5 h-5 text-blue-600 shrink-0 mt-0.5"></i>
                                 <span class="font-bold">현) 경상남도의회 기획행정위 부위원장</span>
                             </li>
-                            <li class="flex items-start gap-3 px-2">
-                                <div class="w-2 h-2 rounded-full bg-gray-400 mt-2 shrink-0"></div>
+                            <li class="flex items-start gap-3 px-2 pt-1 text-gray-600">
+                                <div class="w-2 h-2 rounded-full bg-gray-300 mt-2 shrink-0"></div>
                                 <span>현) (사)한국외식업중앙회 창원시 진해구지부장</span>
-                            </li>
-                            <li class="flex items-start gap-3 px-2">
-                                <div class="w-2 h-2 rounded-full bg-gray-400 mt-2 shrink-0"></div>
-                                <span>현) 백년가업 하늘땅 본점 대표</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- 4. 연락처 및 소통 채널 -->
-            <section id="contact" class="py-16 px-6 bg-white">
-                <div class="reveal text-center mb-10">
-                    <h2 class="text-2xl font-black mb-2 uppercase tracking-tighter">소통 채널</h2>
-                    <p class="text-gray-500 text-sm">진해의 목소리를 듣겠습니다.</p>
-                </div>
-
-                <div class="space-y-4 mb-10 reveal">
-                    <!-- 채널톡 상담 버튼 (강조) -->
+            <!-- 4. 연락처 및 하단 배너 -->
+            <section id="contact" class="py-16 bg-white px-6">
+                <div class="space-y-4 mb-10">
                     <a href="http://pf.kakao.com/_xgALdX/chat" target="_blank" class="flex items-center bg-[#FAE100] p-6 rounded-2xl border-2 border-[#F4D500] shadow-lg active:scale-95 transition-transform">
                         <div class="bg-black shadow-md p-3.5 rounded-full mr-4 flex items-center justify-center">
                             <svg viewBox="0 0 24 24" class="w-6 h-6 text-[#FAE100]" fill="currentColor"><path d="M12 3c-5.523 0-10 3.582-10 8 0 2.85 1.83 5.352 4.606 6.815l-1.15 4.298c-.11.41.345.742.71.554l4.982-3.328c.28.02.564.03.852.03 5.523 0 10-3.582 10-8s-4.477-8-10-8z"/></svg>
@@ -252,47 +271,43 @@
                             <div class="font-black text-xl text-black">카카오톡 채널 연결</div>
                         </div>
                     </a>
-
-                    <a href="tel:055-546-4312" class="flex items-center bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm active:bg-gray-100">
+                    <a href="tel:055-546-4312" class="flex items-center bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm">
                         <div class="bg-white shadow-md p-3.5 rounded-full mr-4"><i data-lucide="phone" class="w-6 h-6 text-party-red"></i></div>
-                        <div>
-                            <div class="text-[12px] text-gray-500 mb-1 font-bold">선거사무소 직통전화</div>
-                            <div class="font-black text-xl text-gray-900">055-546-4312</div>
-                        </div>
+                        <div><div class="text-[11px] text-gray-500 mb-1 font-bold">선거사무소 직통전화</div><div class="font-black text-xl text-gray-900">055-546-4312</div></div>
                     </a>
                 </div>
 
-                <button onclick="shareKakao()" class="w-full bg-gray-900 text-white font-black py-5 rounded-2xl flex justify-center items-center shadow-xl mb-12 active:scale-95 transition-all">
-                    <i data-lucide="share-2" class="w-5 h-5 mr-2"></i> 지인들에게 페이지 공유하기
-                </button>
+                <div class="py-16 bg-gradient-to-br from-[#E61E2B] to-[#9b0013] text-white text-center rounded-[2rem] shadow-2xl px-6 relative overflow-hidden">
+                    <h2 class="text-[1.8rem] font-black leading-tight mb-8">지금은 확실히 밀어줄<br/><span class="text-yellow-300 text-5xl mt-2 block">'철'</span> 입니다!</h2>
+                    <div class="bg-white text-party-red text-lg font-black px-10 py-4 rounded-full inline-block shadow-lg">예비후보 박동철</div>
+                </div>
             </section>
 
-            <!-- 푸터 -->
             <footer class="bg-gray-50 border-t border-gray-100 py-12 px-6 text-center">
-                <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 mx-auto mb-5 grayscale opacity-30">
-                <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest">© 2026 Park Dong-cheol Campaign</p>
-                <p class="text-[10px] text-gray-300 mt-1">본 페이지는 예비후보 박동철 선거사무소에서 제작하였습니다.</p>
+                <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 mx-auto mb-4 grayscale opacity-30">
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">© 2026 Park Dong-cheol Campaign</p>
             </footer>
 
-            <!-- ★ 우측 하단 플로팅 버튼 (채널 / 공유 / 전화) ★ -->
-            <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-4">
-                <a href="http://pf.kakao.com/_xgALdX/chat" target="_blank" class="w-14 h-14 bg-[#FAE100] rounded-full shadow-2xl flex items-center justify-center border-2 border-white transform transition hover:scale-110 active:scale-95">
-                    <svg viewBox="0 0 24 24" class="w-8 h-8 text-black" fill="currentColor"><path d="M12 3c-5.523 0-10 3.582-10 8 0 2.85 1.83 5.352 4.606 6.815l-1.15 4.298c-.11.41.345.742.71.554l4.982-3.328c.28.02.564.03.852.03 5.523 0 10-3.582 10-8s-4.477-8-10-8z"/></svg>
-                </a>
-                <button onclick="shareKakao()" class="w-14 h-14 bg-gray-900 rounded-full shadow-2xl flex items-center justify-center border-2 border-white transform transition hover:scale-110 active:scale-95">
-                    <i data-lucide="share-2" class="w-6 h-6 text-white"></i>
-                </button>
-                <div class="relative w-14 h-14">
-                    <a href="tel:055-546-4312" class="pulse-ring absolute inset-0 bg-party-red rounded-full shadow-2xl flex items-center justify-center z-10 border-2 border-white transition active:scale-95">
-                        <i data-lucide="phone" class="w-6 h-6 text-white fill-current"></i>
+            <!-- 우측 하단 플로팅 버튼 (채널 / 공유 / 전화) -->
+            <div class="fixed-mobile bottom-6 z-50 pointer-events-none flex justify-end px-5">
+                <div class="flex flex-col gap-3 pointer-events-auto">
+                    <a href="http://pf.kakao.com/_xgALdX/chat" target="_blank" class="w-14 h-14 bg-[#FAE100] rounded-full shadow-2xl flex items-center justify-center border-2 border-white transform transition hover:scale-110 active:scale-95">
+                        <svg viewBox="0 0 24 24" class="w-8 h-8 text-black" fill="currentColor"><path d="M12 3c-5.523 0-10 3.582-10 8 0 2.85 1.83 5.352 4.606 6.815l-1.15 4.298c-.11.41.345.742.71.554l4.982-3.328c.28.02.564.03.852.03 5.523 0 10-3.582 10-8s-4.477-8-10-8z"/></svg>
                     </a>
+                    <button onclick="shareKakao()" class="w-14 h-14 bg-gray-900 rounded-full shadow-2xl flex items-center justify-center border-2 border-white transform transition hover:scale-110 active:scale-95">
+                        <i data-lucide="share-2" class="w-6 h-6 text-white"></i>
+                    </button>
+                    <div class="relative w-14 h-14">
+                        <a href="tel:055-546-4312" class="pulse-ring absolute inset-0 bg-party-red rounded-full shadow-2xl flex items-center justify-center z-10 border-2 border-white transition active:scale-95">
+                            <i data-lucide="phone" class="w-6 h-6 text-white fill-current"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- 스크립트 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -300,7 +315,7 @@
 
         lucide.createIcons();
 
-        // ★ 로딩 완료 처리 ★
+        // 로딩 완료 처리
         window.addEventListener('load', () => {
             const splash = document.getElementById('splash-screen');
             const mainCont = document.getElementById('main-container');
@@ -316,7 +331,7 @@
         const days = Math.ceil((electionDate - new Date().getTime()) / (1000 * 60 * 60 * 24));
         document.getElementById('d-day-badge').innerText = days > 0 ? 'D-' + days : 'D-Day';
 
-        // 2. Firebase 조회수 로직
+        // 2. Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCvQ4_dmBqbujpZnQ9q4ZpMe98Qb3LBsAw",
             authDomain: "jinhae-7dab5.firebaseapp.com",
@@ -347,7 +362,7 @@
         };
         initStats();
 
-        // 3. Scroll Reveal
+        // 3. Reveal
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -359,19 +374,17 @@
     </script>
 
     <script>
-        // 카카오톡 초기화 및 공유 함수
         window.shareKakao = function() {
             if(!Kakao.isInitialized()) { Kakao.init('1aa968a094a900e05010d7b54c35e006'); }
-            const campaignUrl = 'https://djmonnar.github.io/jinhae/'; 
             Kakao.Share.sendDefault({
                 objectType: 'feed',
                 content: {
                     title: '진해의 도약!! 박동철 도의원 예비후보',
                     description: '박동하는 진해, 지금이 확실히 밀어줄 철입니다!',
                     imageUrl: 'https://i.ibb.co/9m3bMg44/1775706783867.jpg',
-                    link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl },
+                    link: { mobileWebUrl: 'https://djmonnar.github.io/jinhae/', webUrl: 'https://djmonnar.github.io/jinhae/' },
                 },
-                buttons: [{ title: '예비후보 프로필 보기', link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl } }],
+                buttons: [{ title: '예비후보 프로필 보기', link: { mobileWebUrl: 'https://djmonnar.github.io/jinhae/', webUrl: 'https://djmonnar.github.io/jinhae/' } }],
             });
         }
     </script>
