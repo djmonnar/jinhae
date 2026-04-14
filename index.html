@@ -9,13 +9,13 @@
     <!-- 브라우저 탭 파비콘 -->
     <link rel="icon" href="https://i.ibb.co/9m3bMg44/1775706783867.jpg">
 
-    <!-- 오픈그래프 (공유 시 노출 정보) -->
+    <!-- 오픈그래프 -->
     <meta property="og:title" content="진해의 도약!! 진해의 선택!! 박동철 도의원">
     <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다!">
     <meta property="og:image" content="https://i.ibb.co/9m3bMg44/1775706783867.jpg">
     <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
 
-    <!-- ★ 초고속 로딩을 위한 메인 사진 Preload ★ -->
+    <!-- ★ 신규 포스터 초고속 로딩을 위한 Preload ★ -->
     <link rel="preload" as="image" href="./1776148156619.webp" fetchpriority="high">
 
     <!-- 폰트 및 외부 라이브러리 -->
@@ -25,26 +25,32 @@
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js" xintegrity="sha384-kDljxUXHaJ9xAb2a8C4//nc0uQhH65tM8K//iA1QO0rZ0y1Lw6y1bU3kL6RzSsh" crossorigin="anonymous"></script>
     
     <style>
-        body { font-family: 'Pretendard', sans-serif; word-break: keep-all; margin: 0; padding: 0; background-color: #0f172a; min-height: 100vh; overflow-x: hidden; }
+        /* 로딩 전 텍스트 노출 방지 배경색 */
+        html, body { background-color: #0f172a; margin: 0; padding: 0; }
+        
+        /* 로딩 스플래시 화면 */
+        #splash-screen {
+            position: fixed; inset: 0; z-index: 9999;
+            background-color: #0f172a;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        .loader-logo { width: 80px; height: auto; margin-bottom: 20px; animation: pulse 1.5s infinite ease-in-out; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
+
+        body { font-family: 'Pretendard', sans-serif; word-break: keep-all; min-height: 100vh; overflow-x: hidden; }
         .bg-party-red { background-color: #E61E2B; }
         .text-party-red { color: #E61E2B; }
         .border-party-red { border-color: #E61E2B; }
 
-        /* ==============================
-           ★ PC 화면 최적화 (프리미엄 배경)
-           ============================== */
+        /* PC 화면 레이아웃 (배경 블러 처리) */
         .pc-wrapper {
             display: flex; justify-content: center; align-items: flex-start;
             min-height: 100vh; width: 100%;
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), 
-                        url('./1776147311694.webp') no-repeat center center / cover;
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), 
+                        url('./1776148156619.webp') no-repeat center center / cover;
         }
-        
-        .pc-side-info {
-            display: none; flex-direction: column; justify-content: center;
-            width: 420px; padding-right: 80px; color: white; height: 100vh; position: sticky; top: 0;
-        }
-        
+        .pc-side-info { display: none; flex-direction: column; justify-content: center; width: 420px; padding-right: 80px; color: white; height: 100vh; position: sticky; top: 0; }
         @media (min-width: 1024px) { .pc-side-info { display: flex; } }
 
         /* 모바일 앱 컨테이너 */
@@ -52,57 +58,65 @@
             width: 100%; max-width: 480px; background-color: #ffffff; 
             min-height: 100vh; position: relative; 
             box-shadow: 0 0 80px rgba(0, 0, 0, 0.6); 
-            overflow-x: hidden; z-index: 10;
+            z-index: 10; opacity: 0; transition: opacity 0.4s ease;
         }
+        .mobile-app-container.loaded { opacity: 1; }
 
         .fixed-mobile { position: fixed; width: 100%; max-width: 480px; left: 50%; transform: translateX(-50%); }
         .pb-nav { padding-bottom: 85px; }
 
-        /* 애니메이션 및 특수효과 */
+        /* 탭 전환 애니메이션 */
         .tab-content { display: none; animation: fadeIn 0.4s ease-out forwards; }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* 디자인 포인트 */
         .gradient-text { background: linear-gradient(135deg, #E61E2B 0%, #ff6b6b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .gold-text { background: linear-gradient(135deg, #F59E0B, #FCD34D); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
         .glass-dark { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
         .glass-light { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-        
-        @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.8); opacity: 0; } }
-        .pulse-ring::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #E61E2B; animation: pulse-ring 1.8s ease-out infinite; z-index: -1; }
         
         .nav-indicator { position: absolute; top: 0; height: 3px; background: #E61E2B; border-radius: 0 0 4px 4px; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
         .reveal { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
         .reveal.active { opacity: 1; transform: translateY(0); }
-
+        
+        @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.8); opacity: 0; } }
+        .pulse-ring::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #E61E2B; animation: pulse-ring 1.8s ease-out infinite; z-index: -1; }
+        
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="antialiased">
 
+    <!-- 로딩 스플래시 화면 -->
+    <div id="splash-screen">
+        <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="loader-logo">
+        <div class="text-white font-black text-lg tracking-widest animate-pulse">PARK DONG CHEOL</div>
+        <div class="text-gray-500 text-xs mt-2 italic">진해의 더 큰 도약을 준비합니다...</div>
+    </div>
+
     <div class="pc-wrapper">
-        <!-- PC용 좌측 정보 섹션 -->
+        <!-- PC 버전 좌측 정보 패널 -->
         <div class="pc-side-info">
             <div class="inline-block bg-party-red text-white px-4 py-1.5 rounded-full text-xs font-black mb-6 w-max shadow-lg">제9회 전국동시지방선거</div>
-            <h1 class="text-6xl font-black mb-6 leading-tight tracking-tighter">진해의 도약!<br/><span class="text-party-red">박동철</span>입니다.</h1>
+            <h1 class="text-6xl font-black mb-6 leading-tight tracking-tighter text-white">진해의 도약!<br/><span class="text-party-red">박동철</span>입니다.</h1>
             <p class="text-gray-300 text-xl leading-relaxed font-medium mb-10 opacity-80">
                 기획은 치밀하게, 진해는 따뜻하게.<br/>말이 아닌 결과로 증명해 온 진짜 일꾼입니다.
             </p>
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3">
                 <div class="flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-5 py-3 rounded-2xl">
                     <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
-                    <span class="text-sm font-bold text-gray-200">공식 브랜드 페이지 운영중</span>
+                    <span class="text-sm font-bold text-gray-200">공식 브랜드 페이지 운영 중</span>
                 </div>
             </div>
         </div>
 
-        <!-- 모바일 컨테이너 -->
-        <div class="mobile-app-container pb-nav relative shadow-2xl">
+        <!-- 메인 앱 컨테이너 -->
+        <div id="main-app" class="mobile-app-container pb-nav relative">
             
-            <!-- 상단 헤더 -->
-            <nav id="top-header" class="fixed-mobile top-0 z-50 py-3 glass-light border-b border-gray-100 shadow-sm">
+            <!-- 상단 고정 헤더 -->
+            <nav id="top-header" class="fixed-mobile top-0 z-50 py-3 glass-light border-b border-gray-100 shadow-sm transition-all duration-300">
                 <div class="px-5 flex justify-between items-center w-full">
                     <div class="font-black text-lg tracking-tight flex items-center gap-1.5 border-l-4 border-party-red pl-2">
                         <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 w-auto drop-shadow-sm">
@@ -115,16 +129,13 @@
             </nav>
 
             <!-- ==========================================
-                 ★ 탭 1: [홈] 화면 (화면 꽉 채운 버전)
+                 ★ 탭 1: [홈] 화면
                  ========================================== -->
             <div id="tab-home" class="tab-content active pt-[54px]">
                 
-                <!-- 1. 히어로 섹션 (꽉 찬 화면 디자인) -->
+                <!-- 1. 히어로 섹션 (새 사진 + 꽉 찬 화면) -->
                 <section class="relative w-full bg-white overflow-hidden">
-                    <!-- ★ 사진을 화면 좌우 꽉 채우도록 설정 ★ -->
-                    <img src="./1776147311694.webp" alt="박동철 예비후보" class="w-full h-auto block" />
-                    
-                    <!-- 하단 성과 뱃지 -->
+                    <img src="./1776148156619.webp" alt="박동철 예비후보" class="w-full h-auto block" />
                     <div class="bg-gray-50 py-6 px-5 border-b border-gray-100">
                         <div class="flex flex-wrap justify-center gap-2">
                             <span class="bg-white border border-gray-200 text-gray-800 text-[11px] font-black px-3.5 py-2 rounded-full shadow-sm">🏫 통합진해중학교 개교 완수</span>
@@ -133,34 +144,30 @@
                     </div>
                 </section>
 
-                <!-- 2. 통계 및 조회수 섹션 -->
-                <section class="py-8 px-5 bg-gray-900 relative wave-divider">
+                <!-- 2. 실시간 통계 및 조회수 -->
+                <section class="py-8 px-5 bg-gray-900 relative">
                     <div class="grid grid-cols-2 gap-3 mb-8">
                         <div class="glass-dark rounded-2xl p-5 text-center shadow-lg">
                             <div class="text-3xl font-black gold-text mb-1">10건</div>
-                            <div class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">조례 대표발의</div>
+                            <div class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">조례 대표발의</div>
                         </div>
                         <div class="glass-dark rounded-2xl p-5 text-center shadow-lg">
                             <div class="text-3xl font-black gold-text mb-1">98%</div>
-                            <div class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">본회의 출석률</div>
+                            <div class="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">본회의 출석률</div>
                         </div>
                     </div>
                     
                     <div class="text-center pb-4">
-                        <p class="text-gray-500 text-[11px] font-bold mb-4 flex items-center justify-center gap-2">
-                            <span class="w-8 h-px bg-gray-700"></span>
-                            REAL-TIME VISITS
-                            <span class="w-8 h-px bg-gray-700"></span>
-                        </p>
+                        <p class="text-gray-500 text-[11px] font-bold mb-4 tracking-widest">REAL-TIME VISITS</p>
                         <div class="flex items-center justify-center gap-8">
                             <div class="text-center">
-                                <span class="block text-white font-black text-2xl mb-0.5" id="view-count-today">...</span>
+                                <span class="block text-white font-black text-2xl" id="view-count-today">...</span>
                                 <span class="text-[9px] text-gray-500 font-black uppercase tracking-tighter">Today</span>
                             </div>
                             <div class="w-px h-8 bg-white/10"></div>
                             <div class="text-center">
-                                <span class="block text-yellow-400 font-black text-2xl mb-0.5" id="view-count-total">...</span>
-                                <span class="text-[9px] text-gray-500 font-black uppercase tracking-tighter">Total Views</span>
+                                <span class="block text-yellow-400 font-black text-2xl" id="view-count-total">...</span>
+                                <span class="text-[9px] text-gray-500 font-black uppercase tracking-tighter">Total</span>
                             </div>
                         </div>
                     </div>
@@ -174,89 +181,76 @@
                             <h2 class="text-2xl font-black text-gray-900 tracking-tight">진해를 향한 진심</h2>
                         </div>
                         <div class="bg-gradient-to-br from-gray-900 to-slate-800 rounded-[2rem] p-7 text-white shadow-2xl relative overflow-hidden">
-                            <i data-lucide="award" class="absolute -right-6 -bottom-6 w-32 h-32 text-white opacity-5"></i>
-                            <p class="text-xl font-black mb-4 leading-tight">"재선의 노련함으로 진해의 내일을 완성하겠습니다."</p>
-                            <p class="text-sm text-gray-400 leading-relaxed mb-8 font-medium">초선의 패기에 검증된 실력을 더해, 우리 주민들이 피부로 느끼는 실질적인 변화를 약속합니다.</p>
-                            <button onclick="switchTab('declaration')" class="w-full bg-party-red hover:bg-red-700 text-white font-black py-4.5 rounded-2xl text-sm shadow-[0_8px_20px_rgba(230,30,43,0.3)] transition-all active:scale-95">
+                            <p class="text-xl font-black mb-4">"재선의 노련함으로 진해의 내일을 완성하겠습니다."</p>
+                            <p class="text-sm text-gray-400 mb-8 font-medium">검증된 실력으로 더 큰 결과로 보답하겠습니다.</p>
+                            <button onclick="switchTab('declaration')" class="w-full bg-party-red text-white font-black py-4.5 rounded-2xl text-sm active:scale-95 transition-all">
                                 출마선언 전문 읽기
                             </button>
                         </div>
                     </div>
                 </section>
 
-                <!-- 4. 하단 임팩트 배너 -->
-                <section class="py-20 bg-gradient-to-br from-[#E61E2B] to-[#9b0013] text-white text-center px-6 relative overflow-hidden">
-                    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                <!-- 4. D-DAY 배너 -->
+                <section class="py-20 bg-gradient-to-br from-[#E61E2B] to-[#9b0013] text-white text-center px-6 relative">
                     <div class="relative z-10 reveal">
-                        <div class="bg-white/20 inline-block px-5 py-1.5 rounded-full text-xs font-black mb-6 backdrop-blur-md border border-white/30">
-                            선거 D-DAY <span id="d-day-val" class="text-yellow-300 ml-1">...</span>
+                        <div class="bg-white/20 inline-block px-5 py-1.5 rounded-full text-xs font-black mb-6 border border-white/30">
+                            선거 D-DAY <span id="d-day-val" class="text-yellow-300">...</span>
                         </div>
                         <h2 class="text-[2.2rem] font-black leading-tight mb-10 tracking-tighter">
-                            지금은 확실히 밀어줄<br/><span class="text-yellow-300 drop-shadow-lg text-6xl block mt-2">'철'</span> 입니다!
+                            지금은 확실히 밀어줄<br/><span class="text-yellow-300 text-6xl block mt-2">'철'</span> 입니다!
                         </h2>
-                        <div class="inline-flex items-center gap-3 bg-white text-party-red text-xl font-black px-10 py-5 rounded-full shadow-2xl transform transition hover:scale-105">
+                        <div class="inline-flex bg-white text-party-red text-xl font-black px-10 py-5 rounded-full shadow-2xl">
                             예비후보 박동철
                         </div>
                     </div>
                 </section>
             </div>
 
-            <!-- 나머지 탭들 (프로필, 활동 등 V2 구조 유지) -->
+            <!-- 나머지 탭들 -->
             <div id="tab-profile" class="tab-content pt-20 px-6 bg-gray-50 min-h-screen">
                 <h2 class="text-2xl font-black mb-8 border-b-4 border-party-red w-max pb-1">상세 약력</h2>
                 <div class="space-y-4">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-party-red card-lift">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-party-red">
                         <h3 class="font-black text-party-red text-lg mb-1">현) 도의회 국민의힘 원내부대표</h3>
-                        <p class="text-sm text-gray-500 font-medium">강력한 정무 감각과 추진력</p>
                     </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-600 card-lift">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-600">
                         <h3 class="font-black text-blue-600 text-lg mb-1">현) 도의회 기획행정위 부위원장</h3>
-                        <p class="text-sm text-gray-500 font-medium">경남도정의 기획과 예산 전문가</p>
                     </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-gray-800 card-lift">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-gray-800">
                         <h3 class="font-black text-gray-800 text-lg mb-1">현) 백년가업 하늘땅 본점 대표</h3>
-                        <p class="text-sm text-gray-500 font-medium">지역 경제를 몸소 일궈온 성실한 일꾼</p>
                     </div>
                 </div>
             </div>
 
-            <!-- ... 기타 탭 콘텐츠들 (기존과 동일하게 유지) ... -->
             <div id="tab-declaration" class="tab-content pt-20 px-6 bg-white min-h-screen">
-                <h2 class="text-2xl font-black mb-6 uppercase tracking-tighter">출마 선언문</h2>
-                <div class="text-gray-700 leading-relaxed space-y-6 font-medium text-[15.5px]">
-                    <p>존경하는 진해 시민 여러분, 박동철입니다. 지난 4년, 저는 오직 진해의 발전만을 생각하며 쉼 없이 달려왔습니다.</p>
-                    <p class="bg-red-50 p-4 rounded-xl text-party-red font-bold">"말이 아닌 결과로, 행동으로 증명하겠습니다."</p>
-                    <p>재선 도의원이 되어 더 큰 진해, 더 행복한 진해를 여러분과 함께 만들겠습니다.</p>
+                <h2 class="text-2xl font-black mb-6">출마 선언문</h2>
+                <div class="text-gray-700 leading-relaxed space-y-4 font-medium text-[15.5px]">
+                    <p>존경하는 진해 주민 여러분! 박동철입니다.</p>
+                    <p>재선 도의원이 되어 더 큰 진해, 더 행복한 진해를 여러분과 함께 만들겠습니다. 결과로 보답하고 행동으로 증명하겠습니다.</p>
                 </div>
             </div>
-            
+
             <div id="tab-policy" class="tab-content pt-20 px-6 min-h-screen flex items-center justify-center bg-gray-50">
-                <div class="text-center p-10 bg-white rounded-[2.5rem] shadow-sm">
-                    <i data-lucide="loader-2" class="w-12 h-12 text-gray-200 mx-auto mb-4 animate-spin"></i>
-                    <h3 class="text-xl font-black text-gray-900 mb-2">공약 준비 중</h3>
-                    <p class="text-sm text-gray-400">진해를 위한 최고의 정책을<br/>가다듬고 있습니다.</p>
-                </div>
+                <div class="text-center"><h3 class="text-xl font-black">정책/공약 준비 중입니다.</h3></div>
             </div>
 
             <div id="tab-schedule" class="tab-content pt-20 px-6 bg-white min-h-screen">
                 <h2 class="text-2xl font-black mb-6">유세 일정</h2>
-                <div class="p-10 border-2 border-dashed border-gray-100 rounded-3xl text-center">
-                    <p class="text-gray-300 font-bold">등록된 일정이 없습니다.</p>
-                </div>
+                <p class="text-gray-400 text-center py-10">상세 일정이 업데이트될 예정입니다.</p>
             </div>
 
             <div id="tab-activity" class="tab-content pt-20 px-5 bg-gray-50 min-h-screen">
-                <h2 class="text-2xl font-black mb-6 px-1">언론 보도</h2>
-                <div class="space-y-4 pb-10">
-                    <a href="https://www.gukjenews.com/news/articleView.html?idxno=3549991" target="_blank" class="block bg-white p-5 rounded-2xl shadow-sm card-lift">
-                        <span class="text-[10px] font-black text-green-600 bg-green-50 px-2 py-0.5 rounded mb-2 inline-block">보도자료</span>
-                        <h3 class="font-bold text-gray-900 leading-snug text-lg">생물다양성 보전 조례 발의</h3>
+                <h2 class="text-2xl font-black mb-6">언론 보도</h2>
+                <div class="space-y-4">
+                    <a href="https://www.gukjenews.com/news/articleView.html?idxno=3549991" target="_blank" class="block bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
+                        <span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-md font-bold mb-2 inline-block">소통 입법</span>
+                        <h3 class="font-bold text-gray-900 leading-snug">진해 동진여중 학생 제안이 현실로! '생물다양성 보전 조례' 발의</h3>
                     </a>
                 </div>
             </div>
 
             <div id="tab-gallery" class="tab-content pt-20 px-5 bg-white min-h-screen">
-                <h2 class="text-2xl font-black mb-6">현장 앨범</h2>
+                <h2 class="text-2xl font-black mb-6 px-1">현장 앨범</h2>
                 <div class="grid grid-cols-2 gap-3">
                     <div class="aspect-square bg-gray-100 rounded-2xl overflow-hidden"><img src="https://i.ibb.co/N2zBBgjK/Kakao-Talk-20260330-120127383.jpg" class="w-full h-full object-cover"></div>
                     <div class="aspect-square bg-gray-100 rounded-2xl overflow-hidden"><img src="https://i.ibb.co/xt5ZMtTD/Kakao-Talk-20260330-121216575.png" class="w-full h-full object-cover"></div>
@@ -264,24 +258,24 @@
             </div>
 
             <!-- 글로벌 푸터 -->
-            <footer id="global-footer" class="bg-gray-50 border-t border-gray-100 py-12 px-6 text-center">
+            <footer class="bg-gray-50 border-t border-gray-100 py-12 px-6 text-center">
                 <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 mx-auto mb-5 grayscale opacity-30">
-                <p class="text-[11px] text-gray-400 font-bold uppercase tracking-widest">© 2026 Park Dong-cheol Campaign</p>
-                <p class="text-[10px] text-gray-300 mt-1">본 페이지는 예비후보 선거사무소에서 제작하였습니다.</p>
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">© 2026 Park Dong-cheol Campaign</p>
+                <p class="text-[9px] text-gray-300 mt-1">본 페이지는 예비후보 선거사무소에서 제작하였습니다.</p>
             </footer>
 
-            <!-- ★ 우측 하단 플로팅 버튼 (채널 채팅 / 공유 / 전화 분리) ★ -->
+            <!-- 우측 하단 플로팅 버튼 (상담 / 공유 / 전화) -->
             <div class="fixed-mobile bottom-[95px] z-50 pointer-events-none flex justify-end px-5">
                 <div class="flex flex-col gap-3 pointer-events-auto">
-                    <!-- 1. 카카오톡 채널 상담 (노란색) -->
+                    <!-- 카카오 채널 버튼 -->
                     <a href="http://pf.kakao.com/_xgALdX/chat" target="_blank" class="w-14 h-14 bg-[#FAE100] rounded-full shadow-2xl flex items-center justify-center border-2 border-white transform transition hover:scale-110 active:scale-95">
                         <svg viewBox="0 0 24 24" class="w-8 h-8 text-[#3c1e1e]" fill="currentColor"><path d="M12 3c-5.523 0-10 3.582-10 8 0 2.85 1.83 5.352 4.606 6.815l-1.15 4.298c-.11.41.345.742.71.554l4.982-3.328c.28.02.564.03.852.03 5.523 0 10-3.582 10-8s-4.477-8-10-8z"/></svg>
                     </a>
-                    <!-- 2. 공유하기 (다크) -->
+                    <!-- 페이지 공유 버튼 -->
                     <button onclick="shareKakao()" class="w-14 h-14 bg-gray-900 rounded-full shadow-2xl flex items-center justify-center border-2 border-white transform transition hover:scale-110 active:scale-95">
                         <i data-lucide="share-2" class="w-6 h-6 text-white"></i>
                     </button>
-                    <!-- 3. 전화 (맥박 애니메이션) -->
+                    <!-- 전화 연결 버튼 -->
                     <div class="relative w-14 h-14">
                         <a href="tel:055-546-4312" class="pulse-ring absolute inset-0 bg-party-red rounded-full shadow-2xl flex items-center justify-center z-10 border-2 border-white transition active:scale-95">
                             <i data-lucide="phone" class="w-6 h-6 text-white fill-current"></i>
@@ -290,8 +284,8 @@
                 </div>
             </div>
 
-            <!-- 하단 네비게이션 (7탭) -->
-            <div class="fixed-mobile bottom-0 bg-gray-900/95 backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] z-50 pb-safe">
+            <!-- 하단 네비게이션 -->
+            <div class="fixed-mobile bottom-0 bg-gray-900/95 backdrop-blur-xl border-t border-white/10 shadow-2xl z-50 pb-safe">
                 <div class="relative flex items-center h-[75px] overflow-x-auto hide-scrollbar px-2 gap-1" id="nav-container">
                     <div id="nav-indicator" class="nav-indicator"></div>
                     <a href="javascript:void(0)" onclick="switchTab('home')" id="nav-home" class="nav-item flex-shrink-0 flex flex-col items-center justify-center w-[65px] h-full text-white transition z-10">
@@ -320,7 +314,22 @@
         </div>
     </div>
 
-    <!-- 스크립트 (Firebase + UI) -->
+    <!-- 메뉴 모달 -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50 transition-opacity opacity-0 backdrop-blur-sm" id="mobile-menu-backdrop" onclick="toggleMenu()"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col" id="mobile-menu-panel">
+            <div class="p-5 flex justify-end border-b border-gray-100">
+                <button onclick="toggleMenu()" class="p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition"><i data-lucide="x" class="w-5 h-5 text-gray-900"></i></button>
+            </div>
+            <div class="flex flex-col py-2 overflow-y-auto">
+                <a href="javascript:void(0)" onclick="switchTab('home'); toggleMenu();" class="px-6 py-4 border-b border-gray-50 flex items-center gap-3"><i data-lucide="home" class="w-5 h-5"></i><span class="font-bold">홈</span></a>
+                <a href="javascript:void(0)" onclick="switchTab('profile'); toggleMenu();" class="px-6 py-4 border-b border-gray-50 flex items-center gap-3"><i data-lucide="user" class="w-5 h-5"></i><span class="font-bold">후보 소개</span></a>
+                <a href="http://pf.kakao.com/_xgALdX/chat" target="_blank" class="px-6 py-4 border-b border-gray-50 flex items-center gap-3 text-party-red"><i data-lucide="message-square" class="w-5 h-5"></i><span class="font-bold">1:1 채팅상담</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 스크립트 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -328,25 +337,59 @@
 
         lucide.createIcons();
 
-        // 탭 전환 시스템
+        // 페이지 로딩 핸들러
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash-screen');
+            const mainApp = document.getElementById('main-app');
+            
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                mainApp.classList.add('loaded');
+                setTimeout(() => { splash.style.display = 'none'; }, 500);
+                window.switchTab('home');
+            }, 1000);
+        });
+
+        // 탭 시스템
         window.switchTab = (tabId) => {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(i => {
                 i.classList.remove('text-white');
-                i.classList.add('text-gray-400', 'text-gray-500');
+                i.classList.add('text-gray-500');
             });
             document.getElementById('tab-' + tabId).classList.add('active');
             const activeNav = document.getElementById('nav-' + tabId);
             activeNav.classList.add('text-white');
             activeNav.classList.remove('text-gray-500');
             
-            // 인디케이터 위치
             const indicator = document.getElementById('nav-indicator');
             indicator.style.width = activeNav.offsetWidth + 'px';
             indicator.style.left = activeNav.offsetLeft + 'px';
             
             activeNav.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             window.scrollTo({ top: 0, behavior: 'instant' });
+            reveal();
+        };
+
+        // 메뉴 토글
+        window.toggleMenu = () => {
+            const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('mobile-menu-backdrop');
+            const panel = document.getElementById('mobile-menu-panel');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                void menu.offsetWidth;
+                backdrop.classList.remove('opacity-0');
+                backdrop.classList.add('opacity-100');
+                panel.classList.remove('translate-x-full');
+                panel.classList.add('translate-x-0');
+            } else {
+                backdrop.classList.remove('opacity-100');
+                backdrop.classList.add('opacity-0');
+                panel.classList.remove('translate-x-0');
+                panel.classList.add('translate-x-full');
+                setTimeout(() => menu.classList.add('hidden'), 300);
+            }
         };
 
         // D-Day
@@ -354,7 +397,7 @@
         const days = Math.ceil((new Date('2026-06-03T00:00:00+09:00').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
         dDayVal.innerText = days > 0 ? `D-${days}` : (days === 0 ? 'D-Day' : `D+${Math.abs(days)}`);
 
-        // Firebase 연동
+        // Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCvQ4_dmBqbujpZnQ9q4ZpMe98Qb3LBsAw",
             authDomain: "jinhae-7dab5.firebaseapp.com",
@@ -385,7 +428,6 @@
         };
         initStats();
 
-        // Reveal 효과
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -393,11 +435,8 @@
             }
         }
         window.addEventListener("scroll", reveal);
-        setTimeout(() => { window.switchTab('home'); reveal(); }, 100);
     </script>
-
     <script>
-        // 카카오 공유하기 스크립트
         window.shareKakao = function() {
             if(!Kakao.isInitialized()) { Kakao.init('1aa968a094a900e05010d7b54c35e006'); }
             Kakao.Share.sendDefault({
