@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>박동철 선거사무소 개소식</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red: #C8102E;
+  --red-dark: #8b0000;
+  --gold: #B8963E;
+  --gold-light: #d4af5a;
+  --dark: #0f1421;
+  --dark2: #1a2035;
+  --white: #ffffff;
+  --gray: #f5f5f5;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--dark);
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--dark);
+  position: relative;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 60px;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('uploads/jinhaeru_bg.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  transform: scale(1.05);
+  transition: transform 8s ease-out;
+}
+.hero-bg.loaded { transform: scale(1); }
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(150, 0, 15, 0.75) 0%,
+    rgba(80, 0, 8, 0.65) 35%,
+    rgba(10, 8, 20, 0.88) 70%,
+    rgba(5, 4, 12, 0.98) 100%
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 28px;
+}
+
+.ppp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 5px 14px 5px 8px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(4px);
+}
+.ppp-badge-icon {
+  width: 22px; height: 22px;
+  background: var(--red);
+  border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 900; color: #fff;
+  font-family: 'Pretendard', sans-serif;
+}
+.ppp-badge-text {
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9);
+  letter-spacing: 0.04em;
+}
+
+.hero-eyebrow {
+  font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.hero-title {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: clamp(44px, 14vw, 60px);
+  color: #fff;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.hero-title .gold { color: var(--gold-light); }
+
+.hero-invite {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: clamp(20px, 6vw, 26px);
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.02em;
+  margin-bottom: 14px;
+}
+
+.gold-divider {
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-bottom: 14px;
+}
+
+.hero-slogan {
+  font-size: 14px; font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+}
+.hero-slogan strong { color: var(--gold-light); font-weight: 700; }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 22px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  animation: bounce 2s infinite;
+}
+.scroll-hint span { font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; }
+.scroll-hint svg { width: 18px; height: 18px; color: rgba(255,255,255,0.4); }
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ── CANDIDATE SECTION ── */
+.candidate-section {
+  background: #fff;
+  padding: 52px 28px 48px;
+  text-align: center;
+}
+
+.candidate-photo-wrap {
+  position: relative;
+  width: 160px; height: 200px;
+  margin: 0 auto 24px;
+}
+.candidate-photo {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+}
+.candidate-photo-badge {
+  position: absolute;
+  bottom: -10px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--red);
+  color: #fff;
+  font-size: 11px; font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 12px;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+
+.candidate-name {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 36px;
+  color: var(--dark);
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+  margin-top: 18px;
+}
+.candidate-title {
+  font-size: 14px; font-weight: 500;
+  color: #666;
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+}
+
+.section-divider {
+  width: 32px; height: 2px;
+  background: var(--gold);
+  margin: 0 auto 20px;
+}
+
+.candidate-desc {
+  font-size: 14px; font-weight: 400;
+  color: #444; line-height: 1.8;
+  max-width: 320px; margin: 0 auto;
+}
+
+/* ── EVENT INFO ── */
+.event-section {
+  background: var(--dark2);
+  padding: 52px 28px 48px;
+}
+
+.section-label-top {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.section-eyebrow {
+  font-size: 11px; font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.section-heading {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 26px;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+/* D-Day */
+.dday-box {
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  border-radius: 14px;
+  padding: 22px 24px;
+  text-align: center;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.dday-box::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 100px; height: 100px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.dday-label {
+  font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+.dday-count {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 52px;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.dday-count span { font-size: 22px; margin-left: 4px; }
+.dday-date {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* Event items */
+.event-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.event-item:last-child { border-bottom: none; }
+.event-icon-box {
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: rgba(200,16,46,0.18);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.event-icon-box svg { width: 18px; height: 18px; color: var(--red); fill: none; stroke: currentColor; stroke-width: 1.8; }
+.event-item-text {}
+.event-item-label { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 3px; }
+.event-item-val { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.4; }
+.event-item-sub { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+/* ── MAP SECTION ── */
+.map-section {
+  background: #fff;
+  padding: 52px 28px 48px;
+}
+.map-section .section-eyebrow { color: var(--red); }
+.map-section .section-heading { color: var(--dark); }
+
+.map-box {
+  background: #f0f0f0;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 180px;
+  position: relative;
+  margin: 24px 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.map-placeholder {
+  text-align: center;
+}
+.map-placeholder svg { width: 36px; height: 36px; color: #bbb; margin-bottom: 8px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.map-placeholder p { font-size: 12px; color: #999; }
+
+.address-box {
+  background: var(--gray);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.address-label { font-size: 11px; font-weight: 600; color: #999; letter-spacing: 0.08em; margin-bottom: 4px; }
+.address-val { font-size: 14px; font-weight: 600; color: var(--dark); line-height: 1.5; }
+
+.parking-box {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 14px 18px;
+  background: rgba(200,16,46,0.05);
+  border: 1px solid rgba(200,16,46,0.12);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.parking-box svg { width: 18px; height: 18px; color: var(--red); flex-shrink: 0; margin-top: 1px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.parking-text { font-size: 13px; color: #555; line-height: 1.6; }
+
+.map-btn {
+  display: block; width: 100%;
+  padding: 14px;
+  background: var(--dark);
+  color: #fff;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 14px; font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+  letter-spacing: 0.03em;
+  transition: background 0.2s;
+}
+.map-btn:active { background: #333; }
+
+/* ── DONATION ── */
+.donation-section {
+  background: var(--dark);
+  padding: 52px 28px 48px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.account-box {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(184,150,62,0.3);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin: 24px 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.account-bank-badge {
+  background: #0068a8;
+  color: #fff;
+  font-size: 11px; font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+.account-right {}
+.account-num {
+  font-size: 18px; font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+.account-name {
+  font-size: 11px; color: rgba(255,255,255,0.5);
+  margin-top: 2px;
+}
+
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.rule-num {
+  width: 20px; height: 20px; flex-shrink: 0;
+  background: var(--red);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; color: #fff;
+  margin-top: 1px;
+}
+.rule-text {
+  font-size: 13px; color: rgba(255,255,255,0.72);
+  line-height: 1.6;
+}
+.rule-text em {
+  color: var(--gold-light);
+  font-style: normal; font-weight: 700;
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: #080c14;
+  padding: 40px 28px 50px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-contact {
+  margin-bottom: 28px;
+}
+.footer-contact-label {
+  font-size: 11px; font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
+}
+.footer-phones {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.phone-btn {
+  display: flex; align-items: center; gap: 7px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: background 0.15s;
+}
+.phone-btn svg { width: 16px; height: 16px; color: var(--gold); fill: none; stroke: currentColor; stroke-width: 2; }
+
+.kakao-share-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%;
+  padding: 14px;
+  background: #FEE500;
+  color: #191600;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 15px; font-weight: 800;
+  border: none; border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+}
+.kakao-share-btn svg { width: 20px; height: 20px; }
+
+.footer-org {
+  text-align: center;
+  font-size: 12px; color: rgba(255,255,255,0.3);
+  line-height: 1.8;
+}
+.footer-org strong { color: rgba(255,255,255,0.6); font-weight: 600; }
+
+/* ── REVEAL ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── GOLD LINE DECORATIONS ── */
+.gold-line-deco {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.gold-line-deco::before, .gold-line-deco::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.gold-line-deco span {
+  font-size: 16px; color: var(--gold); opacity: 0.7;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="ppp-badge">
+        <div class="ppp-badge-icon">힘</div>
+        <span class="ppp-badge-text">국민의힘</span>
+      </div>
+      <div class="hero-eyebrow">경남도의원 진해구 선거 후보</div>
+      <div class="hero-title"><span class="gold">박동</span>철</div>
+      <div class="hero-invite">선거사무소 개소식</div>
+      <div class="gold-divider"></div>
+      <div class="hero-slogan">
+        '<strong>박동</strong>'하는 진해<br>이제 뽑아줄 '<strong>철</strong>' 입니다.
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>SCROLL</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- CANDIDATE -->
+  <section class="candidate-section">
+    <div class="reveal">
+      <div class="gold-line-deco"><span>✦</span></div>
+    </div>
+    <div class="candidate-photo-wrap reveal">
+      <img class="candidate-photo" src="uploads/candidate_photo.jpg" alt="박동철 후보">
+      <div class="candidate-photo-badge">진해구 경남도의원 후보</div>
+    </div>
+    <div class="candidate-name reveal reveal-delay-1">박동철</div>
+    <div class="candidate-title reveal reveal-delay-1">경상남도의회의원 진해구 선거 후보</div>
+    <div class="section-divider reveal reveal-delay-2"></div>
+    <p class="candidate-desc reveal reveal-delay-2">
+      진해를 위해 뛰는 진심,<br>
+      여러분의 소중한 응원에 보답하겠습니다.<br>
+      개소식에 함께해 주세요.
+    </p>
+  </section>
+
+  <!-- EVENT INFO -->
+  <section class="event-section">
+    <div class="section-label-top reveal">
+      <div class="section-eyebrow">INVITATION</div>
+      <div class="section-heading">개소식 안내</div>
+    </div>
+
+    <div class="dday-box reveal">
+      <div class="dday-label">D - DAY</div>
+      <div class="dday-count" id="ddayCount">-<span>일</span></div>
+      <div class="dday-date">2026년 5월 1일 (금)</div>
+    </div>
+
+    <div class="event-card reveal">
+      <div class="event-item">
+        <div class="event-icon-box">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="event-item-text">
+          <div class="event-item-label">일시</div>
+          <div class="event-item-val">2026년 5월 1일 (금)</div>
+          <div class="event-item-sub">오후 시간 추후 공지</div>
+        </div>
+      </div>
+      <div class="event-item">
+        <div class="event-icon-box">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="event-item-text">
+          <div class="event-item-label">장소</div>
+          <div class="event-item-val">롯데시네마 진해 10층</div>
+          <div class="event-item-sub">경남 창원시 진해구 진해대로 752</div>
+        </div>
+      </div>
+      <div class="event-item">
+        <div class="event-icon-box">
+          <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="event-item-text">
+          <div class="event-item-label">주차</div>
+          <div class="event-item-val">롯데시네마 지하주차장</div>
+          <div class="event-item-sub">및 인근 공영주차장 이용 가능</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP / DIRECTIONS -->
+  <section class="map-section">
+    <div class="section-label-top reveal">
+      <div class="section-eyebrow">LOCATION</div>
+      <div class="section-heading">오시는 길</div>
+    </div>
+
+    <div class="map-box reveal">
+      <div class="map-placeholder">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <p>롯데시네마 진해점</p>
+      </div>
+    </div>
+
+    <div class="address-box reveal">
+      <div class="address-label">주소</div>
+      <div class="address-val">경남 창원시 진해구<br>진해대로 752 롯데시네마 10층</div>
+    </div>
+
+    <div class="parking-box reveal">
+      <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      <div class="parking-text"><strong>주차 안내</strong><br>롯데시네마 건물 지하 주차장 및 인근 공영주차장 이용 가능합니다.</div>
+    </div>
+
+    <a href="https://map.kakao.com/link/search/경남+창원시+진해구+진해대로+752" target="_blank" class="map-btn reveal">
+      카카오맵으로 길찾기 →
+    </a>
+  </section>
+
+  <!-- DONATION -->
+  <section class="donation-section">
+    <div class="section-label-top reveal">
+      <div class="section-eyebrow">SUPPORT</div>
+      <div class="section-heading">후원 안내</div>
+    </div>
+
+    <div class="account-box reveal">
+      <div class="account-bank-badge">농협</div>
+      <div class="account-right">
+        <div class="account-num">351-1391-7785-43</div>
+        <div class="account-name">경상남도의회의원 박동철 후원회</div>
+      </div>
+    </div>
+
+    <div class="rules-list">
+      <div class="rule-item reveal">
+        <div class="rule-num">1</div>
+        <div class="rule-text">후원회에 <em>1인당 200만원</em>까지 후원 가능합니다.</div>
+      </div>
+      <div class="rule-item reveal reveal-delay-1">
+        <div class="rule-num">2</div>
+        <div class="rule-text">후원하신 분은 <em>성명, 직업, 전화번호, 주소, 생년월일</em>을<br>055-546-4312 또는 010-4518-4312로 꼭 전달 부탁드립니다.</div>
+      </div>
+      <div class="rule-item reveal reveal-delay-2">
+        <div class="rule-num">3</div>
+        <div class="rule-text"><em>본인 개인 명의</em>만 가능합니다. (법인·단체명 후원불가)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-contact reveal">
+      <div class="footer-contact-label">문의 연락처</div>
+      <div class="footer-phones">
+        <a href="tel:055-546-4312" class="phone-btn">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.08 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          055-546-4312
+        </a>
+        <a href="tel:010-4518-4312" class="phone-btn">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.08 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          010-4518-4312
+        </a>
+      </div>
+    </div>
+
+    <button class="kakao-share-btn reveal" onclick="shareKakao()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.92 2 10.75c0 3.02 1.78 5.67 4.48 7.25L5.5 22l4.55-2.39C10.65 19.86 11.32 20 12 20c5.52 0 10-3.92 10-8.75S17.52 2 12 2z"/></svg>
+      카카오톡으로 공유하기
+    </button>
+
+    <div class="footer-org reveal">
+      <strong>박동철 선거사무소</strong><br>
+      경남도의원 진해구 선거 후보<br>
+      진해구가 선택한 힘
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// Hero BG ken burns
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => document.getElementById('heroBg').classList.add('loaded'), 100);
+});
+
+// D-Day counter
+function updateDDay() {
+  const target = new Date('2026-05-01T00:00:00+09:00');
+  const now = new Date();
+  const diff = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
+  const el = document.getElementById('ddayCount');
+  if (diff > 0) el.innerHTML = `${diff}<span>일</span>`;
+  else if (diff === 0) el.innerHTML = `D<span>-DAY</span>`;
+  else el.innerHTML = `+${Math.abs(diff)}<span>일</span>`;
+}
+updateDDay();
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+// Kakao share
+function shareKakao() {
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: '박동철 선거사무소 개소식', text: '박동철 경남도의원 진해구 후보 개소식에 초대합니다.', url });
+  } else {
+    const text = encodeURIComponent(`박동철 선거사무소 개소식\n2026년 5월 1일\n롯데시네마 진해 10층\n${url}`);
+    window.open(`https://sharer.kakao.com/talk/friends/picker/link?app_key=&text=${text}`, '_blank');
+  }
+}
+</script>
+</body>
+</html>
