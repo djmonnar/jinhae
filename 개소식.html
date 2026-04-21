@@ -59,7 +59,7 @@
       <div class="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style="background:rgba(255,255,255,.15)">
         <iconify-icon icon="solar:calendar-bold" style="color:#FFD166;font-size:12px"></iconify-icon>
       </div>
-      <span class="text-white font-bold text-sm"><span style="color:#FFD166">2026년 5월 3일 (일)</span> · 오후 2시</span>
+      <span class="text-white font-bold text-sm"><span style="color:#FFD166">2026년 5월 2일(토) · 3일(일)</span> · 오후 2시</span>
     </div>
     <div class="flex items-center gap-2">
       <div class="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style="background:rgba(255,255,255,.15)">
@@ -125,7 +125,7 @@
       <div class="bezel-inner px-6 py-6 text-center" style="background:linear-gradient(135deg,#C8102E,#9b0020)">
         <p class="text-white/60 text-xs font-semibold tracking-[.2em] uppercase mb-1">D-DAY</p>
         <p class="text-white font-black leading-none mb-2" style="font-size:clamp(48px,14vw,64px);letter-spacing:-3px" id="ddayNum">-</p>
-        <p class="text-white/70 text-sm font-medium">2026년 5월 3일 (일)</p>
+        <p class="text-white/70 text-sm font-medium">2026년 5월 2일(토) · 3일(일)</p>
       </div>
     </div>
   </div>
@@ -139,7 +139,7 @@
         </div>
         <div>
           <p class="text-white/50 text-[10px] font-semibold tracking-widest uppercase mb-0.5">일시</p>
-          <p class="text-white font-bold text-[15px]">2026년 5월 3일 (일)</p>
+          <p class="text-white font-bold text-[15px]">2026년 5월 2일(토) · 3일(일)</p>
           <p class="text-white/50 text-xs mt-0.5">오후 2시</p>
         </div>
       </div>
@@ -291,7 +291,7 @@
 
 <script>
 // D-Day
-const t=new Date('2026-05-03T14:00:00+09:00'),n=new Date();
+const t=new Date('2026-05-02T14:00:00+09:00'),n=new Date();
 const d=Math.ceil((t-n)/864e5);
 document.getElementById('ddayNum').textContent=d>0?'D-'+d:d===0?'D-DAY':'D+'+Math.abs(d);
 
