@@ -52,14 +52,14 @@
 
   <!-- 메인 텍스트 -->
   <div class="relative z-10 px-6 flex-1 flex flex-col justify-center" style="animation:fadeUp .9s cubic-bezier(.16,1,.3,1) both">
-    <p class="text-white/60 text-xs font-semibold tracking-widest uppercase mb-2">경남도의원 진해구 선거 후보</p>
+    <p class="text-white/60 text-xs font-semibold tracking-widest uppercase mb-2">경남도의원 진해구 후보</p>
     <h1 class="text-white font-black leading-none mb-1" style="font-size:clamp(52px,16vw,68px);letter-spacing:-2px">'<span style="color:#FFD166">박동</span>'철</h1>
     <h2 class="text-white font-black leading-tight mb-5" style="font-size:clamp(20px,6vw,26px);letter-spacing:-.5px">선거사무소 개소식<br>초대합니다</h2>
     <div class="flex items-center gap-2 mb-2">
       <div class="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style="background:rgba(255,255,255,.15)">
         <iconify-icon icon="solar:calendar-bold" style="color:#FFD166;font-size:12px"></iconify-icon>
       </div>
-      <span class="text-white font-bold text-sm"><span style="color:#FFD166">2026년 5월 1일 (금)</span> · 시간 추후 공지</span>
+      <span class="text-white font-bold text-sm"><span style="color:#FFD166">2026년 5월 3일 (일)</span> · 오후 2시</span>
     </div>
     <div class="flex items-center gap-2">
       <div class="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style="background:rgba(255,255,255,.15)">
@@ -95,7 +95,7 @@
       <p class="text-gray-600 leading-[2.1] text-[15px] text-center">
         안녕하십니까?<br>
         국민의힘 경남도의원 진해구<br>
-        선거 후보 <strong class="text-gray-900">박동철</strong>입니다.<br><br>
+        후보 <strong class="text-gray-900">박동철</strong>입니다.<br><br>
         언제나 든든한 힘이 되어주시는<br>
         소중한 분들을 모시고,<br>
         힘찬 발걸음을 내딛고자 합니다.<br><br>
@@ -125,7 +125,7 @@
       <div class="bezel-inner px-6 py-6 text-center" style="background:linear-gradient(135deg,#C8102E,#9b0020)">
         <p class="text-white/60 text-xs font-semibold tracking-[.2em] uppercase mb-1">D-DAY</p>
         <p class="text-white font-black leading-none mb-2" style="font-size:clamp(48px,14vw,64px);letter-spacing:-3px" id="ddayNum">-</p>
-        <p class="text-white/70 text-sm font-medium">2026년 5월 1일 (금)</p>
+        <p class="text-white/70 text-sm font-medium">2026년 5월 3일 (일)</p>
       </div>
     </div>
   </div>
@@ -139,8 +139,8 @@
         </div>
         <div>
           <p class="text-white/50 text-[10px] font-semibold tracking-widest uppercase mb-0.5">일시</p>
-          <p class="text-white font-bold text-[15px]">2026년 5월 1일 (금)</p>
-          <p class="text-white/50 text-xs mt-0.5">오후 시간 추후 공지</p>
+          <p class="text-white font-bold text-[15px]">2026년 5월 3일 (일)</p>
+          <p class="text-white/50 text-xs mt-0.5">오후 2시</p>
         </div>
       </div>
     </div>
@@ -281,7 +281,7 @@
 <footer class="px-6 py-12 text-center" style="background:#0f1117">
   <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-black mx-auto mb-4" style="background:#C8102E">힘</div>
   <p class="text-white font-black text-lg mb-1">박동철 선거사무소</p>
-  <p class="text-white/40 text-xs leading-loose">국민의힘 경남도의원 진해구 선거 후보<br>진해구가 선택한 힘</p>
+  <p class="text-white/40 text-xs leading-loose">국민의힘 경남도의원 진해구 후보<br>진해구가 선택한 힘</p>
 </footer>
 
 <!-- TOP 버튼 -->
@@ -291,7 +291,7 @@
 
 <script>
 // D-Day
-const t=new Date('2026-05-01T00:00:00+09:00'),n=new Date();
+const t=new Date('2026-05-03T14:00:00+09:00'),n=new Date();
 const d=Math.ceil((t-n)/864e5);
 document.getElementById('ddayNum').textContent=d>0?'D-'+d:d===0?'D-DAY':'D+'+Math.abs(d);
 
