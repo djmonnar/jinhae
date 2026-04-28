@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>후보자 가상자산 신고 정리기</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <style>
+    body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif}.mono{font-variant-numeric:tabular-nums}input,select,textarea{outline:none}@media print{.no-print{display:none!important}body{background:#fff!important}.card{box-shadow:none!important;border:1px solid #ddd!important}}
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900">
+  <div class="max-w-7xl mx-auto p-4 md:p-8">
+    <header class="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div>
+        <p class="text-sm font-bold text-blue-700">선거 후보자 재산신고 보조도구</p>
+        <h1 class="text-3xl md:text-4xl font-black mt-1">가상자산 신고 정리기 v1</h1>
+        <p class="text-slate-600 mt-2">스크린샷 OCR, 수동 입력, 종목코드 자동완성, 신고문구 생성, 엑셀 내보내기를 지원합니다.</p>
+      </div>
+      <div class="no-print flex flex-wrap gap-2">
+        <button onclick="addRow()" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-bold">+ 코인 추가</button>
+        <button onclick="exportExcel()" class="px-4 py-2 rounded-xl bg-emerald-600 text-white font-bold">엑셀 내보내기</button>
+        <button onclick="copyReport()" class="px-4 py-2 rounded-xl bg-blue-600 text-white font-bold">신고문구 복사</button>
+      </div>
+    </header>
+
+    <section class="no-print card bg-white rounded-2xl border border-slate-200 shadow-sm p-5 mb-5">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <h2 class="font-black text-lg">사용방법 메뉴얼</h2>
+          <p class="text-sm text-slate-500 mt-1">OCR 결과는 초안입니다. 제출 전 잔고증명서 원본과 수량·단가·종목코드를 반드시 대조하세요.</p>
+        </div>
+        <button onclick="manual.classList.toggle('hidden')" class="px-4 py-2 rounded-xl bg-slate-100 font-bold">열기/닫기</button>
+      </div>
+      <div id="manual" class="mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+        <div class="rounded-2xl bg-blue-50 border border-blue-100 p-4"><b class="text-blue-900">1. 기본정보</b><p class="text-sm text-blue-900 mt-2 leading-6">후보자명, 기준일, 천원 단위 처리 방식을 입력합니다. 기준일은 보통 전년도 12월 31일입니다.</p></div>
+        <div class="rounded-2xl bg-purple-50 border border-purple-100 p-4"><b class="text-purple-900">2. 스크린샷 변환</b><p class="text-sm text-purple-900 mt-2 leading-6">잔고증명서 화면을 크게 캡처해 업로드합니다. OCR이 심볼과 수량을 찾아 미리보기에 보여줍니다.</p></div>
+        <div class="rounded-2xl bg-amber-50 border border-amber-100 p-4"><b class="text-amber-900">3. 단가 입력</b><p class="text-sm text-amber-900 mt-2 leading-6">국세청 또는 거래소 기준일 단가를 입력합니다. 종목코드가 없으면 999999를 사용합니다.</p></div>
+        <div class="rounded-2xl bg-emerald-50 border border-emerald-100 p-4"><b class="text-emerald-900">4. 출력</b><p class="text-sm text-emerald-900 mt-2 leading-6">신고문구 복사 또는 엑셀 내보내기를 눌러 정리표를 만듭니다. 0수량 행은 제외할 수 있습니다.</p></div>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-5">
+      <div class="card bg-white rounded-2xl border border-slate-200 p-4"><label class="text-sm font-bold">후보자명</label><input id="candidate" class="mt-2 w-full rounded-xl border px-3 py-2" placeholder="예: 박동철" oninput="save();render()"></div>
+      <div class="card bg-white rounded-2xl border border-slate-200 p-4"><label class="text-sm font-bold">재산 산정 기준일</label><input id="baseDate" type="date" value="2025-12-31" class="mt-2 w-full rounded-xl border px-3 py-2" oninput="save();render()"></div>
+      <div class="card bg-white rounded-2xl border border-slate-200 p-4"><label class="text-sm font-bold">천원 단위 처리</label><select id="roundMode" class="mt-2 w-full rounded-xl border px-3 py-2" onchange="save();render()"><option value="round">반올림</option><option value="floor">버림</option><option value="ceil">올림</option></select></div>
+      <div class="card bg-white rounded-2xl border border-slate-200 p-4"><label class="text-sm font-bold">잔고 기준</label><select id="basis" class="mt-2 w-full rounded-xl border px-3 py-2" onchange="save();render()"><option>기말잔고</option><option>기초잔고</option></select></div>
+    </section>
+
+    <section class="grid grid-cols-1 xl:grid-cols-4 gap-5">
+      <main class="xl:col-span-3 space-y-4">
+        <div class="no-print card bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+            <div><h2 class="font-black text-lg">스크린샷 자동 변환</h2><p class="text-sm text-slate-500 mt-1">잔고증명서 스크린샷을 업로드하면 OCR로 심볼과 수량을 추정합니다.</p></div>
+            <div class="flex gap-2"><input id="imageInput" type="file" accept="image/*" multiple class="hidden" onchange="runOcr(this.files)"><button onclick="imageInput.click()" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold">스크린샷 업로드</button><button onclick="parseOcr(false)" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-bold">텍스트 변환</button></div>
+          </div>
+          <div class="mt-3 grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <div><div id="ocrStatus" class="mb-2 text-sm font-bold text-purple-700">대기 중</div><textarea id="ocrText" class="mono w-full h-44 rounded-xl border p-3 text-xs bg-slate-50" placeholder="OCR 결과 또는 직접 복사한 텍스트"></textarea></div>
+            <div><div class="mb-2 text-sm font-bold">변환 미리보기</div><div id="ocrPreview" class="h-44 overflow-auto rounded-xl border p-3 text-xs bg-slate-50">아직 변환된 항목이 없습니다.</div></div>
+          </div>
+        </div>
+
+        <div class="card bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-4 border-b flex flex-col md:flex-row md:items-center md:justify-between gap-3"><div><h2 class="font-black text-lg">입력 목록</h2><p class="text-sm text-slate-500">단가와 보유수량을 기준으로 가액이 자동 계산됩니다.</p></div><div class="no-print flex gap-2"><button onclick="removeZeroRows()" class="px-3 py-2 rounded-xl bg-slate-100 font-bold text-sm">0수량/0원 제외</button><button onclick="resetAll()" class="px-3 py-2 rounded-xl bg-red-50 text-red-600 font-bold text-sm">전체 초기화</button></div></div>
+          <div class="overflow-x-auto"><table class="min-w-[1220px] w-full text-sm"><thead class="bg-slate-50 text-slate-600 border-b"><tr><th class="px-3 py-3 text-left">소유자</th><th class="px-3 py-3 text-left">거래소</th><th class="px-3 py-3 text-left">가상자산명</th><th class="px-3 py-3 text-left">심볼</th><th class="px-3 py-3 text-left">종목코드</th><th class="px-3 py-3 text-right">1개당 가격</th><th class="px-3 py-3 text-right">보유수량</th><th class="px-3 py-3 text-right">가액</th><th class="px-3 py-3 text-right">천원</th><th class="no-print px-3 py-3">삭제</th></tr></thead><tbody id="body"></tbody></table></div>
+        </div>
+
+        <div class="card bg-white rounded-2xl border border-slate-200 shadow-sm p-4"><h2 class="font-black text-lg">신고서용 권리명세 문구</h2><p class="text-sm text-slate-500 mt-1 mb-3">거래소명, 가상자산명, 심볼, 종목코드, 1개당 가격, 보유수량 형식입니다.</p><textarea id="report" class="mono w-full h-56 rounded-xl border p-3 text-sm bg-slate-50" readonly></textarea></div>
+      </main>
+
+      <aside class="space-y-4">
+        <div class="card bg-white rounded-2xl border border-slate-200 shadow-sm p-5"><h2 class="font-black text-lg">합계</h2><div class="mt-4 space-y-3"><div class="flex justify-between border-b pb-3"><span>총 행 수</span><b id="totalCount">0개</b></div><div class="flex justify-between border-b pb-3"><span>총 가액</span><b id="totalWon">0원</b></div><div class="flex justify-between"><span>신고 가액</span><b id="totalThousand" class="text-blue-700">0천원</b></div></div></div>
+        <div class="card bg-white rounded-2xl border border-slate-200 shadow-sm p-5"><h2 class="font-black text-lg">누락 체크</h2><ul id="warn" class="mt-3 text-sm space-y-2 text-red-600"></ul><p id="noWarn" class="mt-3 text-sm text-emerald-700 font-bold hidden">필수값 누락 없음</p></div>
+        <div class="no-print card bg-white rounded-2xl border border-slate-200 shadow-sm p-5"><h2 class="font-black text-lg">종목코드 DB 추가</h2><p class="text-sm text-slate-500 mt-2">국세청 조회 결과를 붙여넣으면 자동완성 DB에 저장됩니다.</p><textarea id="codeInput" class="mono mt-3 w-full h-28 rounded-xl border p-3 text-xs" placeholder="000145,비트코인,BTC&#10;000146,비트코인 캐시,BCH"></textarea><div class="mt-2 flex gap-2"><button onclick="importCodeDb()" class="flex-1 px-3 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold">DB 저장</button><button onclick="clearCodeDb()" class="px-3 py-2 rounded-xl bg-slate-100 text-sm font-bold">초기화</button></div><p id="codeStatus" class="mt-2 text-xs text-slate-500"></p></div>
+      </aside>
+    </section>
+  </div>
+
+<script>
+const KEY='candidate-crypto-asset-editor-v1';
+const BUILTIN={BTC:{name:'비트코인',code:'000145'},BCH:{name:'비트코인 캐시',code:'000146'},LTC:{name:'라이트코인',code:'000489'},WBTC:{name:'랩트 비트코인',code:'000921'},ETH:{name:'이더리움',code:''},DASH:{name:'대시',code:''},XRP:{name:'엑스알피',code:''},BTG:{name:'비트코인 골드',code:''},A:{name:'볼타',code:''},PAY:{name:'텐엑스',code:''},PCHT:{name:'팝체인',code:''},EOSDAC:{name:'이오스닥',code:''},REP:{name:'어거',code:''},ADA:{name:'에이다',code:''},BAT:{name:'베이직어텐션토큰',code:''},LINK:{name:'체인링크',code:''},CHL:{name:'챌린저닥',code:''},NPXS:{name:'펀디엑스',code:''},BSV:{name:'비트코인에스브이',code:''},MIX:{name:'믹스마블',code:''},WIN:{name:'윙크',code:''},MEV:{name:'미버스',code:''},BASIC:{name:'베이직',code:''},UNI:{name:'유니스왑',code:''},RSR:{name:'리저브라이트',code:''},AWO:{name:'에이아이워크',code:''},ADP:{name:'어댑터토큰',code:''},DVI:{name:'디비전',code:''},SOFI:{name:'라이파이낸스',code:''},MANA:{name:'디센트럴랜드',code:''},LPT:{name:'라이브피어',code:''},PUNDIX:{name:'펀디엑스',code:''},CWD:{name:'크라우드',code:''},BCDC:{name:'비씨디씨',code:''},HC:{name:'하이퍼캐시',code:''},BCD:{name:'비트코인 다이아몬드',code:''},XLM:{name:'스텔라루멘',code:''},JST:{name:'저스트',code:''},XTZ:{name:'테조스',code:''},DOT:{name:'폴카닷',code:''},TEMCO:{name:'템코',code:''},SGB:{name:'송버드',code:''},GALA:{name:'갈라',code:''},TDROP:{name:'티드랍',code:''},REI:{name:'레이',code:''},ETHW:{name:'이더리움피오더블유',code:''},DIS:{name:'디스체인',code:''},FLR:{name:'플레어',code:''},PCI:{name:'페이코인',code:''},VTHO:{name:'비토르토큰',code:''}};
+let custom={}, rows=[];
+const db=()=>({...BUILTIN,...custom});
+const uid=()=>Math.random().toString(36).slice(2)+Date.now().toString(36);
+const row=()=>({id:uid(),owner:'본인',exchange:'빗썸',assetName:'',symbol:'',code:'',price:'',quantity:'',memo:''});
+const num=v=>{const n=Number(String(v??'').replaceAll(',','').trim());return isFinite(n)?n:0};
+const fmt=(n,f=0)=>new Intl.NumberFormat('ko-KR',{minimumFractionDigits:f,maximumFractionDigits:f}).format(isFinite(n)?n:0);
+const sym=s=>String(s||'').trim().toUpperCase();
+const esc=s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
+function thousand(w){const v=w/1000,m=roundMode.value;return m==='floor'?Math.floor(v):m==='ceil'?Math.ceil(v):Math.round(v)}
+function won(r){return num(r.price)*num(r.quantity)}
+function save(){localStorage.setItem(KEY,JSON.stringify({candidate:candidate.value,baseDate:baseDate.value,roundMode:roundMode.value,basis:basis.value,custom,rows}))}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||'{}');candidate.value=s.candidate||'';baseDate.value=s.baseDate||'2025-12-31';roundMode.value=s.roundMode||'round';basis.value=s.basis||'기말잔고';custom=s.custom||{};rows=Array.isArray(s.rows)&&s.rows.length?s.rows:[row()]}catch(e){rows=[row()]}}
+function lookup(r){const info=db()[sym(r.symbol)];if(info){if(!r.assetName)r.assetName=info.name;if(!r.code&&info.code)r.code=info.code}return r}
+function setVal(id,k,v){rows=rows.map(r=>{if(r.id!==id)return r;const n={...r,[k]:v};if(k==='symbol')lookup(n);return n});save();render()}
+function addRow(prefill){rows.push(prefill?{...row(),...prefill,id:uid()}:row());save();render()}
+function removeRow(id){rows=rows.filter(r=>r.id!==id);if(!rows.length)rows=[row()];save();render()}
+function removeZeroRows(){rows=rows.filter(r=>num(r.quantity)>0&&(num(r.price)>0||r.price===''));if(!rows.length)rows=[row()];save();render()}
+function resetAll(){if(!confirm('입력한 내용을 모두 초기화할까요?'))return;rows=[row()];candidate.value='';baseDate.value='2025-12-31';roundMode.value='round';basis.value='기말잔고';save();render()}
+function rights(r){return `${r.exchange||'미입력'}, ${r.assetName||'미입력'}, ${sym(r.symbol)||'미입력'}, ${r.code||'999999'}, ${fmt(num(r.price))}원, ${num(r.quantity).toFixed(8)}개`}
+function render(){body.innerHTML='';rows.forEach(r=>{const tr=document.createElement('tr');tr.className='border-b hover:bg-slate-50';tr.innerHTML=`<td class="px-3 py-3"><select class="w-full rounded-lg border px-2 py-2" onchange="setVal('${r.id}','owner',this.value)">${['본인','배우자','부','모','자녀','기타'].map(v=>`<option ${r.owner===v?'selected':''}>${v}</option>`).join('')}</select></td><td class="px-3 py-3"><input class="w-full rounded-lg border px-2 py-2" value="${esc(r.exchange)}" oninput="setVal('${r.id}','exchange',this.value)"></td><td class="px-3 py-3"><input class="w-full rounded-lg border px-2 py-2" value="${esc(r.assetName)}" oninput="setVal('${r.id}','assetName',this.value)"></td><td class="px-3 py-3"><input class="mono uppercase w-full rounded-lg border px-2 py-2" value="${esc(r.symbol)}" oninput="setVal('${r.id}','symbol',this.value.toUpperCase())"></td><td class="px-3 py-3"><input class="mono w-full rounded-lg border px-2 py-2" value="${esc(r.code)}" oninput="setVal('${r.id}','code',this.value)" placeholder="999999"></td><td class="px-3 py-3"><input class="mono text-right w-full rounded-lg border px-2 py-2" value="${esc(r.price)}" oninput="setVal('${r.id}','price',this.value)" inputmode="decimal"></td><td class="px-3 py-3"><input class="mono text-right w-full rounded-lg border px-2 py-2" value="${esc(r.quantity)}" oninput="setVal('${r.id}','quantity',this.value)" inputmode="decimal"></td><td class="mono px-3 py-3 text-right font-bold whitespace-nowrap">${fmt(won(r))}원</td><td class="mono px-3 py-3 text-right font-bold text-blue-700 whitespace-nowrap">${fmt(thousand(won(r)))}천원</td><td class="no-print px-3 py-3 text-center"><button onclick="removeRow('${r.id}')" class="px-3 py-2 rounded-lg bg-red-50 text-red-600 font-bold">삭제</button></td>`;body.appendChild(tr)});const tw=rows.reduce((s,r)=>s+won(r),0),tt=rows.reduce((s,r)=>s+thousand(won(r)),0);totalCount.textContent=rows.length+'개';totalWon.textContent=fmt(tw)+'원';totalThousand.textContent=fmt(tt)+'천원';report.value=`[${candidate.value||'후보자명 미입력'}] 가상자산 신고 정리\n기준일: ${baseDate.value||'기준일 미입력'}\n잔고 기준: ${basis.value}\n\n${rows.map((r,i)=>`${i+1}. ${r.owner||'본인'} / 가상자산 / ${rights(r)} / ${fmt(thousand(won(r)))}천원`).join('\n')}\n\n합계: ${fmt(tt)}천원`;const ws=[];rows.forEach((r,i)=>{if(!r.owner)ws.push(`${i+1}번 행: 소유자 누락`);if(!r.exchange)ws.push(`${i+1}번 행: 거래소명 누락`);if(!r.assetName)ws.push(`${i+1}번 행: 가상자산명 누락`);if(!r.symbol)ws.push(`${i+1}번 행: 심볼 누락`);if(!r.code)ws.push(`${i+1}번 행: 종목코드 누락, 없으면 999999 입력`);if(num(r.price)<=0)ws.push(`${i+1}번 행: 단가 누락 또는 0원`);if(num(r.quantity)<=0)ws.push(`${i+1}번 행: 수량 누락 또는 0개`)});warn.innerHTML=ws.map(w=>`<li>• ${esc(w)}</li>`).join('');noWarn.classList.toggle('hidden',ws.length>0)}
+async function runOcr(files){if(!files?.length)return;ocrText.value='';ocrStatus.textContent=`OCR 준비 중: ${files.length}개`;try{for(let i=0;i<files.length;i++){const f=files[i];ocrStatus.textContent=`OCR 진행 중 ${i+1}/${files.length}`;const res=await Tesseract.recognize(f,'kor+eng',{logger:m=>{if(m.status==='recognizing text')ocrStatus.textContent=`OCR 진행 중 ${i+1}/${files.length}: ${Math.round((m.progress||0)*100)}%`}});ocrText.value+=`\n\n--- ${f.name} ---\n`+res.data.text}ocrStatus.textContent='OCR 완료. 미리보기를 확인하세요.';parseOcr(true)}catch(e){console.error(e);ocrStatus.textContent='OCR 실패. 더 선명한 스크린샷을 사용하세요.'}}
+function parseOcr(previewOnly){const items=extractAssets(ocrText.value);preview(items);if(previewOnly)return;if(!items.length){alert('변환할 항목을 찾지 못했습니다.');return}if(confirm(`${items.length}개 항목을 입력 목록에 추가할까요?`))items.forEach(it=>addRow({owner:'본인',exchange:guessExchange(ocrText.value),assetName:it.assetName,symbol:it.symbol,code:it.code,price:'',quantity:it.quantity}))}
+function guessExchange(t){t=String(t).toLowerCase();if(t.includes('업비트')||t.includes('upbit'))return'업비트';if(t.includes('코인원')||t.includes('coinone'))return'코인원';if(t.includes('코빗')||t.includes('korbit'))return'코빗';return'빗썸'}
+function numbers(t){const out=[];let cur='',dot=false;const push=()=>{if(cur&&cur!=='.'){const n=Number(cur);if(isFinite(n))out.push(n)}cur='';dot=false};for(const ch of String(t)){if(ch>='0'&&ch<='9')cur+=ch;else if(ch==='.'&&!dot){cur+=ch;dot=true}else push()}push();return out}
+function extractAssets(text){const d=db(),symbols=Object.keys(d).sort((a,b)=>b.length-a.length),lines=String(text).replaceAll(',','').split('\n').map(x=>x.trim()).filter(Boolean),found=[],seen=new Set();for(let i=0;i<lines.length;i++){const win=[lines[i-1]||'',lines[i],lines[i+1]||'',lines[i+2]||''].join(' '),pad=' '+win.toUpperCase()+' ';for(const s of symbols){if(seen.has(s)||!pad.includes(' '+s+' '))continue;const ns=numbers(win).filter(n=>n>=0&&n<1000000);if(!ns.length)continue;const info=d[s]||{};found.push({assetName:info.name||'',symbol:s,code:info.code||'',quantity:String(ns[ns.length-1])});seen.add(s)}}return found}
+function preview(items){if(!items.length){ocrPreview.innerHTML='아직 변환된 항목이 없습니다.';return}ocrPreview.innerHTML=`<table class="w-full text-xs"><thead><tr class="border-b"><th class="text-left py-1">코인명</th><th class="text-left py-1">심볼</th><th class="text-right py-1">수량</th></tr></thead><tbody>${items.map(x=>`<tr class="border-b"><td class="py-1">${esc(x.assetName)}</td><td class="py-1 mono">${esc(x.symbol)}</td><td class="py-1 text-right mono">${esc(x.quantity)}</td></tr>`).join('')}</tbody></table>`}
+function importCodeDb(){const raw=codeInput.value.trim();if(!raw){alert('추가할 종목코드를 입력해주세요.');return}let added=0;raw.split(/\n+/).forEach(line=>{const p=line.split(/[\t,]/).map(v=>v.trim()).filter(Boolean);if(p.length<3)return;custom[sym(p[2])]={code:p[0],name:p[1]};added++});save();render();codeInput.value='';codeStatus.textContent=`${added}개 종목코드를 저장했습니다. 사용자 DB: ${Object.keys(custom).length}개`}
+function clearCodeDb(){if(!confirm('직접 추가한 종목코드 DB를 초기화할까요?'))return;custom={};save();render();codeStatus.textContent='사용자 DB를 초기화했습니다.'}
+function copyReport(){navigator.clipboard.writeText(report.value).then(()=>alert('신고서용 문구를 복사했습니다.'))}
+function exportExcel(){const data=rows.map((r,i)=>({순번:i+1,후보자명:candidate.value||'후보자',기준일:baseDate.value,잔고기준:basis.value,재산구분:'가상자산',소유자:r.owner,거래소명:r.exchange,가상자산명:r.assetName,심볼:sym(r.symbol),종목코드:r.code||'999999','1개당 가격(원)':num(r.price),보유수량:num(r.quantity),'가액(원)':won(r),'신고가액(천원)':thousand(won(r)),권리명세:rights(r),비고:r.memo||''}));data.push({순번:'',후보자명:'',기준일:'',잔고기준:'',재산구분:'합계',소유자:'',거래소명:'',가상자산명:'',심볼:'',종목코드:'','1개당 가격(원)':'',보유수량:'','가액(원)':rows.reduce((s,r)=>s+won(r),0),'신고가액(천원)':rows.reduce((s,r)=>s+thousand(won(r)),0),권리명세:'',비고:''});const ws=XLSX.utils.json_to_sheet(data);ws['!cols']=[{wch:6},{wch:12},{wch:12},{wch:10},{wch:12},{wch:10},{wch:12},{wch:18},{wch:10},{wch:10},{wch:16},{wch:16},{wch:16},{wch:16},{wch:60},{wch:20}];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'가상자산 신고정리');const safe=(candidate.value||'후보자').replace(/[\\/:*?"<>|]/g,'_');XLSX.writeFile(wb,`${safe}_가상자산_신고정리_${baseDate.value||'기준일'}.xlsx`)}
+window.addEventListener('load',()=>{load();render()});
+</script>
+</body>
+</html>
