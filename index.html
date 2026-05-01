@@ -27,7 +27,7 @@
         .mobile-container.ready { opacity: 1; }
     </style>
 
-    <link rel="preload" as="image" href="./1776148156619.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="./개소식사진.webp" fetchpriority="high">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -44,7 +44,7 @@
             display: flex; justify-content: center; align-items: flex-start;
             min-height: 100vh; width: 100%;
             background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.95)), 
-                        url('./1776148156619.webp') no-repeat center center / cover;
+                        url('./개소식사진.webp') no-repeat center center / cover;
         }
         .pc-side-info { display: none; flex-direction: column; justify-content: center; width: 420px; padding-right: 80px; color: white; height: 100vh; position: sticky; top: 0; }
         @media (min-width: 1024px) { .pc-side-info { display: flex; } }
@@ -110,7 +110,7 @@
 
             <!-- 1. 히어로 섹션 (이미지 꽉 채움) -->
             <header class="relative w-full pt-[54px] bg-white overflow-hidden">
-                <img src="./1776148156619.webp" alt="메인 포스터" class="w-full h-auto block" />
+                <img src="./개소식사진.webp" alt="메인 포스터" class="w-full h-auto block" />
                 <div class="relative w-full bg-gray-900 px-6 pb-16 pt-10 text-center border-t-[5px] border-party-red text-white">
                     <div class="inline-flex items-center gap-1.5 bg-party-red px-3 py-1.5 text-[11px] font-bold rounded mb-5 shadow-lg">
                         <span id="d-day-badge" class="bg-white text-party-red px-1.5 py-0.5 rounded-sm font-black text-[10px]">D-?</span>
@@ -300,12 +300,13 @@
         lucide.createIcons();
 
         // 로딩 완료 후 처리
-        window.addEventListener('load', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const splash = document.getElementById('splash-screen');
             const mainCont = document.getElementById('main-container');
+            splash.style.transition = 'opacity 0.2s ease';
             splash.style.opacity = '0';
             mainCont.classList.add('ready');
-            setTimeout(() => { splash.style.display = 'none'; }, 400);
+            setTimeout(() => { splash.style.display = 'none'; }, 200);
         });
 
         // 1. D-Day
@@ -360,7 +361,7 @@
                 content: {
                     title: '진해의 도약!! 박동철 도의원 예비후보',
                     description: '박동하는 진해, 지금이 확실히 밀어줄 철입니다!',
-                    imageUrl: 'https://djmonnar.github.io/jinhae/1776148156619.webp', 
+                    imageUrl: 'https://djmonnar.github.io/jinhae/개소식사진.webp',
                     link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl },
                 },
                 buttons: [{ title: '예비후보 프로필 보기', link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl } }],
