@@ -48,10 +48,11 @@
         }
 
         /* 모바일 컨테이너 */
-        .mobile-container { 
-            width: 100%; max-width: 480px; background-color: #ffffff; 
-            min-height: 100vh; position: relative; 
+        .mobile-container {
+            width: 100%; max-width: 480px; background-color: #ffffff;
+            min-height: 100vh; position: relative;
             box-shadow: 0 0 80px rgba(0, 0, 0, 0.6); z-index: 10;
+            margin-left: auto; margin-right: auto;
         }
         .fixed-mobile { position: fixed; width: 100%; max-width: 480px; left: 50%; transform: translateX(-50%); }
         @media (min-width: 1024px) { .fixed-mobile { left: calc(50% + 210px); transform: translateX(-50%); } }
