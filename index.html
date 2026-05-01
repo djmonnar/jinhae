@@ -27,7 +27,7 @@
         .mobile-container.ready { opacity: 1; }
     </style>
 
-    <link rel="preload" as="image" href="./1776148156619.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="./개소식사진.webp" fetchpriority="high">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -300,12 +300,13 @@
         lucide.createIcons();
 
         // 로딩 완료 후 처리
-        window.addEventListener('load', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const splash = document.getElementById('splash-screen');
             const mainCont = document.getElementById('main-container');
+            splash.style.transition = 'opacity 0.2s ease';
             splash.style.opacity = '0';
             mainCont.classList.add('ready');
-            setTimeout(() => { splash.style.display = 'none'; }, 400);
+            setTimeout(() => { splash.style.display = 'none'; }, 200);
         });
 
         // 1. D-Day
@@ -360,7 +361,7 @@
                 content: {
                     title: '진해의 도약!! 박동철 도의원 예비후보',
                     description: '박동하는 진해, 지금이 확실히 밀어줄 철입니다!',
-                    imageUrl: 'https://djmonnar.github.io/jinhae/1776148156619.webp', 
+                    imageUrl: 'https://djmonnar.github.io/jinhae/개소식사진.webp',
                     link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl },
                 },
                 buttons: [{ title: '예비후보 프로필 보기', link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl } }],
