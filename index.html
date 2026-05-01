@@ -54,6 +54,7 @@
             box-shadow: 0 0 80px rgba(0, 0, 0, 0.6); z-index: 10;
         }
         .fixed-mobile { position: fixed; width: 100%; max-width: 480px; left: 50%; transform: translateX(-50%); }
+        @media (min-width: 1024px) { .fixed-mobile { left: calc(50% + 210px); transform: translateX(-50%); } }
 
         .gradient-text { background: linear-gradient(135deg, #E61E2B 0%, #ff6b6b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .gold-text { background: linear-gradient(135deg, #F59E0B, #FCD34D); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
