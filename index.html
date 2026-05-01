@@ -27,7 +27,7 @@
         .mobile-container.ready { opacity: 1; }
     </style>
 
-    <link rel="preload" as="image" href="./1776148156619.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="./개소식사진.webp" fetchpriority="high">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -56,6 +56,7 @@
             box-shadow: 0 0 80px rgba(0, 0, 0, 0.6); z-index: 10;
         }
         .fixed-mobile { position: fixed; width: 100%; max-width: 480px; left: 50%; transform: translateX(-50%); }
+        @media (min-width: 1024px) { .fixed-mobile { left: calc(50% + 210px); transform: translateX(-50%); } }
 
         .gradient-text { background: linear-gradient(135deg, #E61E2B 0%, #ff6b6b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .gold-text { background: linear-gradient(135deg, #F59E0B, #FCD34D); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -110,7 +111,7 @@
 
             <!-- 1. 히어로 섹션 (이미지 꽉 채움) -->
             <header class="relative w-full pt-[54px] bg-white overflow-hidden">
-                <img src="./1776148156619.webp" alt="메인 포스터" class="w-full h-auto block" />
+                <img src="./개소식사진.webp" alt="메인 포스터" class="w-full h-auto block" />
                 <div class="relative w-full bg-gray-900 px-6 pb-16 pt-10 text-center border-t-[5px] border-party-red text-white">
                     <div class="inline-flex items-center gap-1.5 bg-party-red px-3 py-1.5 text-[11px] font-bold rounded mb-5 shadow-lg">
                         <span id="d-day-badge" class="bg-white text-party-red px-1.5 py-0.5 rounded-sm font-black text-[10px]">D-?</span>
