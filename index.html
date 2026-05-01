@@ -89,7 +89,7 @@
                 <div class="px-5 flex justify-between items-center w-full text-gray-900">
                     <div class="font-black text-lg flex items-center gap-1.5 border-l-4 border-party-red pl-2">
                         <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 w-auto">
-                        <span>도의원 예비후보 박동철</span>
+                        <span>도의원 후보 박동철</span>
                     </div>
                     <a href="#contact" class="text-[11px] font-bold px-3 py-2 rounded-full bg-party-red text-white shadow-sm">선거사무소</a>
                 </div>
@@ -234,7 +234,36 @@
                 </div>
             </section>
 
-            <!-- 6. 소통 채널 -->
+            <!-- 6. 활동사진 갤러리 -->
+            <section class="py-16 bg-white text-gray-900">
+                <div class="reveal px-6 mb-6">
+                    <div class="inline-block bg-party-red text-white px-2.5 py-1 text-[10px] font-bold rounded mb-3 shadow-sm">활동사진</div>
+                    <h2 class="text-2xl font-black">현장에서 <span class="text-party-red">함께한</span> 순간들</h2>
+                </div>
+                <div class="relative">
+                    <div id="gallery-track" class="flex gap-3 px-6 overflow-hidden">
+                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/1.jpg" class="w-full h-full object-cover" onerror="this.closest('div').style.display='none'"></div>
+                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/2.jpg" class="w-full h-full object-cover" onerror="this.closest('div').style.display='none'"></div>
+                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/3.jpg" class="w-full h-full object-cover" onerror="this.closest('div').style.display='none'"></div>
+                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/4.jpg" class="w-full h-full object-cover" onerror="this.closest('div').style.display='none'"></div>
+                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/5.jpg" class="w-full h-full object-cover" onerror="this.closest('div').style.display='none'"></div>
+                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/6.jpg" class="w-full h-full object-cover" onerror="this.closest('div').style.display='none'"></div>
+                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/7.jpg" class="w-full h-full object-cover" onerror="this.closest('div').style.display='none'"></div>
+                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/8.jpg" class="w-full h-full object-cover" onerror="this.closest('div').style.display='none'"></div>
+                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/9.jpg" class="w-full h-full object-cover" onerror="this.closest('div').style.display='none'"></div>
+                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/10.jpg" class="w-full h-full object-cover" onerror="this.closest('div').style.display='none'"></div>
+                    </div>
+                    <!-- < > 버튼 -->
+                    <button id="gallery-prev" onclick="galleryMove(-1)" class="absolute left-1 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-200 active:scale-95">
+                        <i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i>
+                    </button>
+                    <button id="gallery-next" onclick="galleryMove(1)" class="absolute right-1 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-200 active:scale-95">
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-700"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 7. 소통 채널 -->
             <section id="contact" class="py-20 px-6 bg-white">
                 <div class="space-y-4 mb-10">
                     <a href="http://pf.kakao.com/_xgALdX/chat" target="_blank" class="flex items-center bg-[#FAE100] p-6 rounded-2xl border-2 border-[#F4D500] shadow-lg active:scale-95 transition-transform">
@@ -251,14 +280,14 @@
                 <div class="py-16 bg-gradient-to-br from-[#E61E2B] to-[#9b0013] text-white text-center rounded-[2.5rem] shadow-2xl px-6 relative overflow-hidden">
                     <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
                     <h2 class="relative z-10 text-[1.8rem] font-black leading-tight mb-8 tracking-tighter">지금은 확실히 밀어줄<br/><span class="text-yellow-300 text-5xl mt-2 block">'철'</span> 입니다!</h2>
-                    <div class="relative z-10 bg-white text-party-red text-lg font-black px-10 py-4 rounded-full inline-block shadow-lg">예비후보 박동철</div>
+                    <div class="relative z-10 bg-white text-party-red text-lg font-black px-10 py-4 rounded-full inline-block shadow-lg">후보 박동철</div>
                 </div>
             </section>
 
             <footer class="bg-gray-50 border-t border-gray-100 py-12 px-6 text-center text-gray-400">
                 <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="Logo" class="h-6 mx-auto mb-4 grayscale opacity-30">
                 <p class="text-[10px] font-bold uppercase tracking-widest">© 2026 Park Dong-cheol Campaign</p>
-                <p class="text-[9px] text-gray-300 mt-1">본 페이지는 예비후보 박동철 선거사무소에서 제작하였습니다.</p>
+                <p class="text-[9px] text-gray-300 mt-1">본 페이지는 후보 박동철 선거사무소에서 제작하였습니다.</p>
             </footer>
 
             <!-- ★ 우측 하단 플로팅 버튼 트리오 ★ -->
@@ -346,14 +375,38 @@
             Kakao.Share.sendDefault({
                 objectType: 'feed',
                 content: {
-                    title: '진해의 도약!! 박동철 도의원 예비후보',
+                    title: '진해의 도약!! 박동철 도의원 후보',
                     description: '박동하는 진해, 지금이 확실히 밀어줄 철입니다!',
                     imageUrl: 'https://djmonnar.github.io/jinhae/개소식사진.webp',
                     link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl },
                 },
-                buttons: [{ title: '예비후보 프로필 보기', link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl } }],
+                buttons: [{ title: '후보 프로필 보기', link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl } }],
             });
         }
+    </script>
+    <script>
+        // 갤러리 슬라이더
+        (function() {
+            const track = document.getElementById('gallery-track');
+            const itemWidth = 260 + 12; // width + gap
+            let current = 0;
+
+            window.galleryMove = function(dir) {
+                const visibleItems = Math.round(track.parentElement.offsetWidth / itemWidth);
+                const total = track.children.length;
+                current = Math.max(0, Math.min(current + dir, total - visibleItems));
+                track.style.transform = 'translateX(-' + (current * itemWidth) + 'px)';
+                track.style.transition = 'transform 0.35s ease';
+            };
+
+            // 터치 스와이프
+            let startX = 0;
+            track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+            track.addEventListener('touchend', e => {
+                const diff = startX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 40) galleryMove(diff > 0 ? 1 : -1);
+            });
+        })();
     </script>
 </body>
 </html>
