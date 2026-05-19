@@ -437,7 +437,8 @@ const googleProvider = new GoogleAuthProvider();
 // ── 설정 ──
 const ELECTION_DATE = new Date('2026-06-03T00:00:00+09:00');
 const KAKAO_JS_KEY = '1aa968a094a900e05010d7b54c35e006';
-const FCM_VAPID_KEY = 'REPLACE_WITH_FIREBASE_VAPID_KEY';
+const PUBLIC_URL = 'https://djmonnar.github.io/jinhae/vote.html';
+const FCM_VAPID_KEY = 'BIPiYKZInFK34DIx_s7OBhfDfqSLQwAlZPTJnMcDaZQeoELW8lZ7yt6CaeQTP9swdiVd3mpTz5JvPfa3O_Z9YV4';
 const ADMIN_EMAILS = [
   'iu431214@gmail.com',
   'djmonnar4@gmail.com',
@@ -557,7 +558,7 @@ async function ensureMessaging() {
       new Notification(title, {
         body,
         icon: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
-        data: { url: location.href },
+        data: { url: PUBLIC_URL },
       });
     } else {
       showToast(body);
@@ -1330,22 +1331,27 @@ if (window.Kakao && !Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
 
 // ── 공유 (전체 일정) ──
 window.shareKakao = function() {
-  Kakao.Share.sendDefault({
-    objectType: 'feed',
-    content: {
-      title: '박동철 유세 일정',
-      description: '진해 구석구석 직접 찾아갑니다! 일정을 확인하고 현장에서 만나요 🇰🇷',
-      imageUrl: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
-      link: {
-        mobileWebUrl: location.href,
-        webUrl:       location.href,
+  try {
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '박동철 유세 일정',
+        description: '진해 구석구석 직접 찾아갑니다! 일정을 확인하고 현장에서 만나요 🇰🇷',
+        imageUrl: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
+        link: {
+          mobileWebUrl: PUBLIC_URL,
+          webUrl:       PUBLIC_URL,
+        },
       },
-    },
-    buttons: [{
-      title: '📅 전체 일정 보기',
-      link: { mobileWebUrl: location.href, webUrl: location.href },
-    }],
-  });
+      buttons: [{
+        title: '📅 전체 일정 보기',
+        link: { mobileWebUrl: PUBLIC_URL, webUrl: PUBLIC_URL },
+      }],
+    });
+  } catch (err) {
+    console.error(err);
+    fallbackCopy(PUBLIC_URL);
+  }
 };
 
 // ── 공유 (개별 일정) ──
@@ -1354,22 +1360,27 @@ function shareEvent(dayDocId, evId) {
   if (!ev) return;
   const teams = getEventTeamNames(ev);
   const teamLine = teams.length ? `\n담당 팀: ${teams.join(', ')}` : '';
-  Kakao.Share.sendDefault({
-    objectType: 'feed',
-    content: {
-      title: `⏰ ${ev.time}  📍 ${ev.place}`,
-      description: `${ev.title}${teamLine}\n\n국민의힘 박동철 후보가 찾아갑니다!`,
-      imageUrl: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
-      link: {
-        mobileWebUrl: location.href,
-        webUrl:       location.href,
+  try {
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: `⏰ ${ev.time}  📍 ${ev.place}`,
+        description: `${ev.title}${teamLine}\n\n국민의힘 박동철 후보가 찾아갑니다!`,
+        imageUrl: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
+        link: {
+          mobileWebUrl: PUBLIC_URL,
+          webUrl:       PUBLIC_URL,
+        },
       },
-    },
-    buttons: [{
-      title: '📅 전체 일정 보기',
-      link: { mobileWebUrl: location.href, webUrl: location.href },
-    }],
-  });
+      buttons: [{
+        title: '📅 전체 일정 보기',
+        link: { mobileWebUrl: PUBLIC_URL, webUrl: PUBLIC_URL },
+      }],
+    });
+  } catch (err) {
+    console.error(err);
+    fallbackCopy(PUBLIC_URL);
+  }
 }
 
 function fallbackCopy(url) {
