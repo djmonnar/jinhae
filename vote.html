@@ -19,7 +19,7 @@
     --orange: #d4620a; --orange-bg: #fef0e6;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--navy); min-height: 100vh; padding-bottom: 120px; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--navy); min-height: 100vh; padding-bottom: 150px; }
 
   header { background: var(--navy); color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.25); }
   .gold-bar { height: 4px; background: linear-gradient(90deg, var(--gold), #f0d080, var(--gold)); }
@@ -183,8 +183,11 @@
   .map-info strong { display:block; font-size:13px; margin-bottom:4px; color:var(--navy); }
   .map-info span { display:block; font-size:12px; color:#555; line-height:1.5; }
 
-  .float-share { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:200; }
+  .float-share { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:200; display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap; width:min(94vw, 520px); }
   .float-kakao { display:inline-flex; align-items:center; gap:8px; background:#fde300; color:#3a1d1d; font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:700; padding:13px 22px; border-radius:40px; border:none; cursor:pointer; box-shadow:0 4px 20px rgba(0,0,0,0.2); white-space:nowrap; }
+  .float-notify { display:inline-flex; align-items:center; gap:8px; background:var(--navy); color:white; font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:700; padding:13px 18px; border-radius:40px; border:none; cursor:pointer; box-shadow:0 4px 20px rgba(0,0,0,0.18); white-space:nowrap; }
+  .float-notify.subscribed { background:var(--green); }
+  .float-notify:disabled { opacity:0.62; cursor:not-allowed; }
 
   .notice { background:#fff8e1; border-left:3px solid var(--gold); border-radius:0 10px 10px 0; padding:12px 16px; font-size:13px; color:#665500; margin-bottom:18px; line-height:1.6; }
   .empty { text-align:center; padding:50px 20px; color:var(--muted); }
@@ -256,6 +259,7 @@
 
 <div class="float-share">
   <button class="float-kakao" onclick="shareKakao()">💬 카카오톡으로 일정 공유하기</button>
+  <button class="float-notify" id="notify-btn" onclick="enableScheduleNotifications()">🔔 새 일정 알림받기</button>
 </div>
 
 <footer>국민의힘 제9회 전국동시지방선거<br>경남도의회의원 창원시 제14선거구 <strong>박동철</strong><br>선거사무소 055-211-7321<span class="credit">짓마케팅 서효승 제작</span></footer>
@@ -413,6 +417,8 @@ import { getFirestore, collection, doc,
   from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getMessaging, getToken, onMessage, isSupported as isMessagingSupported }
+  from "https://www.gstatic.com/firebasejs/11.6.0/firebase-messaging.js";
 
 // ── Firebase 초기화 ──
 const firebaseConfig = {
@@ -431,6 +437,7 @@ const googleProvider = new GoogleAuthProvider();
 // ── 설정 ──
 const ELECTION_DATE = new Date('2026-06-03T00:00:00+09:00');
 const KAKAO_JS_KEY = '1aa968a094a900e05010d7b54c35e006';
+const FCM_VAPID_KEY = 'REPLACE_WITH_FIREBASE_VAPID_KEY';
 const ADMIN_EMAILS = [
   'iu431214@gmail.com',
   'djmonnar4@gmail.com',
@@ -458,6 +465,8 @@ let infoWindow = null;
 let mapMarkers = [];
 let previewMap = null;
 let previewMarker = null;
+let messaging = null;
+let messagingReady = false;
 
 // ── D-Day ──
 function calcDday() {
@@ -467,6 +476,7 @@ function calcDday() {
     diff > 0 ? diff : diff === 0 ? '오늘!' : '종료';
 }
 calcDday();
+updateNotifyButton();
 
 function escapeHtml(value) {
   return String(value ?? '')
@@ -494,6 +504,110 @@ function renderTeamChips(teamIds = []) {
   if (!teamIds.length) return '';
   return `<div class="event-teams">${teamIds.map(id => `<span class="team-chip">👥 ${escapeHtml(getTeamName(id))}</span>`).join('')}</div>`;
 }
+
+function isVapidConfigured() {
+  return FCM_VAPID_KEY && !FCM_VAPID_KEY.startsWith('REPLACE_');
+}
+
+async function tokenIdFromToken(token) {
+  const bytes = new TextEncoder().encode(token);
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function updateNotifyButton() {
+  const btn = document.getElementById('notify-btn');
+  if (!btn) return;
+  if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+    btn.disabled = true;
+    btn.textContent = '🔕 알림 미지원';
+    return;
+  }
+  if (!isVapidConfigured()) {
+    btn.disabled = true;
+    btn.textContent = '🔔 알림 설정 필요';
+    return;
+  }
+  const supported = await isMessagingSupported().catch(() => false);
+  if (!supported) {
+    btn.disabled = true;
+    btn.textContent = '🔕 알림 미지원';
+    return;
+  }
+  if (Notification.permission === 'granted') {
+    btn.classList.add('subscribed');
+    btn.textContent = '🔔 알림받는 중';
+  }
+}
+
+async function ensureMessaging() {
+  if (messagingReady) {
+    return { messaging, registration: await navigator.serviceWorker.ready };
+  }
+  if (!isVapidConfigured()) throw new Error('FCM VAPID 키가 설정되지 않았습니다');
+  const supported = await isMessagingSupported();
+  if (!supported) throw new Error('이 브라우저는 웹 푸시를 지원하지 않습니다');
+  const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js');
+  messaging = getMessaging(app);
+  messagingReady = true;
+  onMessage(messaging, payload => {
+    const title = payload.notification?.title || '새 유세 일정';
+    const body = payload.notification?.body || '새 일정이 등록되었습니다.';
+    if (Notification.permission === 'granted') {
+      new Notification(title, {
+        body,
+        icon: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
+        data: { url: location.href },
+      });
+    } else {
+      showToast(body);
+    }
+  });
+  return { messaging, registration };
+}
+
+window.enableScheduleNotifications = async function() {
+  const btn = document.getElementById('notify-btn');
+  if (!btn) return;
+  if (!isVapidConfigured()) {
+    alert('Firebase 콘솔의 Web Push 인증서 키를 코드에 먼저 넣어야 합니다.');
+    return;
+  }
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = '알림 설정 중...';
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      alert('브라우저 알림을 허용해야 새 일정 알림을 받을 수 있습니다.');
+      return;
+    }
+    const { messaging, registration } = await ensureMessaging();
+    const token = await getToken(messaging, {
+      vapidKey: FCM_VAPID_KEY,
+      serviceWorkerRegistration: registration,
+    });
+    if (!token) throw new Error('알림 토큰을 받지 못했습니다');
+    const tokenId = await tokenIdFromToken(token);
+    await setDoc(doc(db, 'notification_subscribers', tokenId), {
+      token,
+      enabled: true,
+      userAgent: navigator.userAgent,
+      platform: navigator.platform || '',
+      updatedAt: Date.now(),
+      createdAt: Date.now(),
+    }, { merge: true });
+    btn.classList.add('subscribed');
+    btn.textContent = '🔔 알림받는 중';
+    showToast('새 일정 알림을 받을 수 있습니다');
+  } catch (err) {
+    console.error(err);
+    alert('알림 설정 실패: ' + err.message);
+    btn.textContent = originalText;
+  } finally {
+    btn.disabled = false;
+  }
+};
 
 function pad2(value) {
   return String(value).padStart(2, '0');

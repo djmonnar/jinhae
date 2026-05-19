@@ -1,0 +1,42 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in [
+          "iu431214@gmail.com",
+          "djmonnar4@gmail.com"
+        ];
+    }
+
+    function isValidSubscriberWrite() {
+      return request.resource.data.keys().hasOnly([
+          "token",
+          "enabled",
+          "userAgent",
+          "platform",
+          "updatedAt",
+          "createdAt"
+        ])
+        && request.resource.data.token is string
+        && request.resource.data.token.size() < 4096
+        && request.resource.data.enabled is bool;
+    }
+
+    match /schedule_days/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /campaign_teams/{teamId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /notification_subscribers/{subscriberId} {
+      allow create, update: if isValidSubscriberWrite();
+      allow read, delete: if isAdmin();
+    }
+  }
+}
