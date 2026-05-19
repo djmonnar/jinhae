@@ -1,555 +1,373 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth" style="background-color: #0f172a;">
+<html lang="ko" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>진해의 도약!! 진해의 선택!! 박동철 도의원</title>
-    
-    <!-- ★ 파비콘 이미지 교체 ★ -->
-    <link rel="icon" href="./개소식사진.webp">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>박동철 경남도의원 후보 | 진해의 중단 없는 발전</title>
+  <link rel="icon" href="./개소식사진.webp" />
+  <meta property="og:title" content="박동철 경남도의원 후보" />
+  <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다." />
+  <meta property="og:image" content="https://djmonnar.github.io/jinhae/개소식사진.webp" />
+  <meta property="og:url" content="https://djmonnar.github.io/jinhae/" />
 
-    <!-- 오픈그래프 (★ 공유 썸네일 이미지 교체 ★) -->
-    <meta property="og:title" content="진해의 도약!! 진해의 선택!! 박동철 도의원">
-    <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다!">
-    <meta property="og:image" content="./개소식사진.webp">
-    <meta property="og:url" content="https://djmonnar.github.io/jinhae/">
+  <link rel="preload" as="image" href="./개소식사진.webp" fetchpriority="high" />
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+    integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
+    crossorigin="anonymous"></script>
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1aa968a094a900e05010d7b54c35e006&libraries=services&autoload=false"></script>
 
-    <!-- 로딩 지연 방지 및 배경색 우선 설정 -->
-    <style>
-        html, body { background-color: #0f172a !important; margin: 0; padding: 0; color: #ffffff; }
-        #splash-screen {
-            position: fixed; inset: 0; z-index: 9999; background-color: #0f172a;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-        }
-        .loader-logo { width: 70px; height: auto; margin-bottom: 20px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.05); opacity: 1; } }
-        .mobile-container { opacity: 0; transition: opacity 0.4s ease; }
-        .mobile-container.ready { opacity: 1; }
-    </style>
-
-    <link rel="preload" as="image" href="./개소식사진.webp" fetchpriority="high">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"></script>
-    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1aa968a094a900e05010d7b54c35e006&libraries=services&autoload=false"></script>
-
-    <style>
-        body { font-family: 'Pretendard', sans-serif; word-break: keep-all; min-height: 100vh; overflow-x: hidden; color: #1f2937; }
-        .bg-party-red { background-color: #E61E2B; }
-        .text-party-red { color: #E61E2B; }
-        .border-party-red { border-color: #E61E2B; }
-
-        /* PC 모니터용 프리미엄 레이아웃 */
-        .pc-wrapper {
-            display: flex; justify-content: center; align-items: flex-start;
-            min-height: 100vh; width: 100%;
-            background-color: #0f172a;
-        }
-
-        /* 모바일 컨테이너 */
-        .mobile-container {
-            width: 100%; max-width: 480px; background-color: #ffffff;
-            min-height: 100vh; position: relative;
-            box-shadow: 0 0 80px rgba(0, 0, 0, 0.6); z-index: 10;
-            margin-left: auto; margin-right: auto;
-        }
-        .fixed-mobile { position: fixed; width: 100%; max-width: 480px; left: 50%; transform: translateX(-50%); }
-
-        .gradient-text { background: linear-gradient(135deg, #E61E2B 0%, #ff6b6b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .gold-text { background: linear-gradient(135deg, #F59E0B, #FCD34D); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass-dark { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        .glass-light { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-        
-        .reveal { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        
-        @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.8); opacity: 0; } }
-        .pulse-ring::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #E61E2B; animation: pulse-ring 1.8s ease-out infinite; z-index: -1; }
-        
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .card-lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-        .card-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-    </style>
+  <style>
+    :root { --red:#E61E2B; --navy:#111827; --gold:#f4c542; }
+    * { box-sizing:border-box; }
+    html, body { margin:0; min-height:100%; background:#e5e7eb; color:#111827; font-family:'Pretendard', system-ui, sans-serif; word-break:keep-all; }
+    body { overflow-x:hidden; }
+    .page { width:100%; max-width:480px; min-height:100vh; margin:0 auto; background:#fff; box-shadow:0 0 70px rgba(15,23,42,.28); position:relative; }
+    .brand-red { color:var(--red); }
+    .bg-brand-red { background:var(--red); }
+    .section { padding:54px 22px; }
+    .kicker { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:#fff1f2; color:var(--red); font-size:11px; font-weight:900; letter-spacing:.04em; }
+    .title { font-size:26px; line-height:1.18; font-weight:950; letter-spacing:-.02em; }
+    .subcopy { color:#4b5563; font-size:14px; line-height:1.7; }
+    .hero { min-height:680px; color:#fff; position:relative; overflow:hidden; background:#111827; }
+    .hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .hero::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,15,25,.24) 0%, rgba(10,15,25,.72) 52%, rgba(10,15,25,.96) 100%); }
+    .hero-inner { position:relative; z-index:2; min-height:680px; display:flex; flex-direction:column; justify-content:space-between; padding:18px 20px 24px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 0; }
+    .logo-row { display:flex; align-items:center; gap:8px; font-weight:900; font-size:14px; }
+    .logo-row img { width:34px; height:auto; }
+    .badge { background:var(--red); color:#fff; border-radius:999px; padding:8px 12px; font-size:12px; font-weight:950; box-shadow:0 8px 24px rgba(230,30,43,.32); }
+    .hero-copy { padding-top:320px; }
+    .hero h1 { font-size:40px; line-height:1.08; font-weight:950; letter-spacing:-.04em; margin:14px 0 14px; }
+    .hero p { color:#e5e7eb; font-size:15px; line-height:1.7; margin:0; }
+    .hero-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:24px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:46px; border-radius:999px; font-size:14px; font-weight:900; text-decoration:none; border:0; cursor:pointer; }
+    .btn.primary { background:#fff; color:#111827; }
+    .btn.red { background:var(--red); color:#fff; }
+    .btn.dark { background:#111827; color:#fff; }
+    .hero-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:24px; }
+    .stat { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.16); border-radius:16px; padding:12px 10px; backdrop-filter:blur(10px); }
+    .stat span { display:block; font-size:10px; color:#d1d5db; font-weight:800; margin-bottom:5px; }
+    .stat strong { font-size:17px; font-weight:950; color:#fff; }
+    .schedule-box { background:#fff; border:1px solid #eef0f4; border-radius:22px; overflow:hidden; box-shadow:0 18px 40px rgba(15,23,42,.08); margin-top:22px; }
+    #today-map { width:100%; height:250px; background:#f3f4f6; }
+    .schedule-list { padding:16px; display:flex; flex-direction:column; gap:10px; }
+    .event-link { display:block; text-decoration:none; color:inherit; border:1px solid #eef0f4; border-radius:16px; padding:14px; transition:background .18s ease; }
+    .event-link:active { background:#f9fafb; }
+    .event-time { display:inline-flex; background:var(--red); color:#fff; border-radius:9px; padding:5px 8px; font-size:12px; font-weight:950; margin-bottom:8px; }
+    .event-place { font-size:15px; font-weight:950; line-height:1.35; }
+    .event-title { font-size:13px; color:#4b5563; line-height:1.55; margin-top:4px; }
+    .promise-grid { display:grid; gap:10px; margin-top:22px; }
+    .promise { border:1px solid #eceff4; border-radius:18px; padding:18px; background:#fff; }
+    .promise i { color:var(--red); }
+    .promise h3 { margin:10px 0 6px; font-size:16px; font-weight:950; }
+    .promise p { margin:0; color:#4b5563; font-size:13px; line-height:1.65; }
+    .career-list { margin-top:22px; display:flex; flex-direction:column; gap:10px; }
+    .career-item { display:flex; gap:12px; align-items:flex-start; border-bottom:1px solid #eef0f4; padding-bottom:12px; }
+    .career-dot { width:8px; height:8px; border-radius:50%; background:var(--red); margin-top:7px; flex:0 0 auto; }
+    .career-item strong { display:block; font-size:14px; line-height:1.5; }
+    .career-item span { display:block; color:#6b7280; font-size:12px; margin-top:2px; }
+    .media-row { display:flex; gap:14px; overflow-x:auto; padding:4px 22px 18px; scrollbar-width:none; }
+    .media-row::-webkit-scrollbar { display:none; }
+    .media-card { flex:0 0 260px; border-radius:18px; overflow:hidden; background:#fff; color:#111827; text-decoration:none; box-shadow:0 12px 30px rgba(15,23,42,.12); }
+    .media-card img { width:100%; height:138px; object-fit:cover; display:block; }
+    .media-card div { padding:16px; }
+    .media-card span { display:block; color:var(--red); font-size:10px; font-weight:950; margin-bottom:5px; }
+    .media-card h3 { margin:0; font-size:14px; line-height:1.45; font-weight:950; }
+    .contact-card { background:#111827; color:#fff; border-radius:24px; padding:24px; }
+    .contact-actions { display:grid; grid-template-columns:1fr; gap:10px; margin-top:18px; }
+    footer { padding:32px 22px 88px; color:#9ca3af; background:#f9fafb; text-align:center; font-size:11px; line-height:1.7; }
+    .float-actions { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); width:min(440px, calc(100vw - 32px)); display:grid; grid-template-columns:1fr 1fr; gap:10px; z-index:50; }
+    .float-actions .btn { box-shadow:0 12px 32px rgba(15,23,42,.22); }
+    @media (max-width:380px) {
+      .hero h1 { font-size:34px; }
+      .hero-actions, .float-actions { grid-template-columns:1fr; }
+      .hero-stats { grid-template-columns:1fr 1fr; }
+    }
+  </style>
 </head>
-<body class="antialiased">
-
-    <!-- 로딩 스플래시 (html 글자 노출 방지) -->
-    <div id="splash-screen">
-        <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="Logo" class="loader-logo">
-        <div class="text-white font-black tracking-widest text-sm opacity-80">진해의 새로운 박동을 준비합니다</div>
-    </div>
-
-    <div class="pc-wrapper">
-
-        <div id="main-container" class="mobile-container relative pb-10">
-            
-            <nav id="navbar" class="fixed-mobile top-0 z-50 py-3 glass-light border-b border-gray-100 shadow-sm transition-all duration-300">
-                <div class="px-5 flex justify-between items-center w-full text-gray-900">
-                    <div class="font-black text-lg flex items-center gap-1.5 border-l-4 border-party-red pl-2">
-                        <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 w-auto">
-                        <span>도의원 후보 박동철</span>
-                    </div>
-                    <a href="#contact" class="text-[11px] font-bold px-3 py-2 rounded-full bg-party-red text-white shadow-sm">선거사무소</a>
-                </div>
-            </nav>
-
-            <!-- 1. 히어로 섹션 (이미지 꽉 채움) -->
-            <header class="relative w-full pt-[54px] bg-white overflow-hidden">
-                <img src="./개소식사진.webp" alt="메인 포스터" class="w-full h-auto block" />
-                <div class="relative w-full bg-gray-900 px-6 pb-16 pt-10 text-center border-t-[5px] border-party-red text-white">
-                    <div class="inline-flex items-center gap-1.5 bg-party-red px-3 py-1.5 text-[11px] font-bold rounded mb-5 shadow-lg">
-                        <span id="d-day-badge" class="bg-white text-party-red px-1.5 py-0.5 rounded-sm font-black text-[10px]">D-?</span>
-                        제9회 전국동시지방선거
-                    </div>
-                    <h1 class="text-[2.2rem] font-black mb-6 leading-tight">진심이 전해 <span class="gold-text">진해,</span><br/>내 삶이 든든해 <span class="gold-text">진해!</span></h1>
-                    
-                    <!-- 실시간 조회수 -->
-                    <div class="mb-8 flex items-center justify-center gap-5 text-[11px] font-bold bg-white/10 px-6 py-3 rounded-full backdrop-blur-md border border-white/10 shadow-inner w-max mx-auto">
-                        <div class="flex items-center gap-1.5">
-                            <i data-lucide="eye" class="w-4 h-4 text-gray-400"></i>
-                            <span class="text-gray-400">오늘</span> 
-                            <span id="view-count-today" class="text-yellow-400 text-[14px]">...</span>
-                        </div>
-                        <div class="w-px h-3 bg-white/20"></div>
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-gray-400">누적</span> 
-                            <span id="view-count-total" class="text-white text-[14px]">...</span>
-                        </div>
-                    </div>
-
-                    <p class="text-gray-300 text-[15px] mb-8 leading-relaxed">진해의 아들 박동철 입니다.<br/>말이 아닌 결과로 증명해 온 진짜 일꾼입니다.</p>
-                    <div class="flex flex-wrap justify-center gap-2">
-                        <span class="bg-party-red/90 text-white text-[11px] px-3.5 py-2 rounded-full border border-red-500 font-bold shadow-sm">국민의힘 원내부대표</span>
-                        <span class="bg-slate-800 text-white text-[11px] px-3.5 py-2 rounded-full border border-slate-600 font-semibold shadow-sm">기획행정위 부위원장</span>
-                    </div>
-                </div>
-            </header>
-
-            <!-- 2. 출마선언문 -->
-            <section class="py-16 px-6 bg-white relative z-30 -mt-6 rounded-t-[2.5rem] shadow-2xl">
-                <div class="reveal">
-                    <div class="inline-block bg-party-red text-white px-2.5 py-1 text-[10px] font-bold rounded mb-4 shadow-sm">출마 선언문</div>
-                    <h2 class="text-2xl font-black text-gray-900 mb-8 border-l-4 border-party-red pl-3 leading-snug">진해의 중단 없는 발전,<br/><span class="gradient-text">검증된 실천력</span>으로 완성하겠습니다!</h2>
-                    <div class="text-[15.5px] text-gray-700 leading-[1.8] space-y-6 font-medium break-keep">
-                        <p>존경하는 진해 주민 여러분! 박동철 의원입니다. 저는 지난 4년의 성과를 디딤돌 삼아 진해의 더 큰 도약과 발전을 완수하기 위해 다시 섰습니다.</p>
-                        <div class="bg-gray-50 border-l-4 border-party-red p-6 rounded-r-2xl shadow-sm">
-                            <p class="font-black text-gray-900 mb-3 text-lg">의정활동은 말이 아닌 결과로 증명해야 합니다.</p>
-                            <p class="text-[14px] text-gray-600 leading-relaxed">장기간 표류하던 ‘통합진해중학교’ 개교 완수, 「경상남도교육청 학교복합시설 설치 조례」 제정 등 오직 주민만을 바라본 진심이 이뤄낸 결과였습니다.</p>
-                        </div>
-                        <p>초선의 패기에 실력을 더해, 피부로 느끼는 실질적인 변화를 체감시켜 드리겠습니다. <span class="gradient-text font-bold">결과로 보답하고 행동으로 증명하겠습니다.</span></p>
-                    </div>
-                    <div class="mt-10 pt-6 border-t border-gray-100 text-right">
-                        <p class="text-sm text-gray-500 mb-2">2026년 3월 26일</p>
-                        <p class="text-2xl font-black text-gray-900">도의원 후보 박 동 철 <span class="text-sm font-bold text-gray-500 ml-1">올림</span></p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 오늘 유세 일정 -->
-            <section id="today-schedule" class="py-16 px-6 bg-gray-50 border-b border-gray-100">
-                <div class="reveal">
-                    <div class="flex items-end justify-between gap-4 mb-6">
-                        <div>
-                            <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-2.5 py-1 text-[10px] font-bold rounded mb-3 shadow-sm">
-                                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 오늘의 현장
-                            </div>
-                            <h2 class="text-2xl font-black text-gray-900 leading-tight">오늘 유세 일정</h2>
-                            <p id="today-schedule-date" class="text-[12px] text-gray-500 mt-1 font-bold">일정을 불러오는 중...</p>
-                        </div>
-                        <a href="./vote.html" class="shrink-0 bg-gray-900 text-white text-[12px] font-black px-4 py-2.5 rounded-full shadow-lg active:scale-95">자세히 보기</a>
-                    </div>
-                    <div class="bg-white rounded-3xl border border-gray-100 shadow-xl overflow-hidden">
-                        <div id="today-map" class="w-full h-[240px] bg-gray-100"></div>
-                        <div id="today-schedule-list" class="p-5 space-y-3">
-                            <div class="text-center text-gray-400 text-sm py-8">오늘 일정을 불러오는 중입니다.</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 3. 상세 약력 및 학력 -->
-            <section class="py-16 px-6 bg-gray-50 border-b border-gray-100">
-                <div class="reveal">
-                    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 relative overflow-hidden">
-                        <i data-lucide="award" class="absolute -right-6 -bottom-6 w-40 h-40 text-gray-50 opacity-60"></i>
-                        <h3 class="text-xl font-black text-gray-900 mb-6 flex items-center gap-2 border-b-2 border-gray-100 pb-3">
-                            <i data-lucide="landmark" class="w-6 h-6 text-party-red"></i> 주요 경력 및 학력
-                        </h3>
-                        <ul class="space-y-4 mb-8 text-[14.5px] text-gray-800 font-medium">
-                            <li class="flex items-start gap-3 bg-red-50 p-4 rounded-xl border-l-4 border-party-red shadow-sm">
-                                <i data-lucide="star" class="w-5 h-5 text-party-red shrink-0 fill-current mt-0.5"></i>
-                                <span class="font-bold">현) 경상남도의회 국민의힘 원내부대표</span>
-                            </li>
-                            <li class="flex items-start gap-3 bg-blue-50 p-4 rounded-xl border-l-4 border-blue-600 shadow-sm">
-                                <i data-lucide="bar-chart-3" class="w-5 h-5 text-blue-600 shrink-0 mt-0.5"></i>
-                                <span class="font-bold">현) 경상남도의회 기획행정위 부위원장</span>
-                            </li>
-                            <li class="flex items-center gap-3 px-2">
-                                <div class="w-2 h-2 rounded-full bg-party-red shrink-0"></div>
-                                <span class="font-bold">현) 진해혁신포럼 대표</span>
-                            </li>
-                            <li class="flex items-center gap-3 px-2 text-gray-600">
-                                <div class="w-2 h-2 rounded-full bg-gray-400 shrink-0"></div>
-                                <span>현) (사)한국외식업중앙회 창원시 진해구지부장</span>
-                            </li>
-                            <li class="flex items-center gap-3 px-2 text-gray-400">
-                                <div class="w-2 h-2 rounded-full bg-gray-300 shrink-0"></div>
-                                <span>전) 창원중앙고 총동문회장 / 진해고 학교운영위원장</span>
-                            </li>
-                        </ul>
-                        <div class="bg-gray-900 p-5 rounded-2xl text-white shadow-lg">
-                            <h3 class="text-sm font-bold text-yellow-400 mb-2 flex items-center gap-1.5"><i data-lucide="graduation-cap" class="w-4 h-4"></i> 학력사항</h3>
-                            <p class="text-[13px] font-medium opacity-90">• 동아대학교 대학원 에너지·자원공학 박사과정 수료</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 4. 언론 보도 행적 (6건 전체) -->
-            <section class="py-20 bg-gray-900 text-white overflow-hidden relative">
-                <div class="reveal px-6 mb-8 flex justify-between items-end">
-                    <div>
-                        <h2 class="text-2xl font-black mb-2 leading-tight"><span class="text-yellow-400">진해와 소통하는</span><br/>박동철의 행적</h2>
-                        <p class="text-gray-400 text-[13px]">기사 원문을 확인하실 수 있습니다.</p>
-                    </div>
-                    <div class="flex items-center text-[10px] font-bold text-gray-900 bg-yellow-400 px-3 py-1.5 rounded-full animate-pulse shadow-lg">
-                        밀어서 보기 <i data-lucide="arrow-right" class="w-3 h-3 ml-1"></i>
-                    </div>
-                </div>
-                <div class="flex gap-5 overflow-x-auto hide-scrollbar px-6 pb-8">
-                    <a href="https://www.gukjenews.com/news/articleView.html?idxno=3549991" target="_blank" class="block shrink-0 w-[280px] bg-white text-gray-900 rounded-3xl overflow-hidden card-lift shadow-2xl">
-                        <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=600" class="w-full h-40 object-cover">
-                        <div class="p-5"><span class="text-[10px] font-bold text-green-600 mb-1 block">소통 입법</span><h3 class="font-black text-sm leading-snug">학생 제안 '생물다양성 보전 조례' 대표 발의</h3></div>
-                    </a>
-                    <a href="http://www.koreaeaglenews.com/news/articleView.html?idxno=98143" target="_blank" class="block shrink-0 w-[280px] bg-white text-gray-900 rounded-3xl overflow-hidden card-lift shadow-2xl">
-                        <img src="https://cdn.koreaeaglenews.com/news/photo/202603/98143_122518_580.jpg" class="w-full h-40 object-cover object-top">
-                        <div class="p-5"><span class="text-[10px] font-bold text-party-red mb-1 block">재선 도전</span><h3 class="font-black text-sm leading-snug">박동철 도의원, 재선 도전 공식 선언 "진해 발전 완수"</h3></div>
-                    </a>
-                    <a href="https://www.newsfreezone.co.kr/news/articleView.html?idxno=614396" target="_blank" class="block shrink-0 w-[280px] bg-white text-gray-900 rounded-3xl overflow-hidden card-lift shadow-2xl">
-                        <img src="https://i.ibb.co/cS890NTF/Kakao-Talk-20260327-103441014.jpg" class="w-full h-40 object-cover object-top">
-                        <div class="p-5"><span class="text-[10px] font-bold text-blue-600 mb-1 block">어민 수호</span><h3 class="font-black text-sm leading-snug">진해신항 상생형 개발 및 어민 생존권 촉구</h3></div>
-                    </a>
-                    <a href="https://search.naver.com/search.naver?query=도의원+박동철+지방의정대상" target="_blank" class="block shrink-0 w-[280px] bg-white text-gray-900 rounded-3xl overflow-hidden card-lift shadow-2xl">
-                        <img src="https://i.ibb.co/xS3PSz29/Kakao-Talk-20260327-151656724.jpg" class="w-full h-40 object-cover object-top">
-                        <div class="p-5"><span class="text-[10px] font-bold text-yellow-600 mb-1 block">입법 성과</span><h3 class="font-black text-sm leading-snug">2025 지방의정대상 '최우수상' 수상</h3></div>
-                    </a>
-                    <a href="https://search.naver.com/search.naver?query=도의원+박동철+폭우+진해" target="_blank" class="block shrink-0 w-[280px] bg-white text-gray-900 rounded-3xl overflow-hidden card-lift shadow-2xl">
-                        <img src="https://i.ibb.co/xSFHGV9R/Kakao-Talk-20260327-103343620.jpg" class="w-full h-40 object-cover"><div class="p-5"><span class="text-[10px] font-bold text-party-red mb-1 block">현장 중심</span><h3 class="font-black text-sm leading-snug">기록적 폭우 현장, 주민과 함께 토사 치우며 소통</h3></div>
-                    </a>
-                    <a href="https://www.yna.co.kr/view/AKR20260331172200052" target="_blank" class="block shrink-0 w-[280px] bg-white text-gray-900 rounded-3xl overflow-hidden card-lift shadow-2xl">
-                        <img src="https://i.ibb.co/Y79k3ybM/image.png" class="w-full h-40 object-cover"><div class="p-5"><span class="text-[10px] font-bold text-green-600 mb-1 block">청년 비전</span><h3 class="font-black text-sm leading-snug">창원청년비전센터 진해관 개소식 참여</h3></div>
-                    </a>
-                </div>
-            </section>
-
-            <!-- 5. 카드뉴스 및 현장 앨범 -->
-            <section class="py-20 bg-gray-100 text-gray-900 overflow-hidden relative">
-                <div class="reveal px-6 mb-8 flex justify-between items-end">
-                    <h2 class="text-2xl font-black mb-2"><span class="text-party-red">카드뉴스</span> 및 현장 앨범</h2>
-                </div>
-                <div class="flex gap-4 overflow-x-auto hide-scrollbar px-6 pb-8">
-                    <a href="https://i.ibb.co/N2zBBgjK/Kakao-Talk-20260330-120127383.jpg" target="_blank" class="block shrink-0 w-[260px] bg-white rounded-3xl shadow-md overflow-hidden card-lift"><img src="https://i.ibb.co/N2zBBgjK/Kakao-Talk-20260330-120127383.jpg" class="w-full aspect-[4/5] object-cover"></a>
-                    <a href="https://i.ibb.co/xt5ZMtTD/Kakao-Talk-20260330-121216575.png" target="_blank" class="block shrink-0 w-[260px] bg-white rounded-3xl shadow-md overflow-hidden card-lift"><img src="https://i.ibb.co/xt5ZMtTD/Kakao-Talk-20260330-121216575.png" class="w-full aspect-[4/5] object-cover"></a>
-                    <a href="https://i.ibb.co/cXTx34kq/image.png" target="_blank" class="block shrink-0 w-[260px] bg-white rounded-3xl shadow-md overflow-hidden p-2 card-lift"><img src="https://i.ibb.co/cXTx34kq/image.png" class="w-full aspect-[4/5] object-contain bg-gray-50 rounded-2xl"></a>
-                </div>
-            </section>
-
-            <!-- 6. 활동사진 갤러리 -->
-            <section class="py-16 bg-white text-gray-900">
-                <div class="reveal px-6 mb-6">
-                    <div class="inline-block bg-party-red text-white px-2.5 py-1 text-[10px] font-bold rounded mb-3 shadow-sm">활동사진</div>
-                    <h2 class="text-2xl font-black">현장에서 <span class="text-party-red">함께한</span> 순간들</h2>
-                </div>
-                <div class="relative overflow-hidden">
-                    <div id="gallery-track" class="flex gap-3 px-6">
-                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/KakaoTalk_20260501_143932057.webp" class="w-full h-full object-cover"></div>
-                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/KakaoTalk_20260501_143932057_01.webp" class="w-full h-full object-cover"></div>
-                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/KakaoTalk_20260501_143932057_02.webp" class="w-full h-full object-cover"></div>
-                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/KakaoTalk_20260501_143932057_03.webp" class="w-full h-full object-cover"></div>
-                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/KakaoTalk_20260501_143932057_04.webp" class="w-full h-full object-cover"></div>
-                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/KakaoTalk_20260501_143932057_05.webp" class="w-full h-full object-cover"></div>
-                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/KakaoTalk_20260501_143932057_06.webp" class="w-full h-full object-cover"></div>
-                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/KakaoTalk_20260501_143932057_07.webp" class="w-full h-full object-cover"></div>
-                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/KakaoTalk_20260501_143932057_08.webp" class="w-full h-full object-cover"></div>
-                        <div class="shrink-0 w-[260px] rounded-2xl overflow-hidden shadow-md bg-gray-100 aspect-[4/5]"><img src="./이미지/KakaoTalk_20260501_143932057_09.webp" class="w-full h-full object-cover"></div>
-                    </div>
-                    <!-- < > 버튼 -->
-                    <button id="gallery-prev" onclick="galleryMove(-1)" class="absolute left-1 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-200 active:scale-95">
-                        <i data-lucide="chevron-left" class="w-5 h-5 text-gray-700"></i>
-                    </button>
-                    <button id="gallery-next" onclick="galleryMove(1)" class="absolute right-1 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-200 active:scale-95">
-                        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-700"></i>
-                    </button>
-                </div>
-            </section>
-
-            <!-- 7. 소통 채널 -->
-            <section id="contact" class="py-20 px-6 bg-white">
-                <div class="space-y-4 mb-10">
-                    <a href="http://pf.kakao.com/_xgALdX/chat" target="_blank" class="flex items-center bg-[#FAE100] p-6 rounded-2xl border-2 border-[#F4D500] shadow-lg active:scale-95 transition-transform">
-                        <div class="bg-black shadow-md p-3.5 rounded-full mr-4 flex items-center justify-center">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6 text-[#FAE100]" fill="currentColor"><path d="M12 3c-5.523 0-10 3.582-10 8 0 2.85 1.83 5.352 4.606 6.815l-1.15 4.298c-.11.41.345.742.71.554l4.982-3.328c.28.02.564.03.852.03 5.523 0 10-3.582 10-8s-4.477-8-10-8z"/></svg>
-                        </div>
-                        <div><div class="text-[12px] text-gray-800 mb-1 font-black">카카오톡 1:1 채팅상담</div><div class="font-black text-xl text-black">카카오톡 채널 연결</div></div>
-                    </a>
-                    <a href="tel:055-546-4312" class="flex items-center bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm active:bg-gray-100">
-                        <div class="bg-white shadow-md p-3.5 rounded-full mr-4"><i data-lucide="phone" class="w-6 h-6 text-party-red"></i></div>
-                        <div><div class="text-[12px] text-gray-500 mb-1 font-bold">선거사무소 직통전화</div><div class="font-black text-xl text-gray-900">055-546-4312</div></div>
-                    </a>
-                </div>
-                <div class="py-16 bg-gradient-to-br from-[#E61E2B] to-[#9b0013] text-white text-center rounded-[2.5rem] shadow-2xl px-6 relative overflow-hidden">
-                    <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                    <h2 class="relative z-10 text-[1.8rem] font-black leading-tight mb-8 tracking-tighter">지금은 확실히 밀어줄<br/><span class="text-yellow-300 text-5xl mt-2 block">'철'</span> 입니다!</h2>
-                    <div class="relative z-10 bg-white text-party-red text-lg font-black px-10 py-4 rounded-full inline-block shadow-lg">후보 박동철</div>
-                </div>
-            </section>
-
-            <footer class="bg-gray-50 border-t border-gray-100 py-12 px-6 text-center text-gray-400">
-                <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="Logo" class="h-6 mx-auto mb-4 grayscale opacity-30">
-                <p class="text-[10px] font-bold uppercase tracking-widest">© 2026 Park Dong-cheol Campaign</p>
-                <p class="text-[9px] text-gray-300 mt-1">본 페이지는 후보 박동철 선거사무소에서 제작하였습니다.</p>
-            </footer>
-
-            <!-- ★ 우측 하단 플로팅 버튼 트리오 ★ -->
-            <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-4">
-                <a href="http://pf.kakao.com/_xgALdX/chat" target="_blank" class="w-14 h-14 bg-[#FAE100] rounded-full shadow-2xl flex items-center justify-center border-2 border-white transform transition hover:scale-110 active:scale-95">
-                    <svg viewBox="0 0 24 24" class="w-8 h-8 text-black" fill="currentColor"><path d="M12 3c-5.523 0-10 3.582-10 8 0 2.85 1.83 5.352 4.606 6.815l-1.15 4.298c-.11.41.345.742.71.554l4.982-3.328c.28.02.564.03.852.03 5.523 0 10-3.582 10-8s-4.477-8-10-8z"/></svg>
-                </a>
-                <button onclick="shareKakao()" class="w-14 h-14 bg-gray-900 rounded-full shadow-2xl flex items-center justify-center border-2 border-white transform transition hover:scale-110 active:scale-95">
-                    <i data-lucide="share-2" class="w-6 h-6 text-white"></i>
-                </button>
-                <div class="relative w-14 h-14">
-                    <a href="tel:055-546-4312" class="pulse-ring absolute inset-0 bg-party-red rounded-full shadow-2xl flex items-center justify-center z-10 border-2 border-white active:scale-95">
-                        <i data-lucide="phone" class="w-6 h-6 text-white fill-current"></i>
-                    </a>
-                </div>
-            </div>
+<body>
+  <main class="page">
+    <header class="hero">
+      <img src="./개소식사진.webp" alt="박동철 후보 현장 사진" class="hero-img" />
+      <div class="hero-inner">
+        <div class="topbar">
+          <div class="logo-row">
+            <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" />
+            <span>박동철 경남도의원 후보</span>
+          </div>
+          <div class="badge">기호 2번</div>
         </div>
+        <div class="hero-copy">
+          <div class="kicker" style="background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.18)">제9회 전국동시지방선거</div>
+          <h1>진해의 중단 없는 발전,<br />검증된 실천력으로.</h1>
+          <p>말이 아닌 결과로 증명해 온 진해의 일꾼 박동철입니다. 오늘의 현장 일정과 주요 소식을 한곳에서 확인하세요.</p>
+          <div class="hero-actions">
+            <a href="#today-schedule" class="btn primary"><i data-lucide="map-pin" class="w-4 h-4"></i> 오늘 일정</a>
+            <a href="./vote.html" class="btn red"><i data-lucide="calendar-days" class="w-4 h-4"></i> 전체 일정</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><span>선거일까지</span><strong id="d-day-badge">D-?</strong></div>
+            <div class="stat"><span>오늘 조회</span><strong id="view-count-today">...</strong></div>
+            <div class="stat"><span>누적 조회</span><strong id="view-count-total">...</strong></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="today-schedule" class="section bg-white">
+      <div class="kicker"><i data-lucide="map" class="w-3.5 h-3.5"></i> 오늘 유세 동선</div>
+      <div class="mt-4 flex items-end justify-between gap-4">
+        <div>
+          <h2 class="title">오늘 어디서<br />만날 수 있나요?</h2>
+          <p id="today-schedule-date" class="subcopy mt-2">일정을 불러오는 중...</p>
+        </div>
+        <a href="./vote.html" class="btn dark shrink-0 px-4">자세히 보기</a>
+      </div>
+      <div class="schedule-box">
+        <div id="today-map"></div>
+        <div id="today-schedule-list" class="schedule-list">
+          <div class="text-center text-gray-400 text-sm py-8">오늘 일정을 불러오는 중입니다.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-gray-50">
+      <div class="kicker"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> 핵심 약속</div>
+      <h2 class="title mt-4">진해의 변화를<br />멈추지 않겠습니다.</h2>
+      <p class="subcopy mt-3">지난 성과를 바탕으로 교육, 생활, 지역경제의 변화를 현장에서 이어가겠습니다.</p>
+      <div class="promise-grid">
+        <div class="promise">
+          <i data-lucide="school" class="w-6 h-6"></i>
+          <h3>교육 기반 완성</h3>
+          <p>통합진해중학교 개교 등 교육 현안의 실질적 해결을 이어가겠습니다.</p>
+        </div>
+        <div class="promise">
+          <i data-lucide="waves" class="w-6 h-6"></i>
+          <h3>신항 상생 발전</h3>
+          <p>진해신항 개발 과정에서 지역과 어민이 함께 사는 길을 만들겠습니다.</p>
+        </div>
+        <div class="promise">
+          <i data-lucide="users" class="w-6 h-6"></i>
+          <h3>현장 중심 소통</h3>
+          <p>주민 곁에서 듣고, 확인하고, 끝까지 해결하는 의정활동을 하겠습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-white">
+      <div class="kicker"><i data-lucide="landmark" class="w-3.5 h-3.5"></i> 주요 경력</div>
+      <h2 class="title mt-4">결과로 증명한<br />진해의 일꾼</h2>
+      <div class="career-list">
+        <div class="career-item"><div class="career-dot"></div><div><strong>현) 경상남도의회 국민의힘 원내부대표</strong><span>책임 있는 의정 운영</span></div></div>
+        <div class="career-item"><div class="career-dot"></div><div><strong>현) 경상남도의회 기획행정위 부위원장</strong><span>도정과 지역 현안 점검</span></div></div>
+        <div class="career-item"><div class="career-dot"></div><div><strong>현) 진해혁신포럼 대표</strong><span>지역 발전 의제 발굴</span></div></div>
+        <div class="career-item"><div class="career-dot"></div><div><strong>동아대학교 대학원 에너지·자원공학 박사과정 수료</strong><span>전문성과 실행력</span></div></div>
+      </div>
+    </section>
+
+    <section class="py-14 bg-gray-900 text-white overflow-hidden">
+      <div class="px-6 mb-6">
+        <div class="kicker" style="background:rgba(255,255,255,.1);color:#fff">언론과 현장</div>
+        <h2 class="title mt-4">진해 곳곳에서<br />발로 뛰었습니다.</h2>
+      </div>
+      <div class="media-row">
+        <a href="https://www.gukjenews.com/news/articleView.html?idxno=3549991" target="_blank" class="media-card">
+          <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=600" alt="" />
+          <div><span>소통 입법</span><h3>학생 제안 생물다양성 보전 조례 대표 발의</h3></div>
+        </a>
+        <a href="http://www.koreaeaglenews.com/news/articleView.html?idxno=98143" target="_blank" class="media-card">
+          <img src="https://cdn.koreaeaglenews.com/news/photo/202603/98143_122518_580.jpg" alt="" />
+          <div><span>재선 도전</span><h3>박동철 도의원, 재선 도전 공식 선언</h3></div>
+        </a>
+        <a href="https://www.newsfreezone.co.kr/news/articleView.html?idxno=614396" target="_blank" class="media-card">
+          <img src="https://i.ibb.co/cS890NTF/Kakao-Talk-20260327-103441014.jpg" alt="" />
+          <div><span>어민 수호</span><h3>진해신항 상생형 개발 및 어민 생존권 촉구</h3></div>
+        </a>
+      </div>
+    </section>
+
+    <section id="contact" class="section bg-white">
+      <div class="contact-card">
+        <div class="kicker" style="background:rgba(255,255,255,.1);color:#fff">연락과 공유</div>
+        <h2 class="title mt-4">현장의 의견을<br />들려주세요.</h2>
+        <p class="mt-3 text-sm leading-7 text-gray-300">선거사무소와 카카오톡 채널을 통해 진해의 목소리를 전해주세요.</p>
+        <div class="contact-actions">
+          <a href="http://pf.kakao.com/_xgALdX/chat" target="_blank" class="btn primary">카카오톡 채널 연결</a>
+          <a href="tel:055-546-4312" class="btn red">선거사무소 055-546-4312</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 mx-auto mb-4 grayscale opacity-40" />
+      <strong>© 2026 Park Dong-cheol Campaign</strong><br />
+      본 페이지는 후보 박동철 선거사무소에서 제작하였습니다.<br />
+      짓마케팅 서효승 제작
+    </footer>
+
+    <div class="float-actions">
+      <button onclick="shareKakao()" class="btn dark"><i data-lucide="share-2" class="w-4 h-4"></i> 공유하기</button>
+      <a href="./vote.html" class="btn red"><i data-lucide="calendar-days" class="w-4 h-4"></i> 유세 일정</a>
     </div>
+  </main>
 
-    <!-- 스크립트 (Firebase + UI) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot, increment, collection, query, where, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot, increment, collection, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        lucide.createIcons();
+    lucide.createIcons();
 
-        // 로딩 완료 후 처리
-        document.addEventListener('DOMContentLoaded', () => {
-            const splash = document.getElementById('splash-screen');
-            const mainCont = document.getElementById('main-container');
-            splash.style.transition = 'opacity 0.2s ease';
-            splash.style.opacity = '0';
-            mainCont.classList.add('ready');
-            setTimeout(() => { splash.style.display = 'none'; }, 200);
+    const campaignUrl = 'https://djmonnar.github.io/jinhae/';
+    const scheduleUrl = 'https://djmonnar.github.io/jinhae/vote.html';
+
+    const days = Math.ceil((new Date('2026-06-03T00:00:00+09:00').getTime() - new Date().getTime()) / 86400000);
+    document.getElementById('d-day-badge').innerText = days > 0 ? 'D-' + days : 'D-Day';
+
+    const statsConfig = {
+      apiKey: "AIzaSyCvQ4_dmBqbujpZnQ9q4ZpMe98Qb3LBsAw",
+      authDomain: "jinhae-7dab5.firebaseapp.com",
+      projectId: "jinhae-7dab5",
+      storageBucket: "jinhae-7dab5.firebasestorage.app",
+      messagingSenderId: "1051264585019",
+      appId: "1:1051264585019:web:9c83765e72a100bcc7bb1e"
+    };
+    const statsApp = initializeApp(statsConfig);
+    const statsAuth = getAuth(statsApp);
+    const statsDb = getFirestore(statsApp);
+
+    async function initStats() {
+      await signInAnonymously(statsAuth);
+      onAuthStateChanged(statsAuth, async user => {
+        if (!user) return;
+        const todayStr = new Date(new Date().getTime() + 9 * 3600000).toISOString().slice(0, 10);
+        const statsRef = doc(statsDb, 'stats', 'page_views');
+        try { await setDoc(statsRef, { total: increment(1), [todayStr]: increment(1) }, { merge:true }); } catch(e) {}
+        onSnapshot(statsRef, snap => {
+          const data = snap.data() || {};
+          document.getElementById('view-count-today').innerText = (data[todayStr] || 0).toLocaleString();
+          document.getElementById('view-count-total').innerText = (data.total || 0).toLocaleString();
         });
+      });
+    }
 
-        // 1. D-Day
-        const days = Math.ceil((new Date('2026-06-03T00:00:00+09:00').getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-        document.getElementById('d-day-badge').innerText = days > 0 ? 'D-' + days : 'D-Day';
+    const scheduleConfig = {
+      apiKey: "AIzaSyAeHS1qb4SzJTZWnwd8s_V8K3MuKPBCx5Y",
+      authDomain: "vote-94dda.firebaseapp.com",
+      projectId: "vote-94dda",
+      storageBucket: "vote-94dda.firebasestorage.app",
+      messagingSenderId: "548877092595",
+      appId: "1:548877092595:web:7d6381ceb779b7b319d986"
+    };
+    const scheduleApp = initializeApp(scheduleConfig, 'campaignSchedule');
+    const scheduleDb = getFirestore(scheduleApp);
+    const WEEKDAYS = ['일','월','화','수','목','금','토'];
+    let todayMap = null;
+    let todayMarkers = [];
+    let todayInfoWindow = null;
 
-        // 2. Firebase 조회수 연동
-        const firebaseConfig = {
-            apiKey: "AIzaSyCvQ4_dmBqbujpZnQ9q4ZpMe98Qb3LBsAw",
-            authDomain: "jinhae-7dab5.firebaseapp.com",
-            projectId: "jinhae-7dab5",
-            storageBucket: "jinhae-7dab5.firebasestorage.app",
-            messagingSenderId: "1051264585019",
-            appId: "1:1051264585019:web:9c83765e72a100bcc7bb1e"
-        };
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+    function todayKstDate() {
+      return new Date(new Date().getTime() + 9 * 3600000).toISOString().slice(0, 10);
+    }
 
-        // 3. 오늘 유세 일정 연동
-        const scheduleFirebaseConfig = {
-            apiKey: "AIzaSyAeHS1qb4SzJTZWnwd8s_V8K3MuKPBCx5Y",
-            authDomain: "vote-94dda.firebaseapp.com",
-            projectId: "vote-94dda",
-            storageBucket: "vote-94dda.firebasestorage.app",
-            messagingSenderId: "548877092595",
-            appId: "1:548877092595:web:7d6381ceb779b7b319d986"
-        };
-        const scheduleApp = initializeApp(scheduleFirebaseConfig, 'campaignSchedule');
-        const scheduleDb = getFirestore(scheduleApp);
-        const WEEKDAYS = ['일','월','화','수','목','금','토'];
-        let todayMap = null;
-        let todayMarkers = [];
-        let todayInfoWindow = null;
+    function formatTodayLabel(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00+09:00');
+      return `${d.getMonth() + 1}월 ${d.getDate()}일 ${WEEKDAYS[d.getDay()]}요일`;
+    }
 
-        function todayKstDate() {
-            return new Date(new Date().getTime() + (9 * 60 * 60 * 1000)).toISOString().slice(0, 10);
-        }
+    function escapeHtml(value) {
+      return String(value ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;");
+    }
 
-        function formatTodayLabel(dateStr) {
-            const d = new Date(dateStr + 'T00:00:00+09:00');
-            return `${d.getMonth() + 1}월 ${d.getDate()}일 ${WEEKDAYS[d.getDay()]}요일`;
-        }
+    function eventCoords(ev) {
+      const lat = Number(ev.lat);
+      const lng = Number(ev.lng);
+      return Number.isFinite(lat) && Number.isFinite(lng) ? { lat, lng } : null;
+    }
 
-        function escapeHtml(value) {
-            return String(value ?? '')
-                .replaceAll('&', '&amp;')
-                .replaceAll('<', '&lt;')
-                .replaceAll('>', '&gt;')
-                .replaceAll('"', '&quot;')
-                .replaceAll("'", '&#39;');
-        }
+    function renderTodayList(events) {
+      const el = document.getElementById('today-schedule-list');
+      if (!events.length) {
+        el.innerHTML = '<div class="text-center text-gray-400 text-sm py-8">오늘 등록된 유세 일정이 없습니다.</div>';
+        return;
+      }
+      el.innerHTML = events.map(ev => {
+        const coords = eventCoords(ev);
+        const mapUrl = coords
+          ? `https://map.kakao.com/link/to/${encodeURIComponent(ev.place || '유세 장소')},${ev.lat},${ev.lng}`
+          : `https://map.kakao.com/link/search/${encodeURIComponent(ev.mapQuery || ev.place || '')}`;
+        return `
+          <a href="${mapUrl}" target="_blank" class="event-link">
+            <span class="event-time">${escapeHtml(ev.time || '')}</span>
+            <div class="event-place">${escapeHtml(ev.place || '')}</div>
+            <div class="event-title">${escapeHtml(ev.title || '')}</div>
+          </a>
+        `;
+      }).join('');
+    }
 
-        function eventCoords(ev) {
-            const lat = Number(ev.lat);
-            const lng = Number(ev.lng);
-            return Number.isFinite(lat) && Number.isFinite(lng) ? { lat, lng } : null;
-        }
-
-        function renderTodayList(events) {
-            const listEl = document.getElementById('today-schedule-list');
-            if (!listEl) return;
-            if (!events.length) {
-                listEl.innerHTML = '<div class="text-center text-gray-400 text-sm py-8">오늘 등록된 유세 일정이 없습니다.</div>';
-                return;
-            }
-            listEl.innerHTML = events.map(ev => {
-                const coords = eventCoords(ev);
-                const mapUrl = coords
-                    ? `https://map.kakao.com/link/to/${encodeURIComponent(ev.place || '유세 장소')},${ev.lat},${ev.lng}`
-                    : `https://map.kakao.com/link/search/${encodeURIComponent(ev.mapQuery || ev.place || '')}`;
-                return `
-                    <a href="${mapUrl}" target="_blank" class="block border border-gray-100 rounded-2xl p-4 active:bg-gray-50">
-                        <div class="flex items-start gap-3">
-                            <div class="shrink-0 bg-party-red text-white text-[12px] font-black px-2.5 py-1.5 rounded-lg">${escapeHtml(ev.time || '')}</div>
-                            <div class="min-w-0">
-                                <div class="font-black text-gray-900 text-[15px] leading-snug">${escapeHtml(ev.place || '')}</div>
-                                <div class="text-[13px] text-gray-600 mt-1 leading-relaxed">${escapeHtml(ev.title || '')}</div>
-                                <div class="text-[11px] text-gray-400 mt-2">카카오맵으로 길찾기</div>
-                            </div>
-                        </div>
-                    </a>
-                `;
-            }).join('');
-        }
-
-        function renderTodayMap(events) {
-            const mapEl = document.getElementById('today-map');
-            if (!mapEl) return;
-            const eventsWithCoords = events.filter(eventCoords);
-            if (!eventsWithCoords.length || !window.kakao?.maps) {
-                mapEl.innerHTML = '<div class="h-full flex items-center justify-center text-gray-400 text-sm">좌표가 등록된 오늘 일정이 없습니다.</div>';
-                return;
-            }
-            window.kakao.maps.load(() => {
-                const first = eventCoords(eventsWithCoords[0]);
-                const center = new window.kakao.maps.LatLng(first.lat, first.lng);
-                todayMap = todayMap || new window.kakao.maps.Map(mapEl, { center, level: 5 });
-                todayInfoWindow = todayInfoWindow || new window.kakao.maps.InfoWindow({ removable: true });
-                todayMarkers.forEach(marker => marker.setMap(null));
-                todayMarkers = [];
-                const bounds = new window.kakao.maps.LatLngBounds();
-                eventsWithCoords.forEach(ev => {
-                    const coords = eventCoords(ev);
-                    const pos = new window.kakao.maps.LatLng(coords.lat, coords.lng);
-                    const marker = new window.kakao.maps.Marker({ position: pos, map: todayMap });
-                    window.kakao.maps.event.addListener(marker, 'click', () => {
-                        todayInfoWindow.setContent(`
-                            <div style="padding:8px 10px;min-width:160px;font-family:Pretendard,sans-serif">
-                                <strong style="display:block;font-size:13px;margin-bottom:4px">${escapeHtml(ev.time || '')} ${escapeHtml(ev.place || '')}</strong>
-                                <span style="font-size:12px;color:#555">${escapeHtml(ev.title || '')}</span>
-                            </div>
-                        `);
-                        todayInfoWindow.open(todayMap, marker);
-                    });
-                    todayMarkers.push(marker);
-                    bounds.extend(pos);
-                });
-                if (eventsWithCoords.length > 1) todayMap.setBounds(bounds);
-                else todayMap.setCenter(center);
-            });
-        }
-
-        function initTodaySchedule() {
-            const dateStr = todayKstDate();
-            document.getElementById('today-schedule-date').innerText = formatTodayLabel(dateStr);
-            const daysRef = collection(scheduleDb, 'schedule_days');
-            const todayQuery = query(daysRef, where('date', '==', dateStr), orderBy('date'));
-            onSnapshot(todayQuery, (snapshot) => {
-                const dayData = snapshot.docs[0]?.data();
-                const events = (dayData?.events || []).slice().sort((a, b) => String(a.time || '').localeCompare(String(b.time || '')));
-                renderTodayList(events);
-                renderTodayMap(events);
-            }, (err) => {
-                console.error(err);
-                document.getElementById('today-schedule-list').innerHTML = '<div class="text-center text-red-500 text-sm py-8">오늘 일정을 불러오지 못했습니다.</div>';
-            });
-        }
-
-        const initStats = async () => {
-            await signInAnonymously(auth);
-            onAuthStateChanged(auth, async (user) => {
-                if (!user) return;
-                const todayStr = new Date(new Date().getTime() + (9 * 60 * 60 * 1000)).toISOString().split('T')[0];
-                const statsRef = doc(db, 'stats', 'page_views');
-                try { await setDoc(statsRef, { total: increment(1), [todayStr]: increment(1) }, { merge: true }); } catch(e) {}
-                onSnapshot(statsRef, (snap) => {
-                    if (snap.exists()) {
-                        const d = snap.data();
-                        document.getElementById('view-count-today').innerText = (d[todayStr] || 0).toLocaleString();
-                        document.getElementById('view-count-total').innerText = (d.total || 0).toLocaleString();
-                    }
-                });
-            });
-        };
-        initStats();
-        initTodaySchedule();
-
-        // 4. Reveal 스크롤 효과
-        window.addEventListener("scroll", () => {
-            document.querySelectorAll(".reveal").forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
-            });
+    function renderTodayMap(events) {
+      const mapEl = document.getElementById('today-map');
+      const eventsWithCoords = events.filter(eventCoords);
+      if (!eventsWithCoords.length || !window.kakao?.maps) {
+        mapEl.innerHTML = '<div class="h-full flex items-center justify-center text-gray-400 text-sm">좌표가 등록된 오늘 일정이 없습니다.</div>';
+        return;
+      }
+      window.kakao.maps.load(() => {
+        const first = eventCoords(eventsWithCoords[0]);
+        const center = new window.kakao.maps.LatLng(first.lat, first.lng);
+        todayMap = todayMap || new window.kakao.maps.Map(mapEl, { center, level:5 });
+        todayInfoWindow = todayInfoWindow || new window.kakao.maps.InfoWindow({ removable:true });
+        todayMarkers.forEach(marker => marker.setMap(null));
+        todayMarkers = [];
+        const bounds = new window.kakao.maps.LatLngBounds();
+        eventsWithCoords.forEach(ev => {
+          const coords = eventCoords(ev);
+          const pos = new window.kakao.maps.LatLng(coords.lat, coords.lng);
+          const marker = new window.kakao.maps.Marker({ position:pos, map:todayMap });
+          window.kakao.maps.event.addListener(marker, 'click', () => {
+            todayInfoWindow.setContent(`<div style="padding:8px 10px;min-width:160px;font-family:Pretendard,sans-serif"><strong style="display:block;font-size:13px;margin-bottom:4px">${escapeHtml(ev.time || '')} ${escapeHtml(ev.place || '')}</strong><span style="font-size:12px;color:#555">${escapeHtml(ev.title || '')}</span></div>`);
+            todayInfoWindow.open(todayMap, marker);
+          });
+          todayMarkers.push(marker);
+          bounds.extend(pos);
         });
-    </script>
-    <script>
-        // 카카오 공유하기 (★ 썸네일 이미지 최신화 적용 ★)
-        window.shareKakao = function() {
-            if(!Kakao.isInitialized()) { Kakao.init('1aa968a094a900e05010d7b54c35e006'); }
-            const campaignUrl = 'https://djmonnar.github.io/jinhae/'; 
-            Kakao.Share.sendDefault({
-                objectType: 'feed',
-                content: {
-                    title: '진해의 도약!! 박동철 도의원 후보',
-                    description: '박동하는 진해, 지금이 확실히 밀어줄 철입니다!',
-                    imageUrl: 'https://djmonnar.github.io/jinhae/개소식사진.webp',
-                    link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl },
-                },
-                buttons: [{ title: '후보 프로필 보기', link: { mobileWebUrl: campaignUrl, webUrl: campaignUrl } }],
-            });
-        }
-    </script>
-    <script>
-        // 갤러리 슬라이더
-        (function() {
-            const track = document.getElementById('gallery-track');
-            const itemWidth = 260 + 12; // width + gap
-            let current = 0;
+        if (eventsWithCoords.length > 1) todayMap.setBounds(bounds);
+        else todayMap.setCenter(center);
+      });
+    }
 
-            window.galleryMove = function(dir) {
-                const visibleItems = Math.round(track.parentElement.offsetWidth / itemWidth);
-                const total = track.children.length;
-                current = Math.max(0, Math.min(current + dir, total - visibleItems));
-                track.style.transform = 'translateX(-' + (current * itemWidth) + 'px)';
-                track.style.transition = 'transform 0.35s ease';
-            };
+    function initTodaySchedule() {
+      const dateStr = todayKstDate();
+      document.getElementById('today-schedule-date').innerText = formatTodayLabel(dateStr);
+      const todayQuery = query(collection(scheduleDb, 'schedule_days'), where('date', '==', dateStr));
+      onSnapshot(todayQuery, snapshot => {
+        const dayData = snapshot.docs[0]?.data();
+        const events = (dayData?.events || []).slice().sort((a,b) => String(a.time || '').localeCompare(String(b.time || '')));
+        renderTodayList(events);
+        renderTodayMap(events);
+      }, err => {
+        console.error(err);
+        document.getElementById('today-schedule-list').innerHTML = '<div class="text-center text-red-500 text-sm py-8">오늘 일정을 불러오지 못했습니다.</div>';
+      });
+    }
 
-            // 터치 스와이프
-            let startX = 0;
-            track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-            track.addEventListener('touchend', e => {
-                const diff = startX - e.changedTouches[0].clientX;
-                if (Math.abs(diff) > 40) galleryMove(diff > 0 ? 1 : -1);
-            });
-        })();
-    </script>
+    window.shareKakao = function() {
+      if (!window.Kakao) return;
+      if (!Kakao.isInitialized()) Kakao.init('1aa968a094a900e05010d7b54c35e006');
+      Kakao.Share.sendDefault({
+        objectType:'text',
+        text:`박동철 경남도의원 후보\n진해의 중단 없는 발전, 검증된 실천력으로.\n\n${campaignUrl}`,
+        link:{ mobileWebUrl:campaignUrl, webUrl:campaignUrl },
+        buttonTitle:'후보 페이지 열기'
+      });
+    };
+
+    initStats();
+    initTodaySchedule();
+  </script>
 </body>
 </html>
