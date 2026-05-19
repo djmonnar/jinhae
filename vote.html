@@ -56,6 +56,7 @@
   .admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
   .btn-add-day { display: flex; align-items: center; gap: 6px; background: var(--navy); color: white; border: none; font-family: inherit; font-size: 13px; font-weight: 700; padding: 9px 14px; border-radius: 10px; cursor: pointer; }
   .btn-add-event-top { display: flex; align-items: center; gap: 6px; background: var(--red); color: white; border: none; font-family: inherit; font-size: 13px; font-weight: 700; padding: 9px 14px; border-radius: 10px; cursor: pointer; }
+  .btn-manage-teams { display: flex; align-items: center; gap: 6px; background: var(--green); color: white; border: none; font-family: inherit; font-size: 13px; font-weight: 700; padding: 9px 14px; border-radius: 10px; cursor: pointer; }
   .admin-hint { margin-top: 10px; font-size: 12px; color: var(--muted); }
 
   /* 탭 */
@@ -103,6 +104,8 @@
   .event-location { display:flex; align-items:flex-start; gap:6px; margin-bottom:12px; }
   .event-location .pin { font-size:13px; flex-shrink:0; margin-top:2px; }
   .event-location .addr { font-size:13px; color:#666; line-height:1.5; }
+  .event-teams { display:flex; gap:6px; flex-wrap:wrap; margin:-2px 0 12px; }
+  .team-chip { display:inline-flex; align-items:center; gap:4px; background:#eef2ff; color:#243b8f; border:1px solid #d9e0ff; border-radius:20px; font-size:11px; font-weight:700; padding:4px 9px; }
   .event-actions { display:flex; gap:7px; flex-wrap:wrap; }
   .btn-map { display:inline-flex; align-items:center; gap:5px; background:#fde300; color:#3a1d1d; font-size:12px; font-weight:700; padding:7px 12px; border-radius:8px; text-decoration:none; border:none; cursor:pointer; font-family:inherit; }
   .btn-map.naver { background:#03c75a; color:white; }
@@ -135,6 +138,19 @@
   .field-actions { display:flex; gap:8px; margin-top:8px; }
   .btn-geo { background:var(--navy); color:white; border:none; font-family:inherit; font-size:12px; font-weight:700; padding:9px 12px; border-radius:8px; cursor:pointer; }
   .mini-map { height:160px; border:1px solid var(--border); border-radius:12px; background:#f6f6f6; overflow:hidden; margin-top:10px; }
+  .team-picker { display:flex; flex-wrap:wrap; gap:8px; }
+  .team-option { display:inline-flex; align-items:center; gap:6px; background:#fafafa; border:1.5px solid #e0e0e0; border-radius:20px; padding:8px 11px; cursor:pointer; font-size:13px; font-weight:700; color:var(--navy); }
+  .team-option input { width:auto; margin:0; accent-color:var(--red); }
+  .team-empty-hint { color:var(--muted); font-size:12px; line-height:1.5; }
+  .team-create { display:flex; gap:8px; margin-bottom:14px; }
+  .team-create input { flex:1; padding:11px 14px; border:1.5px solid #e0e0e0; border-radius:10px; font-family:inherit; font-size:14px; }
+  .team-list { display:flex; flex-direction:column; gap:8px; }
+  .team-row { display:flex; align-items:center; gap:8px; justify-content:space-between; background:#fafafa; border:1px solid var(--border); border-radius:10px; padding:10px 12px; }
+  .team-row-name { font-size:14px; font-weight:700; }
+  .team-row-actions { display:flex; gap:6px; }
+  .team-mini-btn { border:none; border-radius:7px; padding:6px 9px; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+  .team-mini-btn.edit { background:var(--orange-bg); color:var(--orange); }
+  .team-mini-btn.delete { background:#fde8e8; color:#c00; }
   .modal-footer { display:flex; gap:10px; padding-top:8px; }
   .btn-save { flex:1; background:var(--red); color:white; border:none; font-family:inherit; font-size:15px; font-weight:700; padding:14px; border-radius:12px; cursor:pointer; }
   .btn-save:disabled { opacity:0.5; cursor:not-allowed; }
@@ -170,6 +186,7 @@
   .empty { text-align:center; padding:50px 20px; color:var(--muted); }
   .empty .emoji { font-size:36px; margin-bottom:10px; }
   footer { text-align:center; padding:28px 20px 16px; font-size:12px; color:var(--muted); line-height:1.8; }
+  footer .credit { display:block; margin-top:6px; color:#777; }
 
   .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:var(--navy); color:white; font-size:13px; font-weight:500; padding:10px 20px; border-radius:20px; z-index:9999; opacity:0; transition:opacity 0.3s; pointer-events:none; white-space:nowrap; }
   .toast.show { opacity:1; }
@@ -207,8 +224,9 @@
   <div class="admin-actions">
     <button class="btn-add-day" onclick="openAddDayModal()">📅 날짜 추가</button>
     <button class="btn-add-event-top" onclick="openAddEventModal(activeIdx)">➕ 현재 날짜에 일정 추가</button>
+    <button class="btn-manage-teams" onclick="openTeamModal()">👥 선거 팀 관리</button>
   </div>
-  <div class="admin-hint">💡 카드의 ✏️수정 / 🗑️삭제 버튼으로 편집하세요 · 탭의 ✕로 날짜 삭제</div>
+  <div class="admin-hint">💡 팀을 먼저 만든 뒤 일정 등록/수정에서 담당 팀을 복수 선택할 수 있습니다.</div>
 </div>
 
 <div class="date-tabs-wrap">
@@ -236,7 +254,7 @@
   <button class="float-kakao" onclick="shareKakao()">💬 카카오톡으로 일정 공유하기</button>
 </div>
 
-<footer>국민의힘 제9회 전국동시지방선거<br>경남도의회의원 창원시 제14선거구 <strong>박동철</strong><br>선거사무소 055-211-7321</footer>
+<footer>국민의힘 제9회 전국동시지방선거<br>경남도의회의원 창원시 제14선거구 <strong>박동철</strong><br>선거사무소 055-211-7321<span class="credit">짓마케팅 서효승 제작</span></footer>
 
 <!-- 관리자 로그인 모달 -->
 <div class="modal-overlay" id="modal-pw">
@@ -257,6 +275,24 @@
           onkeydown="if(event.key==='Enter') loginWithEmail()"/>
         <button class="btn-save" id="btn-email-login" onclick="loginWithEmail()">이메일로 로그인</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- 선거 팀 관리 모달 -->
+<div class="modal-overlay" id="modal-team">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">👥 선거 팀 관리</div>
+      <button class="modal-close" onclick="closeModal('modal-team')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="team-create">
+        <input type="text" id="new-team-name" placeholder="예: A팀, B팀, 차량팀"/>
+        <button class="btn-save" id="btn-save-team" onclick="addTeam()">추가</button>
+      </div>
+      <div class="field-hint" style="margin-bottom:12px">만든 팀은 일정 등록/수정 화면에서 복수 선택할 수 있습니다.</div>
+      <div class="team-list" id="team-list"></div>
     </div>
   </div>
 </div>
@@ -309,6 +345,11 @@
       <div class="field">
         <label>일정 제목 <span class="req">*</span></label>
         <input type="text" id="ev-title" placeholder="예: 진해중앙시장 방문 및 상인 소통"/>
+      </div>
+      <div class="field">
+        <label>담당 선거 팀</label>
+        <div class="team-picker" id="ev-team-picker"></div>
+        <div class="field-hint">여러 팀을 동시에 선택할 수 있습니다.</div>
       </div>
       <div class="field">
         <label>장소명 <span class="req">*</span></label>
@@ -394,6 +435,7 @@ const WEEKDAYS = ['일','월','화','수','목','금','토'];
 
 // ── 상태 ──
 let schedule  = [];   // [{ id, date, day, events:[{id,...}] }]
+let campaignTeams = []; // [{ id, name }]
 let isAdmin   = false;
 window.activeIdx = 0;
 let campaignMap = null;
@@ -424,6 +466,19 @@ function escapeHtml(value) {
 function findEvent(dayDocId, evId) {
   const dayData = schedule.find(d => d.id === dayDocId);
   return (dayData?.events || []).find(e => e.id === evId);
+}
+
+function getTeamName(teamId) {
+  return campaignTeams.find(team => team.id === teamId)?.name || '삭제된 팀';
+}
+
+function getEventTeamNames(ev) {
+  return (ev.teamIds || []).map(getTeamName).filter(Boolean);
+}
+
+function renderTeamChips(teamIds = []) {
+  if (!teamIds.length) return '';
+  return `<div class="event-teams">${teamIds.map(id => `<span class="team-chip">👥 ${escapeHtml(getTeamName(id))}</span>`).join('')}</div>`;
 }
 
 function requireAdmin() {
@@ -499,10 +554,12 @@ async function renderCampaignMap() {
       const pos = new window.kakao.maps.LatLng(coords.lat, coords.lng);
       const marker = new window.kakao.maps.Marker({ position: pos, map: campaignMap });
       window.kakao.maps.event.addListener(marker, 'click', () => {
+        const teams = getEventTeamNames(ev).join(', ');
         infoWindow.setContent(`
           <div class="map-info">
             <strong>${escapeHtml(ev.time || '')} ${escapeHtml(ev.place || '')}</strong>
             <span>${escapeHtml(ev.title || '')}</span>
+            ${teams ? `<span>담당: ${escapeHtml(teams)}</span>` : ''}
             <span>${escapeHtml(ev.date || '')}</span>
           </div>
         `);
@@ -524,6 +581,19 @@ async function renderCampaignMap() {
 // days 컬렉션 → 각 문서가 날짜 하나 (date, day, events[])
 const daysRef = collection(db, 'schedule_days');
 const q       = query(daysRef, orderBy('date'));
+const teamsRef = collection(db, 'campaign_teams');
+const teamsQuery = query(teamsRef, orderBy('name'));
+
+onSnapshot(teamsQuery, (snapshot) => {
+  campaignTeams = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderTeamList();
+  renderTeamPicker(getSelectedTeamIds());
+  render();
+  renderCampaignMap();
+}, (err) => {
+  console.error(err);
+  showToast('팀 목록을 불러오지 못했습니다');
+});
 
 onSnapshot(q, (snapshot) => {
   schedule = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -630,6 +700,7 @@ function renderCard(ev, dayDocId) {
           <span class="pin">📍</span>
           <div class="addr"><strong>${escapeHtml(ev.place)}</strong><br>${escapeHtml(ev.address||'')}</div>
         </div>
+        ${renderTeamChips(ev.teamIds || [])}
         <div class="event-actions">
           <a class="btn-map" href="${kakaoUrl}" target="_blank" rel="noopener">🗺️ 카카오맵</a>
           <a class="btn-map naver" href="${naverUrl}" target="_blank" rel="noopener">N 네이버지도</a>
@@ -753,6 +824,112 @@ window.loginWithEmail = async function() {
   }
 };
 
+// ── 선거 팀 관리 ──
+function renderTeamList() {
+  const listEl = document.getElementById('team-list');
+  if (!listEl) return;
+  if (campaignTeams.length === 0) {
+    listEl.innerHTML = '<div class="team-empty-hint">아직 등록된 팀이 없습니다. A팀, B팀처럼 먼저 팀을 추가해주세요.</div>';
+    return;
+  }
+  listEl.innerHTML = campaignTeams.map(team => `
+    <div class="team-row">
+      <div class="team-row-name">👥 ${escapeHtml(team.name)}</div>
+      <div class="team-row-actions">
+        <button class="team-mini-btn edit" onclick="renameTeam('${escapeHtml(team.id)}')">수정</button>
+        <button class="team-mini-btn delete" onclick="deleteTeam('${escapeHtml(team.id)}')">삭제</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getSelectedTeamIds() {
+  return Array.from(document.querySelectorAll('#ev-team-picker input[type="checkbox"]:checked')).map(input => input.value);
+}
+
+function renderTeamPicker(selectedIds = []) {
+  const pickerEl = document.getElementById('ev-team-picker');
+  if (!pickerEl) return;
+  const selected = new Set(selectedIds);
+  if (campaignTeams.length === 0) {
+    pickerEl.innerHTML = '<div class="team-empty-hint">등록된 팀이 없습니다. 관리자 패널에서 선거 팀을 먼저 추가해주세요.</div>';
+    return;
+  }
+  pickerEl.innerHTML = campaignTeams.map(team => `
+    <label class="team-option">
+      <input type="checkbox" value="${escapeHtml(team.id)}" ${selected.has(team.id) ? 'checked' : ''}/>
+      <span>${escapeHtml(team.name)}</span>
+    </label>
+  `).join('');
+}
+
+window.openTeamModal = function() {
+  if (!requireAdmin()) return;
+  document.getElementById('new-team-name').value = '';
+  renderTeamList();
+  openModal('modal-team');
+  setTimeout(() => document.getElementById('new-team-name').focus(), 100);
+};
+
+window.addTeam = async function() {
+  if (!requireAdmin()) return;
+  const input = document.getElementById('new-team-name');
+  const name = input.value.trim();
+  if (!name) {
+    alert('팀 이름을 입력해주세요');
+    return;
+  }
+  if (campaignTeams.some(team => team.name.toLowerCase() === name.toLowerCase())) {
+    alert('이미 등록된 팀 이름입니다');
+    return;
+  }
+  const btn = document.getElementById('btn-save-team');
+  btn.disabled = true;
+  btn.textContent = '추가 중...';
+  try {
+    await addDoc(teamsRef, { name, createdAt: Date.now() });
+    input.value = '';
+    showToast('팀 추가 완료!');
+  } catch (e) {
+    alert('팀 추가 실패: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '추가';
+  }
+};
+
+window.renameTeam = async function(teamId) {
+  if (!requireAdmin()) return;
+  const team = campaignTeams.find(t => t.id === teamId);
+  if (!team) return;
+  const nextName = prompt('새 팀 이름을 입력해주세요', team.name);
+  if (nextName === null) return;
+  const name = nextName.trim();
+  if (!name) {
+    alert('팀 이름을 입력해주세요');
+    return;
+  }
+  try {
+    await updateDoc(doc(db, 'campaign_teams', teamId), { name });
+    showToast('팀 이름 수정 완료');
+  } catch (e) {
+    alert('팀 수정 실패: ' + e.message);
+  }
+};
+
+window.deleteTeam = async function(teamId) {
+  if (!requireAdmin()) return;
+  const team = campaignTeams.find(t => t.id === teamId);
+  if (!team) return;
+  if (!confirm(`${team.name}을 삭제할까요? 기존 일정의 배정 기록에는 삭제된 팀으로 표시될 수 있습니다.`)) return;
+  try {
+    await deleteDoc(doc(db, 'campaign_teams', teamId));
+    showToast('팀 삭제 완료');
+  } catch (e) {
+    alert('팀 삭제 실패: ' + e.message);
+  }
+};
+
 // ── 날짜 추가 ──
 window.openAddDayModal = function() {
   if (!requireAdmin()) return;
@@ -801,6 +978,7 @@ window.openAddEventModal = function(idx) {
   document.getElementById('modal-event-title').textContent = '➕ 일정 추가';
   document.getElementById('btn-save-event').textContent = '추가';
   clearForm();
+  renderTeamPicker([]);
   openModal('modal-event');
 };
 
@@ -820,6 +998,7 @@ function openEditEventModal(dayDocId, evId) {
   document.getElementById('ev-mapquery').value = ev.mapQuery||'';
   document.getElementById('ev-lat').value      = ev.lat||'';
   document.getElementById('ev-lng').value      = ev.lng||'';
+  renderTeamPicker(ev.teamIds || []);
   openModal('modal-event');
   setTimeout(() => showPreviewMap(ev.lat, ev.lng), 250);
 }
@@ -829,6 +1008,7 @@ function clearForm() {
     document.getElementById(id).value = '');
   document.getElementById('ev-type').value = 'street';
   document.getElementById('event-map-preview').innerHTML = '';
+  renderTeamPicker([]);
   previewMap = null;
   previewMarker = null;
 }
@@ -905,6 +1085,7 @@ window.saveEvent = async function() {
   const place    = document.getElementById('ev-place').value.trim();
   const address  = document.getElementById('ev-address').value.trim();
   const mapQuery = document.getElementById('ev-mapquery').value.trim();
+  const teamIds  = getSelectedTeamIds();
   let lat         = document.getElementById('ev-lat').value.trim();
   let lng         = document.getElementById('ev-lng').value.trim();
   if (!time||!title||!place||!mapQuery) { alert('시간, 제목, 장소명, 카카오맵 검색어는 필수입니다'); return; }
@@ -924,10 +1105,10 @@ window.saveEvent = async function() {
     let events = [...(dayData?.events||[])];
 
     if (editState.mode === 'add') {
-      events.push({ id: uid(), time, type, title, place, address, mapQuery, lat, lng });
+      events.push({ id: uid(), time, type, title, place, address, mapQuery, lat, lng, teamIds });
     } else {
       const idx = events.findIndex(e => e.id === editState.evId);
-      if (idx > -1) events[idx] = { ...events[idx], time, type, title, place, address, mapQuery, lat, lng };
+      if (idx > -1) events[idx] = { ...events[idx], time, type, title, place, address, mapQuery, lat, lng, teamIds };
     }
     // 시간순 정렬
     events.sort((a,b) => a.time.localeCompare(b.time));
@@ -981,11 +1162,13 @@ window.shareKakao = function() {
 function shareEvent(dayDocId, evId) {
   const ev = findEvent(dayDocId, evId);
   if (!ev) return;
+  const teams = getEventTeamNames(ev);
+  const teamLine = teams.length ? `\n담당 팀: ${teams.join(', ')}` : '';
   Kakao.Share.sendDefault({
     objectType: 'feed',
     content: {
       title: `⏰ ${ev.time}  📍 ${ev.place}`,
-      description: `${ev.title}\n\n국민의힘 박동철 후보가 찾아갑니다!`,
+      description: `${ev.title}${teamLine}\n\n국민의힘 박동철 후보가 찾아갑니다!`,
       imageUrl: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
       link: {
         mobileWebUrl: location.href,
