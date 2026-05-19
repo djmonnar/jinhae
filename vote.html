@@ -1333,20 +1333,13 @@ if (window.Kakao && !Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
 window.shareKakao = function() {
   try {
     Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: '박동철 유세 일정',
-        description: '진해 구석구석 직접 찾아갑니다! 일정을 확인하고 현장에서 만나요 🇰🇷',
-        imageUrl: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
-        link: {
-          mobileWebUrl: PUBLIC_URL,
-          webUrl:       PUBLIC_URL,
-        },
+      objectType: 'text',
+      text: `박동철 유세 일정\n진해 구석구석 직접 찾아갑니다!\n\n일정 바로 열기:\n${PUBLIC_URL}`,
+      link: {
+        mobileWebUrl: PUBLIC_URL,
+        webUrl:       PUBLIC_URL,
       },
-      buttons: [{
-        title: '📅 전체 일정 보기',
-        link: { mobileWebUrl: PUBLIC_URL, webUrl: PUBLIC_URL },
-      }],
+      buttonTitle: '📅 일정 바로 열기',
     });
   } catch (err) {
     console.error(err);
@@ -1362,20 +1355,13 @@ function shareEvent(dayDocId, evId) {
   const teamLine = teams.length ? `\n담당 팀: ${teams.join(', ')}` : '';
   try {
     Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: `⏰ ${ev.time}  📍 ${ev.place}`,
-        description: `${ev.title}${teamLine}\n\n국민의힘 박동철 후보가 찾아갑니다!`,
-        imageUrl: 'https://i.ibb.co/tTXCtkSP/removebg-preview.png',
-        link: {
-          mobileWebUrl: PUBLIC_URL,
-          webUrl:       PUBLIC_URL,
-        },
+      objectType: 'text',
+      text: `박동철 유세 일정\n⏰ ${ev.time}  📍 ${ev.place}\n${ev.title}${teamLine}\n\n일정 바로 열기:\n${PUBLIC_URL}`,
+      link: {
+        mobileWebUrl: PUBLIC_URL,
+        webUrl:       PUBLIC_URL,
       },
-      buttons: [{
-        title: '📅 전체 일정 보기',
-        link: { mobileWebUrl: PUBLIC_URL, webUrl: PUBLIC_URL },
-      }],
+      buttonTitle: '📅 일정 바로 열기',
     });
   } catch (err) {
     console.error(err);
