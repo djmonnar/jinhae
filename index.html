@@ -32,6 +32,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"></script>
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1aa968a094a900e05010d7b54c35e006&libraries=services&autoload=false"></script>
 
     <style>
         body { font-family: 'Pretendard', sans-serif; word-break: keep-all; min-height: 100vh; overflow-x: hidden; color: #1f2937; }
@@ -142,6 +143,28 @@
                     <div class="mt-10 pt-6 border-t border-gray-100 text-right">
                         <p class="text-sm text-gray-500 mb-2">2026년 3월 26일</p>
                         <p class="text-2xl font-black text-gray-900">도의원 후보 박 동 철 <span class="text-sm font-bold text-gray-500 ml-1">올림</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 오늘 유세 일정 -->
+            <section id="today-schedule" class="py-16 px-6 bg-gray-50 border-b border-gray-100">
+                <div class="reveal">
+                    <div class="flex items-end justify-between gap-4 mb-6">
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 bg-party-red text-white px-2.5 py-1 text-[10px] font-bold rounded mb-3 shadow-sm">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 오늘의 현장
+                            </div>
+                            <h2 class="text-2xl font-black text-gray-900 leading-tight">오늘 유세 일정</h2>
+                            <p id="today-schedule-date" class="text-[12px] text-gray-500 mt-1 font-bold">일정을 불러오는 중...</p>
+                        </div>
+                        <a href="./vote.html" class="shrink-0 bg-gray-900 text-white text-[12px] font-black px-4 py-2.5 rounded-full shadow-lg active:scale-95">자세히 보기</a>
+                    </div>
+                    <div class="bg-white rounded-3xl border border-gray-100 shadow-xl overflow-hidden">
+                        <div id="today-map" class="w-full h-[240px] bg-gray-100"></div>
+                        <div id="today-schedule-list" class="p-5 space-y-3">
+                            <div class="text-center text-gray-400 text-sm py-8">오늘 일정을 불러오는 중입니다.</div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -310,7 +333,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, onSnapshot, increment, collection, query, where, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         lucide.createIcons();
 
@@ -341,6 +364,126 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // 3. 오늘 유세 일정 연동
+        const scheduleFirebaseConfig = {
+            apiKey: "AIzaSyAeHS1qb4SzJTZWnwd8s_V8K3MuKPBCx5Y",
+            authDomain: "vote-94dda.firebaseapp.com",
+            projectId: "vote-94dda",
+            storageBucket: "vote-94dda.firebasestorage.app",
+            messagingSenderId: "548877092595",
+            appId: "1:548877092595:web:7d6381ceb779b7b319d986"
+        };
+        const scheduleApp = initializeApp(scheduleFirebaseConfig, 'campaignSchedule');
+        const scheduleDb = getFirestore(scheduleApp);
+        const WEEKDAYS = ['일','월','화','수','목','금','토'];
+        let todayMap = null;
+        let todayMarkers = [];
+        let todayInfoWindow = null;
+
+        function todayKstDate() {
+            return new Date(new Date().getTime() + (9 * 60 * 60 * 1000)).toISOString().slice(0, 10);
+        }
+
+        function formatTodayLabel(dateStr) {
+            const d = new Date(dateStr + 'T00:00:00+09:00');
+            return `${d.getMonth() + 1}월 ${d.getDate()}일 ${WEEKDAYS[d.getDay()]}요일`;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#39;');
+        }
+
+        function eventCoords(ev) {
+            const lat = Number(ev.lat);
+            const lng = Number(ev.lng);
+            return Number.isFinite(lat) && Number.isFinite(lng) ? { lat, lng } : null;
+        }
+
+        function renderTodayList(events) {
+            const listEl = document.getElementById('today-schedule-list');
+            if (!listEl) return;
+            if (!events.length) {
+                listEl.innerHTML = '<div class="text-center text-gray-400 text-sm py-8">오늘 등록된 유세 일정이 없습니다.</div>';
+                return;
+            }
+            listEl.innerHTML = events.map(ev => {
+                const coords = eventCoords(ev);
+                const mapUrl = coords
+                    ? `https://map.kakao.com/link/to/${encodeURIComponent(ev.place || '유세 장소')},${ev.lat},${ev.lng}`
+                    : `https://map.kakao.com/link/search/${encodeURIComponent(ev.mapQuery || ev.place || '')}`;
+                return `
+                    <a href="${mapUrl}" target="_blank" class="block border border-gray-100 rounded-2xl p-4 active:bg-gray-50">
+                        <div class="flex items-start gap-3">
+                            <div class="shrink-0 bg-party-red text-white text-[12px] font-black px-2.5 py-1.5 rounded-lg">${escapeHtml(ev.time || '')}</div>
+                            <div class="min-w-0">
+                                <div class="font-black text-gray-900 text-[15px] leading-snug">${escapeHtml(ev.place || '')}</div>
+                                <div class="text-[13px] text-gray-600 mt-1 leading-relaxed">${escapeHtml(ev.title || '')}</div>
+                                <div class="text-[11px] text-gray-400 mt-2">카카오맵으로 길찾기</div>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function renderTodayMap(events) {
+            const mapEl = document.getElementById('today-map');
+            if (!mapEl) return;
+            const eventsWithCoords = events.filter(eventCoords);
+            if (!eventsWithCoords.length || !window.kakao?.maps) {
+                mapEl.innerHTML = '<div class="h-full flex items-center justify-center text-gray-400 text-sm">좌표가 등록된 오늘 일정이 없습니다.</div>';
+                return;
+            }
+            window.kakao.maps.load(() => {
+                const first = eventCoords(eventsWithCoords[0]);
+                const center = new window.kakao.maps.LatLng(first.lat, first.lng);
+                todayMap = todayMap || new window.kakao.maps.Map(mapEl, { center, level: 5 });
+                todayInfoWindow = todayInfoWindow || new window.kakao.maps.InfoWindow({ removable: true });
+                todayMarkers.forEach(marker => marker.setMap(null));
+                todayMarkers = [];
+                const bounds = new window.kakao.maps.LatLngBounds();
+                eventsWithCoords.forEach(ev => {
+                    const coords = eventCoords(ev);
+                    const pos = new window.kakao.maps.LatLng(coords.lat, coords.lng);
+                    const marker = new window.kakao.maps.Marker({ position: pos, map: todayMap });
+                    window.kakao.maps.event.addListener(marker, 'click', () => {
+                        todayInfoWindow.setContent(`
+                            <div style="padding:8px 10px;min-width:160px;font-family:Pretendard,sans-serif">
+                                <strong style="display:block;font-size:13px;margin-bottom:4px">${escapeHtml(ev.time || '')} ${escapeHtml(ev.place || '')}</strong>
+                                <span style="font-size:12px;color:#555">${escapeHtml(ev.title || '')}</span>
+                            </div>
+                        `);
+                        todayInfoWindow.open(todayMap, marker);
+                    });
+                    todayMarkers.push(marker);
+                    bounds.extend(pos);
+                });
+                if (eventsWithCoords.length > 1) todayMap.setBounds(bounds);
+                else todayMap.setCenter(center);
+            });
+        }
+
+        function initTodaySchedule() {
+            const dateStr = todayKstDate();
+            document.getElementById('today-schedule-date').innerText = formatTodayLabel(dateStr);
+            const daysRef = collection(scheduleDb, 'schedule_days');
+            const todayQuery = query(daysRef, where('date', '==', dateStr), orderBy('date'));
+            onSnapshot(todayQuery, (snapshot) => {
+                const dayData = snapshot.docs[0]?.data();
+                const events = (dayData?.events || []).slice().sort((a, b) => String(a.time || '').localeCompare(String(b.time || '')));
+                renderTodayList(events);
+                renderTodayMap(events);
+            }, (err) => {
+                console.error(err);
+                document.getElementById('today-schedule-list').innerHTML = '<div class="text-center text-red-500 text-sm py-8">오늘 일정을 불러오지 못했습니다.</div>';
+            });
+        }
+
         const initStats = async () => {
             await signInAnonymously(auth);
             onAuthStateChanged(auth, async (user) => {
@@ -358,8 +501,9 @@
             });
         };
         initStats();
+        initTodaySchedule();
 
-        // 3. Reveal 스크롤 효과
+        // 4. Reveal 스크롤 효과
         window.addEventListener("scroll", () => {
             document.querySelectorAll(".reveal").forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
