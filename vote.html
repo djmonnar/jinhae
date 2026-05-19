@@ -147,6 +147,10 @@
   .btn-google-login { width:100%; display:flex; align-items:center; justify-content:center; gap:10px; background:white; color:#222; border:1.5px solid #ddd; font-family:inherit; font-size:15px; font-weight:700; padding:13px; border-radius:12px; cursor:pointer; }
   .btn-google-login:hover { background:#f8f8f8; border-color:#bbb; }
   .google-mark { color:#4285f4; font-weight:900; font-size:18px; }
+  .login-divider { display:flex; align-items:center; gap:10px; margin:16px 0; color:var(--muted); font-size:12px; }
+  .login-divider::before, .login-divider::after { content:''; flex:1; height:1px; background:#e5e5e5; }
+  #email-input, #pw-input { width:100%; padding:12px 13px; border:1.5px solid #ddd; border-radius:10px; font-size:14px; font-family:inherit; outline:none; margin-bottom:8px; }
+  #email-input:focus, #pw-input:focus { border-color:var(--red); }
   .pw-error { color:var(--red); font-size:13px; margin-top:8px; display:none; }
 
   .map-panel { background:white; border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:18px; box-shadow:0 2px 12px rgba(0,0,0,0.05); }
@@ -246,7 +250,12 @@
       <div class="pw-desc">등록된 관리자 Google 계정으로 로그인하면 일정을 편집할 수 있습니다.</div>
       <div class="pw-error" id="pw-error">❌ 로그인에 실패했습니다</div>
       <div style="margin-top:16px">
-        <button class="btn-google-login" id="btn-login" onclick="checkPw()"><span class="google-mark">G</span> Google로 로그인</button>
+        <button class="btn-google-login" id="btn-google-login" onclick="checkPw()"><span class="google-mark">G</span> Google로 로그인</button>
+        <div class="login-divider">카카오톡에서 안 열릴 때</div>
+        <input type="email" id="email-input" placeholder="관리자 이메일" autocomplete="username"/>
+        <input type="password" id="pw-input" placeholder="비밀번호" maxlength="60" autocomplete="current-password"
+          onkeydown="if(event.key==='Enter') loginWithEmail()"/>
+        <button class="btn-save" id="btn-email-login" onclick="loginWithEmail()">이메일로 로그인</button>
       </div>
     </div>
   </div>
@@ -348,7 +357,7 @@ import { getFirestore, collection, doc,
          updateDoc, deleteDoc,
          query, orderBy, onSnapshot }
   from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
 // ── Firebase 초기화 ──
@@ -679,12 +688,14 @@ window.toggleAdminMode = function() {
     signOut(auth).then(() => showToast('관리자 모드 종료'));
   } else {
     openModal('modal-pw');
+    document.getElementById('email-input').value = '';
+    document.getElementById('pw-input').value = '';
     document.getElementById('pw-error').style.display = 'none';
   }
 };
 
 window.checkPw = async function() {
-  const btn = document.getElementById('btn-login');
+  const btn = document.getElementById('btn-google-login');
   const errorEl = document.getElementById('pw-error');
   btn.disabled = true;
   btn.textContent = '로그인 중...';
@@ -703,6 +714,42 @@ window.checkPw = async function() {
   } finally {
     btn.disabled = false;
     btn.innerHTML = '<span class="google-mark">G</span> Google로 로그인';
+  }
+};
+
+window.loginWithEmail = async function() {
+  const email = document.getElementById('email-input').value.trim().toLowerCase();
+  const password = document.getElementById('pw-input').value;
+  const btn = document.getElementById('btn-email-login');
+  const errorEl = document.getElementById('pw-error');
+  if (!ADMIN_EMAILS.includes(email)) {
+    errorEl.textContent = '❌ 등록된 관리자 이메일만 사용할 수 있습니다';
+    errorEl.style.display = 'block';
+    return;
+  }
+  if (!password) {
+    errorEl.textContent = '❌ 비밀번호를 입력해주세요';
+    errorEl.style.display = 'block';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = '로그인 중...';
+  try {
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    if (!isAllowedAdmin(result.user)) {
+      await signOut(auth);
+      throw new Error('허용되지 않은 관리자 계정입니다');
+    }
+    closeModal('modal-pw');
+    showToast('관리자 모드 시작!');
+  } catch (err) {
+    console.error(err);
+    errorEl.textContent = '❌ 이메일 또는 비밀번호를 확인해주세요';
+    errorEl.style.display = 'block';
+    document.getElementById('pw-input').select();
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '이메일로 로그인';
   }
 };
 
