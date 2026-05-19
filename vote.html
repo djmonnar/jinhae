@@ -135,6 +135,10 @@
   .field select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
   .field-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   .field-hint { font-size:11px; color:var(--muted); margin-top:4px; }
+  .time-picker { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+  .time-presets { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .time-preset { border:1px solid #ddd; background:#fafafa; color:var(--navy); border-radius:20px; padding:6px 10px; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+  .time-preset.active { background:var(--red); color:white; border-color:var(--red); }
   .field-actions { display:flex; gap:8px; margin-top:8px; }
   .btn-geo { background:var(--navy); color:white; border:none; font-family:inherit; font-size:12px; font-weight:700; padding:9px 12px; border-radius:8px; cursor:pointer; }
   .mini-map { height:160px; border:1px solid var(--border); border-radius:12px; background:#f6f6f6; overflow:hidden; margin-top:10px; }
@@ -328,7 +332,16 @@
       <div class="field-row">
         <div class="field">
           <label>시간 <span class="req">*</span></label>
-          <input type="time" id="ev-time"/>
+          <input type="hidden" id="ev-time"/>
+          <div class="time-picker">
+            <select id="ev-ampm" onchange="syncTimeFromControls()">
+              <option value="AM">오전</option>
+              <option value="PM">오후</option>
+            </select>
+            <select id="ev-hour" onchange="syncTimeFromControls()"></select>
+            <select id="ev-minute" onchange="syncTimeFromControls()"></select>
+          </div>
+          <div class="time-presets" id="time-presets"></div>
         </div>
         <div class="field">
           <label>유세 유형 <span class="req">*</span></label>
@@ -422,6 +435,7 @@ const ADMIN_EMAILS = [
   'iu431214@gmail.com',
   'djmonnar4@gmail.com',
 ];
+const TIME_PRESETS = ['07:00','08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
 
 const TYPE_CONFIG = {
   street:  { cls:'badge-street',  icon:'📢', label:'거리유세'  },
@@ -480,6 +494,64 @@ function renderTeamChips(teamIds = []) {
   if (!teamIds.length) return '';
   return `<div class="event-teams">${teamIds.map(id => `<span class="team-chip">👥 ${escapeHtml(getTeamName(id))}</span>`).join('')}</div>`;
 }
+
+function pad2(value) {
+  return String(value).padStart(2, '0');
+}
+
+function initTimeControls() {
+  const hourEl = document.getElementById('ev-hour');
+  const minuteEl = document.getElementById('ev-minute');
+  const presetEl = document.getElementById('time-presets');
+  if (!hourEl || hourEl.options.length) return;
+
+  hourEl.innerHTML = Array.from({ length: 12 }, (_, i) => i + 1)
+    .map(hour => `<option value="${hour}">${hour}시</option>`)
+    .join('');
+  minuteEl.innerHTML = Array.from({ length: 12 }, (_, i) => pad2(i * 5))
+    .map(min => `<option value="${min}">${min}분</option>`)
+    .join('');
+  presetEl.innerHTML = TIME_PRESETS
+    .map(time => `<button type="button" class="time-preset" data-time="${time}" onclick="setTimeControls('${time}')">${formatTimeLabel(time)}</button>`)
+    .join('');
+  setTimeControls('09:00');
+}
+
+function formatTimeLabel(time) {
+  const match = String(time || '').match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return time || '';
+  const hour24 = Number(match[1]);
+  const minute = match[2];
+  const ampm = hour24 < 12 ? '오전' : '오후';
+  const hour12 = hour24 % 12 || 12;
+  return `${ampm} ${hour12}:${minute}`;
+}
+
+window.setTimeControls = function(time) {
+  initTimeControls();
+  const match = String(time || '09:00').match(/^(\d{1,2}):(\d{2})$/);
+  let hour24 = match ? Number(match[1]) : 9;
+  let minute = match ? match[2] : '00';
+  if (!Number.isFinite(hour24)) hour24 = 9;
+  if (!Array.from(document.getElementById('ev-minute').options).some(opt => opt.value === minute)) {
+    minute = '00';
+  }
+  document.getElementById('ev-ampm').value = hour24 < 12 ? 'AM' : 'PM';
+  document.getElementById('ev-hour').value = String(hour24 % 12 || 12);
+  document.getElementById('ev-minute').value = minute;
+  syncTimeFromControls();
+};
+
+window.syncTimeFromControls = function() {
+  const ampm = document.getElementById('ev-ampm').value;
+  let hour = Number(document.getElementById('ev-hour').value);
+  const minute = document.getElementById('ev-minute').value;
+  if (ampm === 'AM' && hour === 12) hour = 0;
+  if (ampm === 'PM' && hour !== 12) hour += 12;
+  const time = `${pad2(hour)}:${minute}`;
+  document.getElementById('ev-time').value = time;
+  document.querySelectorAll('.time-preset').forEach(btn => btn.classList.toggle('active', btn.dataset.time === time));
+};
 
 function requireAdmin() {
   if (isAdmin) return true;
@@ -974,6 +1046,7 @@ window.openAddEventModal = function(idx) {
   if (!requireAdmin()) return;
   if (idx === undefined) idx = window.activeIdx;
   if (!schedule[idx]) return;
+  initTimeControls();
   editState = { mode:'add', dayDocId: schedule[idx].id };
   document.getElementById('modal-event-title').textContent = '➕ 일정 추가';
   document.getElementById('btn-save-event').textContent = '추가';
@@ -987,10 +1060,11 @@ function openEditEventModal(dayDocId, evId) {
   const dayData = schedule.find(d => d.id === dayDocId);
   const ev = (dayData?.events||[]).find(e => e.id === evId);
   if (!ev) return;
+  initTimeControls();
   editState = { mode:'edit', dayDocId, evId };
   document.getElementById('modal-event-title').textContent = '✏️ 일정 수정';
   document.getElementById('btn-save-event').textContent = '저장';
-  document.getElementById('ev-time').value     = ev.time;
+  setTimeControls(ev.time || '09:00');
   document.getElementById('ev-type').value     = ev.type;
   document.getElementById('ev-title').value    = ev.title;
   document.getElementById('ev-place').value    = ev.place;
@@ -1007,6 +1081,7 @@ function clearForm() {
   ['ev-time','ev-title','ev-place','ev-address','ev-mapquery','ev-lat','ev-lng'].forEach(id =>
     document.getElementById(id).value = '');
   document.getElementById('ev-type').value = 'street';
+  setTimeControls('09:00');
   document.getElementById('event-map-preview').innerHTML = '';
   renderTeamPicker([]);
   previewMap = null;
@@ -1079,6 +1154,7 @@ window.lookupEventLocation = async function() {
 
 window.saveEvent = async function() {
   if (!requireAdmin()) return;
+  syncTimeFromControls();
   const time     = document.getElementById('ev-time').value;
   const type     = document.getElementById('ev-type').value;
   const title    = document.getElementById('ev-title').value.trim();
