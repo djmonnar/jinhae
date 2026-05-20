@@ -100,6 +100,7 @@
   .badge-street{background:#fff3cd;color:#856404} .badge-market{background:#d1ecf1;color:#0c5460}
   .badge-meeting{background:#d4edda;color:#155724} .badge-door{background:#f8d7da;color:#721c24}
   .badge-event{background:#e2d9f3;color:#4a235a} .badge-welfare{background:#fce8d8;color:#8b4513}
+  .weather-badge { display:inline-flex; align-items:center; gap:4px; background:#eef7ff; color:#185a8d; border:1px solid #d5eafe; border-radius:20px; font-size:11px; font-weight:700; padding:3px 9px; }
   .event-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
   .event-location { display:flex; align-items:flex-start; gap:6px; margin-bottom:12px; }
   .event-location .pin { font-size:13px; flex-shrink:0; margin-top:2px; }
@@ -134,11 +135,18 @@
   .field input:focus, .field select:focus { outline:none; border-color:var(--red); background:white; }
   .field select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
   .field-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .field.wide { grid-column:1 / -1; }
   .field-hint { font-size:11px; color:var(--muted); margin-top:4px; }
   .time-picker { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+  .time-range { display:flex; flex-direction:column; gap:10px; }
+  .time-block { background:#fafafa; border:1px solid var(--border); border-radius:12px; padding:10px; }
+  .time-label { font-size:12px; font-weight:700; color:var(--red); margin-bottom:7px; }
   .time-presets { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
-  .time-preset { border:1px solid #ddd; background:#fafafa; color:var(--navy); border-radius:20px; padding:6px 10px; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+  .time-preset { flex:1 1 calc(50% - 6px); min-width:118px; border:1px solid #ddd; background:#fafafa; color:var(--navy); border-radius:10px; padding:9px 10px; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
   .time-preset.active { background:var(--red); color:white; border-color:var(--red); }
+  .weather-picker { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:7px; }
+  .weather-option { border:1px solid #ddd; background:#fafafa; color:var(--navy); border-radius:10px; padding:9px 6px; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+  .weather-option.active { background:var(--navy); color:white; border-color:var(--navy); }
   .field-actions { display:flex; gap:8px; margin-top:8px; }
   .btn-geo { background:var(--navy); color:white; border:none; font-family:inherit; font-size:12px; font-weight:700; padding:9px 12px; border-radius:8px; cursor:pointer; }
   .mini-map { height:160px; border:1px solid var(--border); border-radius:12px; background:#f6f6f6; overflow:hidden; margin-top:10px; }
@@ -197,6 +205,15 @@
 
   .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:var(--navy); color:white; font-size:13px; font-weight:500; padding:10px 20px; border-radius:20px; z-index:9999; opacity:0; transition:opacity 0.3s; pointer-events:none; white-space:nowrap; }
   .toast.show { opacity:1; }
+
+  @media (max-width: 520px) {
+    .modal-overlay { padding:8px; align-items:flex-end; }
+    .modal { max-height:94vh; border-radius:18px 18px 0 0; }
+    .modal-body { padding:0 16px 18px; }
+    .field-row { grid-template-columns:1fr; }
+    .time-preset { flex-basis:calc(50% - 6px); min-width:0; }
+    .weather-picker { grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  }
 </style>
 </head>
 <body>
@@ -334,17 +351,35 @@
     </div>
     <div class="modal-body">
       <div class="field-row">
-        <div class="field">
+        <div class="field wide">
           <label>시간 <span class="req">*</span></label>
           <input type="hidden" id="ev-time"/>
-          <div class="time-picker">
-            <select id="ev-ampm" onchange="syncTimeFromControls()">
-              <option value="AM">오전</option>
-              <option value="PM">오후</option>
-            </select>
-            <select id="ev-hour" onchange="syncTimeFromControls()"></select>
-            <select id="ev-minute" onchange="syncTimeFromControls()"></select>
+          <input type="hidden" id="ev-end-time"/>
+          <div class="time-range">
+            <div class="time-block">
+              <div class="time-label">시작</div>
+              <div class="time-picker">
+                <select id="ev-ampm" onchange="syncTimeFromControls()">
+                  <option value="AM">오전</option>
+                  <option value="PM">오후</option>
+                </select>
+                <select id="ev-hour" onchange="syncTimeFromControls()"></select>
+                <select id="ev-minute" onchange="syncTimeFromControls()"></select>
+              </div>
+            </div>
+            <div class="time-block">
+              <div class="time-label">종료</div>
+              <div class="time-picker">
+                <select id="ev-end-ampm" onchange="syncTimeFromControls()">
+                  <option value="AM">오전</option>
+                  <option value="PM">오후</option>
+                </select>
+                <select id="ev-end-hour" onchange="syncTimeFromControls()"></select>
+                <select id="ev-end-minute" onchange="syncTimeFromControls()"></select>
+              </div>
+            </div>
           </div>
+          <div class="field-hint">아래 버튼을 누르면 1시간 구간이 바로 입력됩니다.</div>
           <div class="time-presets" id="time-presets"></div>
         </div>
         <div class="field">
@@ -357,6 +392,12 @@
             <option value="event">🎉 행사참석</option>
             <option value="welfare">💛 복지방문</option>
           </select>
+        </div>
+        <div class="field">
+          <label>날씨</label>
+          <input type="hidden" id="ev-weather"/>
+          <div class="weather-picker" id="ev-weather-picker"></div>
+          <div class="field-hint">선택하지 않으면 일정에 표시되지 않습니다.</div>
         </div>
       </div>
       <div class="field">
@@ -443,7 +484,12 @@ const ADMIN_EMAILS = [
   'iu431214@gmail.com',
   'djmonnar4@gmail.com',
 ];
-const TIME_PRESETS = ['07:00','08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+const TIME_RANGE_PRESETS = [
+  ['07:00','08:00'], ['08:00','09:00'], ['09:00','10:00'], ['10:00','11:00'],
+  ['11:00','12:00'], ['12:00','13:00'], ['13:00','14:00'], ['14:00','15:00'],
+  ['15:00','16:00'], ['16:00','17:00'], ['17:00','18:00'], ['18:00','19:00'],
+  ['19:00','20:00'],
+];
 
 const TYPE_CONFIG = {
   street:  { cls:'badge-street',  icon:'📢', label:'거리유세'  },
@@ -452,6 +498,16 @@ const TYPE_CONFIG = {
   door:    { cls:'badge-door',    icon:'🚪', label:'방문유세'  },
   event:   { cls:'badge-event',   icon:'🎉', label:'행사참석'  },
   welfare: { cls:'badge-welfare', icon:'💛', label:'복지방문'  },
+};
+const WEATHER_CONFIG = {
+  '':       { icon:'',   label:'없음' },
+  sunny:   { icon:'☀️', label:'맑음' },
+  cloudy:  { icon:'☁️', label:'흐림' },
+  rain:    { icon:'☔', label:'비' },
+  snow:    { icon:'❄️', label:'눈' },
+  windy:   { icon:'💨', label:'바람' },
+  hot:     { icon:'🔥', label:'더움' },
+  cold:    { icon:'🧊', label:'추움' },
 };
 const WEEKDAYS = ['일','월','화','수','목','금','토'];
 
@@ -504,6 +560,22 @@ function getEventTeamNames(ev) {
 function renderTeamChips(teamIds = []) {
   if (!teamIds.length) return '';
   return `<div class="event-teams">${teamIds.map(id => `<span class="team-chip">👥 ${escapeHtml(getTeamName(id))}</span>`).join('')}</div>`;
+}
+
+function getWeatherConfig(weather) {
+  return WEATHER_CONFIG[weather || ''] || WEATHER_CONFIG[''];
+}
+
+function renderWeatherBadge(weather) {
+  if (!weather) return '';
+  const cfg = getWeatherConfig(weather);
+  return `<div class="weather-badge">${cfg.icon} ${cfg.label}</div>`;
+}
+
+function formatWeatherLine(ev) {
+  if (!ev?.weather) return '';
+  const cfg = getWeatherConfig(ev.weather);
+  return `\n날씨: ${cfg.icon} ${cfg.label}`;
 }
 
 function isVapidConfigured() {
@@ -632,22 +704,29 @@ function pad2(value) {
   return String(value).padStart(2, '0');
 }
 
-function initTimeControls() {
-  const hourEl = document.getElementById('ev-hour');
-  const minuteEl = document.getElementById('ev-minute');
-  const presetEl = document.getElementById('time-presets');
-  if (!hourEl || hourEl.options.length) return;
+const TIME_CONTROL_IDS = {
+  start: { ampm:'ev-ampm', hour:'ev-hour', minute:'ev-minute', hidden:'ev-time' },
+  end:   { ampm:'ev-end-ampm', hour:'ev-end-hour', minute:'ev-end-minute', hidden:'ev-end-time' },
+};
 
-  hourEl.innerHTML = Array.from({ length: 12 }, (_, i) => i + 1)
-    .map(hour => `<option value="${hour}">${hour}시</option>`)
+function initTimeControls() {
+  const startHourEl = document.getElementById('ev-hour');
+  const presetEl = document.getElementById('time-presets');
+  if (!startHourEl || startHourEl.options.length) return;
+
+  ['start','end'].forEach(target => {
+    const ids = TIME_CONTROL_IDS[target];
+    document.getElementById(ids.hour).innerHTML = Array.from({ length: 12 }, (_, i) => i + 1)
+      .map(hour => `<option value="${hour}">${hour}시</option>`)
+      .join('');
+    document.getElementById(ids.minute).innerHTML = Array.from({ length: 12 }, (_, i) => pad2(i * 5))
+      .map(min => `<option value="${min}">${min}분</option>`)
+      .join('');
+  });
+  presetEl.innerHTML = TIME_RANGE_PRESETS
+    .map(([start, end]) => `<button type="button" class="time-preset" data-start="${start}" data-end="${end}" onclick="setTimeRangeControls('${start}','${end}')">${formatPresetRangeLabel(start, end)}</button>`)
     .join('');
-  minuteEl.innerHTML = Array.from({ length: 12 }, (_, i) => pad2(i * 5))
-    .map(min => `<option value="${min}">${min}분</option>`)
-    .join('');
-  presetEl.innerHTML = TIME_PRESETS
-    .map(time => `<button type="button" class="time-preset" data-time="${time}" onclick="setTimeControls('${time}')">${formatTimeLabel(time)}</button>`)
-    .join('');
-  setTimeControls('09:00');
+  setTimeRangeControls('09:00', '10:00');
 }
 
 function formatTimeLabel(time) {
@@ -660,30 +739,112 @@ function formatTimeLabel(time) {
   return `${ampm} ${hour12}:${minute}`;
 }
 
-window.setTimeControls = function(time) {
+function timeToMinutes(time) {
+  const match = String(time || '').match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return null;
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  if (!Number.isFinite(hour) || !Number.isFinite(minute)) return null;
+  return hour * 60 + minute;
+}
+
+function minutesToTime(minutes) {
+  const clamped = Math.max(0, Math.min(minutes, (23 * 60) + 55));
+  return `${pad2(Math.floor(clamped / 60))}:${pad2(clamped % 60)}`;
+}
+
+function inferEndTime(startTime) {
+  return minutesToTime((timeToMinutes(startTime) ?? 9 * 60) + 60);
+}
+
+function formatPresetRangeLabel(start, end) {
+  const s = String(start || '').match(/^(\d{1,2}):(\d{2})$/);
+  const e = String(end || '').match(/^(\d{1,2}):(\d{2})$/);
+  if (!s || !e) return `${start}~${end}`;
+  const startHour = Number(s[1]);
+  const endHour = Number(e[1]);
+  const startAmpm = startHour < 12 ? '오전' : '오후';
+  const endAmpm = endHour < 12 ? '오전' : '오후';
+  const startShort = s[2] === '00' ? String(startHour % 12 || 12) : `${startHour % 12 || 12}:${s[2]}`;
+  const endShort = e[2] === '00' ? String(endHour % 12 || 12) : `${endHour % 12 || 12}:${e[2]}`;
+  return startAmpm === endAmpm
+    ? `${startAmpm} ${startShort}~${endShort}시`
+    : `${startAmpm} ${startShort}~${endAmpm} ${endShort}시`;
+}
+
+function formatEventTime(ev) {
+  return ev?.endTime ? `${ev.time || ''}~${ev.endTime}` : (ev?.time || '');
+}
+
+function setSingleTimeControls(time, target) {
   initTimeControls();
+  const ids = TIME_CONTROL_IDS[target] || TIME_CONTROL_IDS.start;
   const match = String(time || '09:00').match(/^(\d{1,2}):(\d{2})$/);
   let hour24 = match ? Number(match[1]) : 9;
   let minute = match ? match[2] : '00';
   if (!Number.isFinite(hour24)) hour24 = 9;
-  if (!Array.from(document.getElementById('ev-minute').options).some(opt => opt.value === minute)) {
+  if (!Array.from(document.getElementById(ids.minute).options).some(opt => opt.value === minute)) {
     minute = '00';
   }
-  document.getElementById('ev-ampm').value = hour24 < 12 ? 'AM' : 'PM';
-  document.getElementById('ev-hour').value = String(hour24 % 12 || 12);
-  document.getElementById('ev-minute').value = minute;
+  document.getElementById(ids.ampm).value = hour24 < 12 ? 'AM' : 'PM';
+  document.getElementById(ids.hour).value = String(hour24 % 12 || 12);
+  document.getElementById(ids.minute).value = minute;
+}
+
+window.setTimeControls = function(time, target = 'start') {
+  setSingleTimeControls(time, target);
   syncTimeFromControls();
 };
 
-window.syncTimeFromControls = function() {
-  const ampm = document.getElementById('ev-ampm').value;
-  let hour = Number(document.getElementById('ev-hour').value);
-  const minute = document.getElementById('ev-minute').value;
+window.setTimeRangeControls = function(startTime, endTime) {
+  initTimeControls();
+  setSingleTimeControls(startTime || '09:00', 'start');
+  setSingleTimeControls(endTime || inferEndTime(startTime || '09:00'), 'end');
+  syncTimeFromControls();
+};
+
+function getTimeFromControls(target) {
+  const ids = TIME_CONTROL_IDS[target] || TIME_CONTROL_IDS.start;
+  const ampm = document.getElementById(ids.ampm).value;
+  let hour = Number(document.getElementById(ids.hour).value);
+  const minute = document.getElementById(ids.minute).value;
   if (ampm === 'AM' && hour === 12) hour = 0;
   if (ampm === 'PM' && hour !== 12) hour += 12;
-  const time = `${pad2(hour)}:${minute}`;
-  document.getElementById('ev-time').value = time;
-  document.querySelectorAll('.time-preset').forEach(btn => btn.classList.toggle('active', btn.dataset.time === time));
+  return `${pad2(hour)}:${minute}`;
+}
+
+window.syncTimeFromControls = function() {
+  let startTime = getTimeFromControls('start');
+  let endTime = getTimeFromControls('end');
+  const startMinutes = timeToMinutes(startTime) ?? 0;
+  let endMinutes = timeToMinutes(endTime) ?? 0;
+  if (endMinutes <= startMinutes) {
+    endTime = inferEndTime(startTime);
+    setSingleTimeControls(endTime, 'end');
+    endMinutes = timeToMinutes(endTime) ?? endMinutes;
+  }
+  document.getElementById('ev-time').value = startTime;
+  document.getElementById('ev-end-time').value = endTime;
+  document.querySelectorAll('.time-preset').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.start === startTime && btn.dataset.end === endTime);
+  });
+};
+
+function initWeatherControls() {
+  const pickerEl = document.getElementById('ev-weather-picker');
+  if (!pickerEl || pickerEl.children.length) return;
+  pickerEl.innerHTML = Object.entries(WEATHER_CONFIG)
+    .map(([value, cfg]) => `<button type="button" class="weather-option" data-weather="${value}" onclick="setWeather('${value}')">${cfg.icon ? `${cfg.icon} ` : ''}${cfg.label}</button>`)
+    .join('');
+  setWeather('');
+}
+
+window.setWeather = function(weather = '') {
+  initWeatherControls();
+  document.getElementById('ev-weather').value = weather;
+  document.querySelectorAll('.weather-option').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.weather === weather);
+  });
 };
 
 function requireAdmin() {
@@ -762,8 +923,9 @@ async function renderCampaignMap() {
         const teams = getEventTeamNames(ev).join(', ');
         infoWindow.setContent(`
           <div class="map-info">
-            <strong>${escapeHtml(ev.time || '')} ${escapeHtml(ev.place || '')}</strong>
+            <strong>${escapeHtml(formatEventTime(ev))} ${escapeHtml(ev.place || '')}</strong>
             <span>${escapeHtml(ev.title || '')}</span>
+            ${ev.weather ? `<span>날씨: ${escapeHtml(getWeatherConfig(ev.weather).icon)} ${escapeHtml(getWeatherConfig(ev.weather).label)}</span>` : ''}
             ${teams ? `<span>담당: ${escapeHtml(teams)}</span>` : ''}
             <span>${escapeHtml(ev.date || '')}</span>
           </div>
@@ -897,8 +1059,9 @@ function renderCard(ev, dayDocId) {
           <button class="btn-del-card"  data-dayid="${escapeHtml(dayDocId)}" data-evid="${escapeHtml(ev.id)}">🗑️ 삭제</button>
         </div>
         <div class="event-top">
-          <div class="event-time">${escapeHtml(ev.time)}</div>
+          <div class="event-time">${escapeHtml(formatEventTime(ev))}</div>
           <div class="event-type-badge ${cfg.cls}">${cfg.icon} ${cfg.label}</div>
+          ${renderWeatherBadge(ev.weather)}
         </div>
         <div class="event-title">${escapeHtml(ev.title)}</div>
         <div class="event-location">
@@ -1180,6 +1343,7 @@ window.openAddEventModal = function(idx) {
   if (idx === undefined) idx = window.activeIdx;
   if (!schedule[idx]) return;
   initTimeControls();
+  initWeatherControls();
   editState = { mode:'add', dayDocId: schedule[idx].id };
   document.getElementById('modal-event-title').textContent = '➕ 일정 추가';
   document.getElementById('btn-save-event').textContent = '추가';
@@ -1194,10 +1358,11 @@ function openEditEventModal(dayDocId, evId) {
   const ev = (dayData?.events||[]).find(e => e.id === evId);
   if (!ev) return;
   initTimeControls();
+  initWeatherControls();
   editState = { mode:'edit', dayDocId, evId };
   document.getElementById('modal-event-title').textContent = '✏️ 일정 수정';
   document.getElementById('btn-save-event').textContent = '저장';
-  setTimeControls(ev.time || '09:00');
+  setTimeRangeControls(ev.time || '09:00', ev.endTime || inferEndTime(ev.time || '09:00'));
   document.getElementById('ev-type').value     = ev.type;
   document.getElementById('ev-title').value    = ev.title;
   document.getElementById('ev-place').value    = ev.place;
@@ -1205,16 +1370,18 @@ function openEditEventModal(dayDocId, evId) {
   document.getElementById('ev-mapquery').value = ev.mapQuery||'';
   document.getElementById('ev-lat').value      = ev.lat||'';
   document.getElementById('ev-lng').value      = ev.lng||'';
+  setWeather(ev.weather || '');
   renderTeamPicker(ev.teamIds || []);
   openModal('modal-event');
   setTimeout(() => showPreviewMap(ev.lat, ev.lng), 250);
 }
 
 function clearForm() {
-  ['ev-time','ev-title','ev-place','ev-address','ev-mapquery','ev-lat','ev-lng'].forEach(id =>
+  ['ev-time','ev-end-time','ev-weather','ev-title','ev-place','ev-address','ev-mapquery','ev-lat','ev-lng'].forEach(id =>
     document.getElementById(id).value = '');
   document.getElementById('ev-type').value = 'street';
-  setTimeControls('09:00');
+  setTimeRangeControls('09:00', '10:00');
+  setWeather('');
   document.getElementById('event-map-preview').innerHTML = '';
   renderTeamPicker([]);
   previewMap = null;
@@ -1289,7 +1456,9 @@ window.saveEvent = async function() {
   if (!requireAdmin()) return;
   syncTimeFromControls();
   const time     = document.getElementById('ev-time').value;
+  const endTime  = document.getElementById('ev-end-time').value;
   const type     = document.getElementById('ev-type').value;
+  const weather  = document.getElementById('ev-weather').value;
   const title    = document.getElementById('ev-title').value.trim();
   const place    = document.getElementById('ev-place').value.trim();
   const address  = document.getElementById('ev-address').value.trim();
@@ -1297,7 +1466,8 @@ window.saveEvent = async function() {
   const teamIds  = getSelectedTeamIds();
   let lat         = document.getElementById('ev-lat').value.trim();
   let lng         = document.getElementById('ev-lng').value.trim();
-  if (!time||!title||!place||!mapQuery) { alert('시간, 제목, 장소명, 카카오맵 검색어는 필수입니다'); return; }
+  if (!time||!endTime||!title||!place||!mapQuery) { alert('시간, 제목, 장소명, 카카오맵 검색어는 필수입니다'); return; }
+  if ((timeToMinutes(endTime) ?? 0) <= (timeToMinutes(time) ?? 0)) { alert('종료시간은 시작시간보다 늦어야 합니다'); return; }
 
   const btn = document.getElementById('btn-save-event');
   btn.disabled = true; btn.textContent = '저장 중...';
@@ -1314,10 +1484,10 @@ window.saveEvent = async function() {
     let events = [...(dayData?.events||[])];
 
     if (editState.mode === 'add') {
-      events.push({ id: uid(), time, type, title, place, address, mapQuery, lat, lng, teamIds });
+      events.push({ id: uid(), time, endTime, type, weather, title, place, address, mapQuery, lat, lng, teamIds });
     } else {
       const idx = events.findIndex(e => e.id === editState.evId);
-      if (idx > -1) events[idx] = { ...events[idx], time, type, title, place, address, mapQuery, lat, lng, teamIds };
+      if (idx > -1) events[idx] = { ...events[idx], time, endTime, type, weather, title, place, address, mapQuery, lat, lng, teamIds };
     }
     // 시간순 정렬
     events.sort((a,b) => a.time.localeCompare(b.time));
@@ -1370,11 +1540,12 @@ function shareEvent(dayDocId, evId) {
   const ev = findEvent(dayDocId, evId);
   if (!ev) return;
   const teams = getEventTeamNames(ev);
+  const weatherLine = formatWeatherLine(ev);
   const teamLine = teams.length ? `\n담당 팀: ${teams.join(', ')}` : '';
   try {
     Kakao.Share.sendDefault({
       objectType: 'text',
-      text: `박동철 유세 일정\n⏰ ${ev.time}  📍 ${ev.place}\n${ev.title}${teamLine}\n\n일정 바로 열기:\n${PUBLIC_URL}`,
+      text: `박동철 유세 일정\n⏰ ${formatEventTime(ev)}  📍 ${ev.place}\n${ev.title}${weatherLine}${teamLine}\n\n일정 바로 열기:\n${PUBLIC_URL}`,
       link: {
         mobileWebUrl: PUBLIC_URL,
         webUrl:       PUBLIC_URL,
