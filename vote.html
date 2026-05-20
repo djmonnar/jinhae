@@ -873,6 +873,24 @@ function getAllEventsWithDay() {
   );
 }
 
+function todayKstDateString() {
+  return new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
+}
+
+function isTodayOrFutureDate(dateStr) {
+  return String(dateStr || '') >= todayKstDateString();
+}
+
+function getUpcomingEventsWithDay() {
+  return getAllEventsWithDay().filter(ev => isTodayOrFutureDate(ev.date));
+}
+
+function findInitialActiveIdx() {
+  const today = todayKstDateString();
+  const upcomingIdx = schedule.findIndex(dayData => String(dayData.date || '') >= today);
+  return upcomingIdx >= 0 ? upcomingIdx : Math.max(0, schedule.length - 1);
+}
+
 function getEventCoords(ev) {
   const lat = Number(ev.lat);
   const lng = Number(ev.lng);
@@ -894,12 +912,15 @@ async function renderCampaignMap() {
   const metaEl = document.getElementById('map-meta');
   if (!mapEl) return;
 
-  const events = getAllEventsWithDay().filter(ev => getEventCoords(ev));
-  metaEl.textContent = `${events.length}개 핀 표시`;
+  const events = getUpcomingEventsWithDay().filter(ev => getEventCoords(ev));
+  metaEl.textContent = `${events.length}개 핀 표시 · 오늘 이후`;
   if (events.length === 0) {
+    mapMarkers.forEach(marker => marker.setMap(null));
+    mapMarkers = [];
+    if (infoWindow) infoWindow.close();
     mapEl.style.display = 'none';
     fallbackEl.style.display = 'block';
-    fallbackEl.textContent = '좌표가 등록된 일정이 없습니다. 관리자가 일정 등록/수정에서 좌표 찾기를 눌러주세요.';
+    fallbackEl.textContent = '오늘 이후 좌표가 등록된 일정이 없습니다. 관리자가 일정 등록/수정에서 좌표 찾기를 눌러주세요.';
     return;
   }
 
@@ -986,6 +1007,9 @@ function render() {
     return;
   }
   if (window.activeIdx >= schedule.length) window.activeIdx = schedule.length - 1;
+  if (String(schedule[window.activeIdx]?.date || '') < todayKstDateString()) {
+    window.activeIdx = findInitialActiveIdx();
+  }
 
   schedule.forEach((dayData, idx) => {
     const d   = new Date(dayData.date + 'T00:00:00');
