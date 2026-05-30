@@ -915,9 +915,11 @@ function findInitialActiveIdx() {
 }
 
 function getEventCoords(ev) {
+  // Number("") === 0 이므로 원본 값이 비어있으면 먼저 차단
+  if (!ev.lat || !ev.lng) return null;
   const lat = Number(ev.lat);
   const lng = Number(ev.lng);
-  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || lat === 0 || lng === 0) return null;
   return { lat, lng };
 }
 
@@ -979,8 +981,13 @@ async function renderCampaignMap() {
       mapMarkers.push(marker);
       bounds.extend(pos);
     });
-    if (events.length > 1) campaignMap.setBounds(bounds);
-    else campaignMap.setCenter(center);
+    if (events.length > 1) {
+      campaignMap.setBounds(bounds);
+      // 핀이 넓게 퍼져도 레벨 7(약 8km 반경) 이상으로 축소되지 않도록 제한
+      if (campaignMap.getLevel() > 7) campaignMap.setLevel(7);
+    } else {
+      campaignMap.setCenter(center);
+    }
   } catch (err) {
     console.error('카카오맵 로딩 오류:', err);
     mapEl.style.display = 'none';
