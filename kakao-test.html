@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>카카오맵 SDK 로딩 테스트</title>
+<style>
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
+  h1 { font-size: 18px; margin-bottom: 16px; }
+  #status { background: white; border-radius: 12px; padding: 16px; margin-bottom: 16px; font-size: 14px; line-height: 1.8; border: 1px solid #ddd; }
+  #map { width: 100%; max-width: 600px; height: 350px; border-radius: 12px; border: 1px solid #ccc; background: #eee; }
+  .ok   { color: #1a7a4a; font-weight: 700; }
+  .fail { color: #c8102e; font-weight: 700; }
+  .wait { color: #885500; }
+</style>
+</head>
+<body>
+<h1>🗺️ 카카오맵 SDK 로딩 테스트</h1>
+<div id="status"><span class="wait">⏳ SDK 로딩 중...</span></div>
+<div id="map"></div>
+
+<script>
+const KAKAO_JS_KEY = '1aa968a094a900e05010d7b54c35e006';
+// 진해중앙시장 좌표
+const TEST_LAT = 35.1534;
+const TEST_LNG = 128.6953;
+
+const statusEl = document.getElementById('status');
+
+function log(msg, cls) {
+  const line = document.createElement('div');
+  if (cls) line.className = cls;
+  line.textContent = msg;
+  statusEl.appendChild(line);
+}
+
+function runTest() {
+  statusEl.innerHTML = '';
+  log('테스트 시작: ' + new Date().toLocaleTimeString('ko-KR'));
+  log('appkey: ' + KAKAO_JS_KEY);
+  log('origin: ' + location.origin);
+
+  if (!window.kakao?.maps) {
+    log('window.kakao.maps 없음 → SDK 스크립트 동적 주입', 'wait');
+    const s = document.createElement('script');
+    s.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&libraries=services&autoload=false`;
+    document.head.appendChild(s);
+  } else {
+    log('window.kakao.maps 이미 존재', 'ok');
+  }
+
+  const deadline = Date.now() + 10000;
+  const poll = setInterval(() => {
+    if (window.kakao?.maps) {
+      clearInterval(poll);
+      log('window.kakao.maps 감지됨 → kakao.maps.load() 호출', 'wait');
+      window.kakao.maps.load(() => {
+        log('✅ kakao.maps.load() 콜백 완료', 'ok');
+        drawMap();
+      });
+    } else if (Date.now() > deadline) {
+      clearInterval(poll);
+      log('❌ 10초 타임아웃 — SDK 로드 실패', 'fail');
+      log('확인 항목:', 'fail');
+      log('  1) Kakao Developers → 앱 → 플랫폼 → Web 도메인에 ' + location.origin + ' 등록 여부');
+      log('  2) appkey 일치 여부: ' + KAKAO_JS_KEY);
+      log('  3) 브라우저 개발자도구 네트워크 탭 → dapi.kakao.com 요청 오류 확인');
+      log('  4) CSP 헤더 또는 ad-block이 dapi.kakao.com 차단하는지 확인');
+    }
+  }, 200);
+}
+
+function drawMap() {
+  const mapEl = document.getElementById('map');
+  try {
+    const center = new window.kakao.maps.LatLng(TEST_LAT, TEST_LNG);
+    const map = new window.kakao.maps.Map(mapEl, { center, level: 4 });
+    const marker = new window.kakao.maps.Marker({ position: center, map });
+    const infoWindow = new window.kakao.maps.InfoWindow({
+      content: '<div style="padding:6px 10px;font-size:13px;font-weight:700">📍 진해중앙시장</div>',
+      removable: false,
+    });
+    infoWindow.open(map, marker);
+    log('✅ 지도 렌더링 성공 — 진해중앙시장 마커 표시', 'ok');
+    log('SDK 로딩과 지도 표시가 정상입니다. vote.html 코드 문제를 확인하세요.', 'ok');
+  } catch (err) {
+    log('❌ 지도 렌더링 오류: ' + err.message, 'fail');
+  }
+}
+
+// 페이지에 미리 로드된 스크립트가 있으면 바로 실행
+runTest();
+</script>
+</body>
+</html>
