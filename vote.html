@@ -937,15 +937,16 @@ async function renderCampaignMap() {
   const metaEl = document.getElementById('map-meta');
   if (!mapEl) return;
 
-  const events = getUpcomingEventsWithDay().filter(ev => getEventCoords(ev));
-  metaEl.textContent = `${events.length}개 핀 표시 · 오늘 이후`;
+  const today = todayKstDateString();
+  const events = getAllEventsWithDay().filter(ev => ev.date === today && getEventCoords(ev));
+  metaEl.textContent = `${events.length}개 핀 표시 · 오늘`;
   if (events.length === 0) {
     mapMarkers.forEach(marker => marker.setMap(null));
     mapMarkers = [];
     if (infoWindow) infoWindow.close();
     mapEl.style.display = 'none';
     fallbackEl.style.display = 'block';
-    fallbackEl.textContent = '오늘 이후 좌표가 등록된 일정이 없습니다. 관리자가 일정 등록/수정에서 좌표 찾기를 눌러주세요.';
+    fallbackEl.textContent = '오늘 좌표가 등록된 일정이 없습니다. 관리자가 일정 등록/수정에서 좌표 찾기를 눌러주세요.';
     return;
   }
 
