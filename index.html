@@ -1,379 +1,87 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>박동철 경남도의원 후보 | 진해의 중단 없는 발전</title>
-  <link rel="icon" href="./개소식사진.webp" />
-  <meta property="og:title" content="박동철 경남도의원 후보" />
-  <meta property="og:description" content="진해의 중단 없는 발전, 검증된 실천력으로 완성하겠습니다." />
-  <meta property="og:image" content="https://djmonnar.github.io/jinhae/개소식사진.webp" />
-  <meta property="og:url" content="https://djmonnar.github.io/jinhae/" />
-
-  <link rel="preload" as="image" href="./uploads/jinhaeru_bg.png" fetchpriority="high" />
-  <link rel="preload" as="image" href="./uploads/candidate_photo.jpg" fetchpriority="high" />
-  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
-    integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
-    crossorigin="anonymous"></script>
-  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1aa968a094a900e05010d7b54c35e006&libraries=services&autoload=false"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, noarchive, nofollow" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>홈페이지 임시 중단</title>
   <style>
-    :root { --red:#E61E2B; --navy:#111827; --gold:#f4c542; }
-    * { box-sizing:border-box; }
-    html, body { margin:0; min-height:100%; background:#e5e7eb; color:#111827; font-family:'Pretendard', system-ui, sans-serif; word-break:keep-all; }
-    body { overflow-x:hidden; }
-    .page { width:100%; max-width:480px; min-height:100vh; margin:0 auto; background:#fff; box-shadow:0 0 70px rgba(15,23,42,.28); position:relative; }
-    .brand-red { color:var(--red); }
-    .bg-brand-red { background:var(--red); }
-    .section { padding:54px 22px; }
-    .kicker { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:#fff1f2; color:var(--red); font-size:11px; font-weight:900; letter-spacing:.04em; }
-    .title { font-size:26px; line-height:1.18; font-weight:950; letter-spacing:-.02em; }
-    .subcopy { color:#4b5563; font-size:14px; line-height:1.7; }
-    .hero { min-height:760px; color:#fff; position:relative; overflow:hidden; background:#111827; }
-    .hero-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; opacity:.42; }
-    .hero-profile { position:absolute; z-index:2; top:86px; right:18px; width:min(58vw, 238px); max-height:340px; object-fit:contain; object-position:center bottom; border-radius:28px; background:#fff; box-shadow:0 26px 70px rgba(0,0,0,.34); }
-    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 82% 18%, rgba(230,30,43,.28), transparent 34%), linear-gradient(135deg, rgba(230,30,43,.76) 0%, rgba(17,24,39,.58) 34%, rgba(17,24,39,.18) 56%); z-index:1; pointer-events:none; }
-    .hero::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(10,15,25,.14) 0%, rgba(10,15,25,.26) 36%, rgba(10,15,25,.94) 60%, rgba(10,15,25,.98) 100%); z-index:1; pointer-events:none; }
-    .hero-inner { position:relative; z-index:3; min-height:760px; display:flex; flex-direction:column; justify-content:space-between; padding:18px 20px 24px; }
-    .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 0; }
-    .logo-row { display:flex; align-items:center; gap:8px; font-weight:900; font-size:14px; }
-    .logo-row img { width:34px; height:auto; }
-    .badge { background:var(--red); color:#fff; border-radius:999px; padding:8px 12px; font-size:12px; font-weight:950; box-shadow:0 8px 24px rgba(230,30,43,.32); }
-    .hero-copy { padding-top:390px; }
-    .hero h1 { font-size:40px; line-height:1.08; font-weight:950; letter-spacing:-.04em; margin:14px 0 14px; }
-    .hero p { color:#e5e7eb; font-size:15px; line-height:1.7; margin:0; }
-    .hero-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:24px; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:46px; border-radius:999px; font-size:14px; font-weight:900; text-decoration:none; border:0; cursor:pointer; }
-    .btn.primary { background:#fff; color:#111827; }
-    .btn.red { background:var(--red); color:#fff; }
-    .btn.dark { background:#111827; color:#fff; }
-    .hero-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:24px; }
-    .stat { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.16); border-radius:16px; padding:12px 10px; backdrop-filter:blur(10px); }
-    .stat span { display:block; font-size:10px; color:#d1d5db; font-weight:800; margin-bottom:5px; }
-    .stat strong { font-size:17px; font-weight:950; color:#fff; }
-    .schedule-box { background:#fff; border:1px solid #eef0f4; border-radius:22px; overflow:hidden; box-shadow:0 18px 40px rgba(15,23,42,.08); margin-top:22px; }
-    #today-map { width:100%; height:250px; background:#f3f4f6; }
-    .schedule-list { padding:16px; display:flex; flex-direction:column; gap:10px; }
-    .event-link { display:block; text-decoration:none; color:inherit; border:1px solid #eef0f4; border-radius:16px; padding:14px; transition:background .18s ease; }
-    .event-link:active { background:#f9fafb; }
-    .event-time { display:inline-flex; background:var(--red); color:#fff; border-radius:9px; padding:5px 8px; font-size:12px; font-weight:950; margin-bottom:8px; }
-    .event-place { font-size:15px; font-weight:950; line-height:1.35; }
-    .event-title { font-size:13px; color:#4b5563; line-height:1.55; margin-top:4px; }
-    .promise-grid { display:grid; gap:10px; margin-top:22px; }
-    .promise { border:1px solid #eceff4; border-radius:18px; padding:18px; background:#fff; }
-    .promise i { color:var(--red); }
-    .promise h3 { margin:10px 0 6px; font-size:16px; font-weight:950; }
-    .promise p { margin:0; color:#4b5563; font-size:13px; line-height:1.65; }
-    .career-list { margin-top:22px; display:flex; flex-direction:column; gap:10px; }
-    .career-item { display:flex; gap:12px; align-items:flex-start; border-bottom:1px solid #eef0f4; padding-bottom:12px; }
-    .career-dot { width:8px; height:8px; border-radius:50%; background:var(--red); margin-top:7px; flex:0 0 auto; }
-    .career-item strong { display:block; font-size:14px; line-height:1.5; }
-    .career-item span { display:block; color:#6b7280; font-size:12px; margin-top:2px; }
-    .media-row { display:flex; gap:14px; overflow-x:auto; padding:4px 22px 18px; scrollbar-width:none; }
-    .media-row::-webkit-scrollbar { display:none; }
-    .media-card { flex:0 0 260px; border-radius:18px; overflow:hidden; background:#fff; color:#111827; text-decoration:none; box-shadow:0 12px 30px rgba(15,23,42,.12); }
-    .media-card img { width:100%; height:138px; object-fit:cover; display:block; }
-    .media-card div { padding:16px; }
-    .media-card span { display:block; color:var(--red); font-size:10px; font-weight:950; margin-bottom:5px; }
-    .media-card h3 { margin:0; font-size:14px; line-height:1.45; font-weight:950; }
-    .contact-card { background:#111827; color:#fff; border-radius:24px; padding:24px; }
-    .contact-actions { display:grid; grid-template-columns:1fr; gap:10px; margin-top:18px; }
-    footer { padding:32px 22px 88px; color:#9ca3af; background:#f9fafb; text-align:center; font-size:11px; line-height:1.7; }
-    .float-actions { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); width:min(440px, calc(100vw - 32px)); display:grid; grid-template-columns:1fr 1fr; gap:10px; z-index:50; }
-    .float-actions .btn { box-shadow:0 12px 32px rgba(15,23,42,.22); }
-    @media (max-width:380px) {
-      .hero h1 { font-size:34px; }
-      .hero-profile { width:215px; right:10px; top:88px; }
-      .hero-copy { padding-top:372px; }
-      .hero-actions, .float-actions { grid-template-columns:1fr; }
-      .hero-stats { grid-template-columns:1fr 1fr; }
+    :root {
+      color-scheme: light;
+      --ink: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --red: #e61e2b;
+      --bg: #f3f4f6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      word-break: keep-all;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    main {
+      width: min(100%, 440px);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+    }
+
+    .mark {
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      background: #fff1f2;
+      color: var(--red);
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 25px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
     }
   </style>
 </head>
 <body>
-  <main class="page">
-    <header class="hero">
-      <img src="./uploads/jinhaeru_bg.png" alt="진해루 배경" class="hero-bg" />
-      <img src="./uploads/candidate_photo.jpg" alt="박동철 후보 프로필" class="hero-profile" />
-      <div class="hero-inner">
-        <div class="topbar">
-          <div class="logo-row">
-            <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" />
-            <span>박동철 경남도의원 후보</span>
-          </div>
-          <div class="badge">기호 2번</div>
-        </div>
-        <div class="hero-copy">
-          <div class="kicker" style="background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.18)">제9회 전국동시지방선거</div>
-          <h1>진해의 중단 없는 발전,<br />검증된 실천력으로.</h1>
-          <p>말이 아닌 결과로 증명해 온 진해의 일꾼 박동철입니다. 오늘의 현장 일정과 주요 소식을 한곳에서 확인하세요.</p>
-          <div class="hero-actions">
-            <a href="#today-schedule" class="btn primary"><i data-lucide="map-pin" class="w-4 h-4"></i> 오늘 일정</a>
-            <a href="./vote.html" class="btn red"><i data-lucide="calendar-days" class="w-4 h-4"></i> 전체 일정</a>
-          </div>
-          <div class="hero-stats">
-            <div class="stat"><span>선거일까지</span><strong id="d-day-badge">D-?</strong></div>
-            <div class="stat"><span>오늘 조회</span><strong id="view-count-today">...</strong></div>
-            <div class="stat"><span>누적 조회</span><strong id="view-count-total">...</strong></div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <section id="today-schedule" class="section bg-white">
-      <div class="kicker"><i data-lucide="map" class="w-3.5 h-3.5"></i> 오늘 유세 동선</div>
-      <div class="mt-4 flex items-end justify-between gap-4">
-        <div>
-          <h2 class="title">오늘 어디서<br />만날 수 있나요?</h2>
-          <p id="today-schedule-date" class="subcopy mt-2">일정을 불러오는 중...</p>
-        </div>
-        <a href="./vote.html" class="btn dark shrink-0 px-4">자세히 보기</a>
-      </div>
-      <div class="schedule-box">
-        <div id="today-map"></div>
-        <div id="today-schedule-list" class="schedule-list">
-          <div class="text-center text-gray-400 text-sm py-8">오늘 일정을 불러오는 중입니다.</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section bg-gray-50">
-      <div class="kicker"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> 핵심 약속</div>
-      <h2 class="title mt-4">진해의 변화를<br />멈추지 않겠습니다.</h2>
-      <p class="subcopy mt-3">지난 성과를 바탕으로 교육, 생활, 지역경제의 변화를 현장에서 이어가겠습니다.</p>
-      <div class="promise-grid">
-        <div class="promise">
-          <i data-lucide="school" class="w-6 h-6"></i>
-          <h3>교육 기반 완성</h3>
-          <p>통합진해중학교 개교 등 교육 현안의 실질적 해결을 이어가겠습니다.</p>
-        </div>
-        <div class="promise">
-          <i data-lucide="waves" class="w-6 h-6"></i>
-          <h3>신항 상생 발전</h3>
-          <p>진해신항 개발 과정에서 지역과 어민이 함께 사는 길을 만들겠습니다.</p>
-        </div>
-        <div class="promise">
-          <i data-lucide="users" class="w-6 h-6"></i>
-          <h3>현장 중심 소통</h3>
-          <p>주민 곁에서 듣고, 확인하고, 끝까지 해결하는 의정활동을 하겠습니다.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section bg-white">
-      <div class="kicker"><i data-lucide="landmark" class="w-3.5 h-3.5"></i> 주요 경력</div>
-      <h2 class="title mt-4">결과로 증명한<br />진해의 일꾼</h2>
-      <div class="career-list">
-        <div class="career-item"><div class="career-dot"></div><div><strong>현) 경상남도의회 국민의힘 원내부대표</strong><span>책임 있는 의정 운영</span></div></div>
-        <div class="career-item"><div class="career-dot"></div><div><strong>현) 경상남도의회 기획행정위 부위원장</strong><span>도정과 지역 현안 점검</span></div></div>
-        <div class="career-item"><div class="career-dot"></div><div><strong>현) 진해혁신포럼 대표</strong><span>지역 발전 의제 발굴</span></div></div>
-        <div class="career-item"><div class="career-dot"></div><div><strong>동아대학교 대학원 에너지·자원공학 박사과정 수료</strong><span>전문성과 실행력</span></div></div>
-      </div>
-    </section>
-
-    <section class="py-14 bg-gray-900 text-white overflow-hidden">
-      <div class="px-6 mb-6">
-        <div class="kicker" style="background:rgba(255,255,255,.1);color:#fff">언론과 현장</div>
-        <h2 class="title mt-4">진해 곳곳에서<br />발로 뛰었습니다.</h2>
-      </div>
-      <div class="media-row">
-        <a href="https://www.gukjenews.com/news/articleView.html?idxno=3549991" target="_blank" class="media-card">
-          <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=600" alt="" />
-          <div><span>소통 입법</span><h3>학생 제안 생물다양성 보전 조례 대표 발의</h3></div>
-        </a>
-        <a href="http://www.koreaeaglenews.com/news/articleView.html?idxno=98143" target="_blank" class="media-card">
-          <img src="https://cdn.koreaeaglenews.com/news/photo/202603/98143_122518_580.jpg" alt="" />
-          <div><span>재선 도전</span><h3>박동철 도의원, 재선 도전 공식 선언</h3></div>
-        </a>
-        <a href="https://www.newsfreezone.co.kr/news/articleView.html?idxno=614396" target="_blank" class="media-card">
-          <img src="https://i.ibb.co/cS890NTF/Kakao-Talk-20260327-103441014.jpg" alt="" />
-          <div><span>어민 수호</span><h3>진해신항 상생형 개발 및 어민 생존권 촉구</h3></div>
-        </a>
-      </div>
-    </section>
-
-    <section id="contact" class="section bg-white">
-      <div class="contact-card">
-        <div class="kicker" style="background:rgba(255,255,255,.1);color:#fff">연락과 공유</div>
-        <h2 class="title mt-4">현장의 의견을<br />들려주세요.</h2>
-        <p class="mt-3 text-sm leading-7 text-gray-300">선거사무소와 카카오톡 채널을 통해 진해의 목소리를 전해주세요.</p>
-        <div class="contact-actions">
-          <a href="http://pf.kakao.com/_xgALdX/chat" target="_blank" class="btn primary">카카오톡 채널 연결</a>
-          <a href="tel:055-546-4312" class="btn red">선거사무소 055-546-4312</a>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <img src="https://i.ibb.co/tTXCtkSP/removebg-preview.png" alt="국민의힘" class="h-6 mx-auto mb-4 grayscale opacity-40" />
-      <strong>© 2026 Park Dong-cheol Campaign</strong><br />
-      본 페이지는 후보 박동철 선거사무소에서 제작하였습니다.<br />
-      짓마케팅 서효승 제작
-    </footer>
-
-    <div class="float-actions">
-      <button onclick="shareKakao()" class="btn dark"><i data-lucide="share-2" class="w-4 h-4"></i> 공유하기</button>
-      <a href="./vote.html" class="btn red"><i data-lucide="calendar-days" class="w-4 h-4"></i> 유세 일정</a>
-    </div>
+  <main aria-labelledby="page-title">
+    <div class="mark" aria-hidden="true">!</div>
+    <h1 id="page-title">홈페이지가 임시로 열리지 않습니다.</h1>
+    <p>현재 홈페이지 접속을 잠시 중단했습니다. 필요한 정리가 끝난 뒤 다시 열겠습니다.</p>
   </main>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, onSnapshot, increment, collection, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-    lucide.createIcons();
-
-    const campaignUrl = 'https://djmonnar.github.io/jinhae/';
-    const scheduleUrl = 'https://djmonnar.github.io/jinhae/vote.html';
-
-    const days = Math.ceil((new Date('2026-06-03T00:00:00+09:00').getTime() - new Date().getTime()) / 86400000);
-    document.getElementById('d-day-badge').innerText = days > 0 ? 'D-' + days : 'D-Day';
-
-    const statsConfig = {
-      apiKey: "AIzaSyCvQ4_dmBqbujpZnQ9q4ZpMe98Qb3LBsAw",
-      authDomain: "jinhae-7dab5.firebaseapp.com",
-      projectId: "jinhae-7dab5",
-      storageBucket: "jinhae-7dab5.firebasestorage.app",
-      messagingSenderId: "1051264585019",
-      appId: "1:1051264585019:web:9c83765e72a100bcc7bb1e"
-    };
-    const statsApp = initializeApp(statsConfig);
-    const statsAuth = getAuth(statsApp);
-    const statsDb = getFirestore(statsApp);
-
-    async function initStats() {
-      await signInAnonymously(statsAuth);
-      onAuthStateChanged(statsAuth, async user => {
-        if (!user) return;
-        const todayStr = new Date(new Date().getTime() + 9 * 3600000).toISOString().slice(0, 10);
-        const statsRef = doc(statsDb, 'stats', 'page_views');
-        try { await setDoc(statsRef, { total: increment(1), [todayStr]: increment(1) }, { merge:true }); } catch(e) {}
-        onSnapshot(statsRef, snap => {
-          const data = snap.data() || {};
-          document.getElementById('view-count-today').innerText = (data[todayStr] || 0).toLocaleString();
-          document.getElementById('view-count-total').innerText = (data.total || 0).toLocaleString();
-        });
-      });
-    }
-
-    const scheduleConfig = {
-      apiKey: "AIzaSyAeHS1qb4SzJTZWnwd8s_V8K3MuKPBCx5Y",
-      authDomain: "vote-94dda.firebaseapp.com",
-      projectId: "vote-94dda",
-      storageBucket: "vote-94dda.firebasestorage.app",
-      messagingSenderId: "548877092595",
-      appId: "1:548877092595:web:7d6381ceb779b7b319d986"
-    };
-    const scheduleApp = initializeApp(scheduleConfig, 'campaignSchedule');
-    const scheduleDb = getFirestore(scheduleApp);
-    const WEEKDAYS = ['일','월','화','수','목','금','토'];
-    let todayMap = null;
-    let todayMarkers = [];
-    let todayInfoWindow = null;
-
-    function todayKstDate() {
-      return new Date(new Date().getTime() + 9 * 3600000).toISOString().slice(0, 10);
-    }
-
-    function formatTodayLabel(dateStr) {
-      const d = new Date(dateStr + 'T00:00:00+09:00');
-      return `${d.getMonth() + 1}월 ${d.getDate()}일 ${WEEKDAYS[d.getDay()]}요일`;
-    }
-
-    function escapeHtml(value) {
-      return String(value ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;");
-    }
-
-    function eventCoords(ev) {
-      const lat = Number(ev.lat);
-      const lng = Number(ev.lng);
-      return Number.isFinite(lat) && Number.isFinite(lng) ? { lat, lng } : null;
-    }
-
-    function renderTodayList(events) {
-      const el = document.getElementById('today-schedule-list');
-      if (!events.length) {
-        el.innerHTML = '<div class="text-center text-gray-400 text-sm py-8">오늘 등록된 유세 일정이 없습니다.</div>';
-        return;
-      }
-      el.innerHTML = events.map(ev => {
-        const coords = eventCoords(ev);
-        const mapUrl = coords
-          ? `https://map.kakao.com/link/to/${encodeURIComponent(ev.place || '유세 장소')},${ev.lat},${ev.lng}`
-          : `https://map.kakao.com/link/search/${encodeURIComponent(ev.mapQuery || ev.place || '')}`;
-        return `
-          <a href="${mapUrl}" target="_blank" class="event-link">
-            <span class="event-time">${escapeHtml(ev.time || '')}</span>
-            <div class="event-place">${escapeHtml(ev.place || '')}</div>
-            <div class="event-title">${escapeHtml(ev.title || '')}</div>
-          </a>
-        `;
-      }).join('');
-    }
-
-    function renderTodayMap(events) {
-      const mapEl = document.getElementById('today-map');
-      const eventsWithCoords = events.filter(eventCoords);
-      if (!eventsWithCoords.length || !window.kakao?.maps) {
-        mapEl.innerHTML = '<div class="h-full flex items-center justify-center text-gray-400 text-sm">좌표가 등록된 오늘 일정이 없습니다.</div>';
-        return;
-      }
-      window.kakao.maps.load(() => {
-        const first = eventCoords(eventsWithCoords[0]);
-        const center = new window.kakao.maps.LatLng(first.lat, first.lng);
-        todayMap = todayMap || new window.kakao.maps.Map(mapEl, { center, level:5 });
-        todayInfoWindow = todayInfoWindow || new window.kakao.maps.InfoWindow({ removable:true });
-        todayMarkers.forEach(marker => marker.setMap(null));
-        todayMarkers = [];
-        const bounds = new window.kakao.maps.LatLngBounds();
-        eventsWithCoords.forEach(ev => {
-          const coords = eventCoords(ev);
-          const pos = new window.kakao.maps.LatLng(coords.lat, coords.lng);
-          const marker = new window.kakao.maps.Marker({ position:pos, map:todayMap });
-          window.kakao.maps.event.addListener(marker, 'click', () => {
-            todayInfoWindow.setContent(`<div style="padding:8px 10px;min-width:160px;font-family:Pretendard,sans-serif"><strong style="display:block;font-size:13px;margin-bottom:4px">${escapeHtml(ev.time || '')} ${escapeHtml(ev.place || '')}</strong><span style="font-size:12px;color:#555">${escapeHtml(ev.title || '')}</span></div>`);
-            todayInfoWindow.open(todayMap, marker);
-          });
-          todayMarkers.push(marker);
-          bounds.extend(pos);
-        });
-        if (eventsWithCoords.length > 1) todayMap.setBounds(bounds);
-        else todayMap.setCenter(center);
-      });
-    }
-
-    function initTodaySchedule() {
-      const dateStr = todayKstDate();
-      document.getElementById('today-schedule-date').innerText = formatTodayLabel(dateStr);
-      const todayQuery = query(collection(scheduleDb, 'schedule_days'), where('date', '==', dateStr));
-      onSnapshot(todayQuery, snapshot => {
-        const dayData = snapshot.docs[0]?.data();
-        const events = (dayData?.events || []).slice().sort((a,b) => String(a.time || '').localeCompare(String(b.time || '')));
-        renderTodayList(events);
-        renderTodayMap(events);
-      }, err => {
-        console.error(err);
-        document.getElementById('today-schedule-list').innerHTML = '<div class="text-center text-red-500 text-sm py-8">오늘 일정을 불러오지 못했습니다.</div>';
-      });
-    }
-
-    window.shareKakao = function() {
-      if (!window.Kakao) return;
-      if (!Kakao.isInitialized()) Kakao.init('1aa968a094a900e05010d7b54c35e006');
-      Kakao.Share.sendDefault({
-        objectType:'text',
-        text:`박동철 경남도의원 후보\n진해의 중단 없는 발전, 검증된 실천력으로.\n\n${campaignUrl}`,
-        link:{ mobileWebUrl:campaignUrl, webUrl:campaignUrl },
-        buttonTitle:'후보 페이지 열기'
-      });
-    };
-
-    initStats();
-    initTodaySchedule();
-  </script>
 </body>
 </html>
